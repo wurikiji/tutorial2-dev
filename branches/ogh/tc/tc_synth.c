@@ -28,7 +28,6 @@
 #define IO_LIMIT           (NUM_LSECTORS)
 #define RANDOM_SEED        (IO_LIMIT)
 #define NUM_PSECTORS_4KB   ((4 * 1024) / 512)
-#define NUM_PSECTORS_512B  1
 #define NUM_PSECTORS_8KB   (NUM_PSECTORS_4KB << 1)
 #define NUM_PSECTORS_16KB  (NUM_PSECTORS_8KB << 1)
 #define NUM_PSECTORS_32KB  (NUM_PSECTORS_16KB << 1)
@@ -41,7 +40,6 @@ extern UINT32 g_ftl_write_buf_id;
 
 static void tc_write_seq(const UINT32 start_lsn, const UINT32 io_num, const UINT32 sector_size);
 static void tc_write_rand(const UINT32 start_lsn, const UINT32 io_num, const UINT32 sector_size);
-static void tc_read(const UINT32 start_lsn, const UINT32 io_num, const UINT32 sector_size);
 static void fillup_dataspace(void);
 static void aging_with_rw(UINT32 io_cnt);
 
@@ -120,9 +118,8 @@ void ftl_test(void)
 {
     uart_print("start ftl test...");
 /*     fillup_dataspace(); */
-     tc_write_seq(0, 5000000, NUM_PSECTORS_4KB); 
-    //tc_write_rand(0, 50000, NUM_PSECTORS_4KB);
-    //tc_read(0, 20000, NUM_PSECTORS_512B);
+     tc_write_seq(0, 50000, NUM_PSECTORS_64KB); 
+//    tc_write_rand(0, 200000, NUM_PSECTORS_4KB);
 /*     tc_write_rand(0, 2000000, NUM_PSECTORS_4KB); */
     uart_print("ftl test passed!");
 }
@@ -161,7 +158,7 @@ static void fillup_dataspace(void)
 }
 static void tc_write_seq(const UINT32 start_lsn, const UINT32 io_num, const UINT32 sector_size)
 {
-    UINT32 i, j, wr_buf_addr, rd_buf_addr, data, pre_data;
+    UINT32 i, j, wr_buf_addr, rd_buf_addr, data;
     UINT32 lba, num_sectors = sector_size;
     UINT32 io_cnt = io_num;
     UINT32 const start_lba = start_lsn;
@@ -170,22 +167,17 @@ static void tc_write_seq(const UINT32 start_lsn, const UINT32 io_num, const UINT
     led(0);
 
     // STEP 1 - write
-    for (UINT32 loop = 0; loop < 1; loop++)
+    for (UINT32 loop = 0; loop < 5; loop++)
     {
         wr_buf_addr = WR_BUF_ADDR;
-        rd_buf_addr = RD_BUF_ADDR;
-        num_sectors = MIN(num_sectors, NUM_RD_BUFFERS * SECTORS_PER_PAGE);
         data = 0;
         lba  = start_lba;
+
         uart_print_32(loop); uart_print("");
 
         for (i = 0; i < io_cnt; i++)
         {
-		pre_data = data;
             wr_buf_addr = WR_BUF_PTR(g_ftl_write_buf_id) + ((lba % SECTORS_PER_PAGE) * BYTES_PER_SECTOR);
-
-            rd_buf_addr = RD_BUF_PTR(g_ftl_read_buf_id) + ((lba % SECTORS_PER_PAGE) * BYTES_PER_SECTOR);
-            /* ptimer_start(); */
             for (j = 0; j < num_sectors; j++)
             {
                 mem_set_dram(wr_buf_addr, data, BYTES_PER_SECTOR);
@@ -198,10 +190,38 @@ static void tc_write_seq(const UINT32 start_lsn, const UINT32 io_num, const UINT
                 }
                 data++;
             }
+	    if( i == 0x0000081C)
+		    i = i;
+            ptimer_start();
             ftl_write(lba, num_sectors);
-		data = pre_data;
+            ptimer_stop_and_uart_print();
+
+            lba += num_sectors;
+
+            if (lba >= (UINT32)NUM_LSECTORS)
+            {
+                uart_print("adjust lba because of out of lba");
+                lba = 0;
+            }
+        }
+
+        // STEP 2 - read and verify
+        rd_buf_addr = RD_BUF_ADDR;
+        data = 0;
+        lba  = start_lba;
+        num_sectors = MIN(num_sectors, NUM_RD_BUFFERS * SECTORS_PER_PAGE);
+
+        for (i = 0; i < io_cnt; i++)
+        {
+            rd_buf_addr = RD_BUF_PTR(g_ftl_read_buf_id) + ((lba % SECTORS_PER_PAGE) * BYTES_PER_SECTOR);
+            /* ptimer_start(); */
+	    if( i == 0x0000081C)
+		    i = i;
             ftl_read(lba, num_sectors);
+
             flash_finish();
+            /* ptimer_stop_and_uart_print(); */
+
             for (j = 0; j < num_sectors; j++)
             {
                 UINT32 sample = read_dram_32(rd_buf_addr);
@@ -224,28 +244,13 @@ static void tc_write_seq(const UINT32 start_lsn, const UINT32 io_num, const UINT
 
             lba += num_sectors;
 
-            if (lba >= (UINT32)NUM_LSECTORS)
+            if (lba >= IO_LIMIT + num_sectors)
             {
-                uart_print("adjust lba because of out of lba");
                 lba = 0;
             }
         }
     }
     ftl_flush();
-}
-static void tc_read(const UINT32 start_lsn, const UINT32 io_num, const UINT32 sector_size)
-{
-    UINT32 io_cnt = io_num;
-
-    ptimer_start();
-    for (UINT32 loop = 0; loop < io_cnt; loop++) {
-	    ftl_read(loop, sector_size);
-    }
-    volatile UINT32 elapsed_time = ptimer_stop_and_uart_print(); 
-
-    volatile UINT32 g_b = 0;
-    while(g_b == 0);
-
 }
 static void tc_write_rand(const UINT32 start_lsn, const UINT32 io_num, const UINT32 sector_size)
 {
@@ -257,7 +262,7 @@ static void tc_write_rand(const UINT32 start_lsn, const UINT32 io_num, const UIN
     led(0);
     srand(RANDOM_SEED);
 
-    for (UINT32 loop = 0; loop < 2; loop++) {
+    for (UINT32 loop = 0; loop < 1; loop++) {
         wr_buf_addr = WR_BUF_ADDR;
         data = 0;
         uart_printf("test loop cnt: %d", loop);
@@ -306,8 +311,7 @@ static void tc_write_rand(const UINT32 start_lsn, const UINT32 io_num, const UIN
                 r_data++;
             }
         } // end for
-    ftl_flush();
-    ftl_por_test();
     }
+    ftl_flush();
 }
 #endif // OPTION_FTL_TEST
