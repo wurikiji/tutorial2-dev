@@ -65,7 +65,7 @@ UINT32 smt_bit_map[ NUM_BANKS_MAX ]; //dirty information
 UINT32 smt_dram_bit[ NUM_BANKS_MAX ]; // on dram information
 /* initialize -1 */
 UINT32 smt_dram_map[ NUM_BANKS_MAX ]; // smt table index information
-UINT32 smt_piece_map[ NUM_BANKS_MAX * NUM_BANKS_MAX ]; // smt 가 dram 의 어디에 있나
+UINT32 smt_piece_map[ NUM_BANKS_MAX * NUM_BANKS_MAX ]; // where a smt is in dram
 // initialize 0 
 UINT32 g_smt_target;	// loading place on dram space
 UINT32 g_smt_victim;	// map,flush target
@@ -186,7 +186,7 @@ void load_smt_piece(UINT32 idx){
 	UINT32 bank,row,block;
 	bank = idx / NUM_BANKS_MAX;
 	block = idx % NUM_BANKS_MAX;
-	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + ((PHYPAGES_PER_PAGE * PAGES_PER_VBLK) * g_bad_list[bank][block]);
+	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
 	if( g_smt_target == NUM_BANKS_MAX){
 		g_smt_target = 0;
 		flush_smt_piece(smt_dram_map[g_smt_victim]);
@@ -224,7 +224,7 @@ void flush_smt_piece(UINT32 idx)
 		}
 		//update and flash 
 		g_misc_meta[bank].smt_pieces[block] = (g_misc_meta[bank].smt_pieces[block] + 1) % SMT_LIMIT;
-		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PHYPAGES_PER_PAGE * PAGES_PER_VBLK * g_bad_list[bank][block]);
+		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + ( PAGES_PER_BLK * g_bad_list[bank][block]);
 		// flash map data to nand
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
@@ -574,7 +574,17 @@ void ftl_write_sector(UINT32 const lba)
 
 		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
 		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
+
+		// Because Firmware does not know 
+		// about status of previous nand flash command, 
+		// wait until target bank is IDLE 
+		// ( target DRAM space is fully flashed ) 
+		while(_BSP_FSM(new_bank) != BANK_IDLE)
+		{
+			dst = dst;
+		}
 		mem_copy(dst, src, BYTES_PER_SECTOR);
+
 		// set psn to -1 , it means that data is in dram 
 		set_psn(lba, ((UINT32)BIT31 | vsect_num ));
 
