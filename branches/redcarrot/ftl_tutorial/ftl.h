@@ -15,11 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Jasmine. See the file COPYING.
 // If not, see <http://www.gnu.org/licenses/>.
-//
-// GreedyFTL header file
-//
-// Author; Sang-Phil Lim (SKKU VLDB Lab.)
-//
+
 
 #ifndef FTL_H
 #define FTL_H
@@ -33,12 +29,12 @@
 #define NUM_RD_BUFFERS		(((NUM_RW_BUFFERS / 8) + NUM_BANKS - 1) / NUM_BANKS * NUM_BANKS)
 #define NUM_WR_BUFFERS		(NUM_RW_BUFFERS - NUM_RD_BUFFERS)
 #define NUM_COPY_BUFFERS	NUM_BANKS_MAX
-#define NUM_FTL_BUFFERS		NUM_BANKS
+#define NUM_FTL_BUFFERS		NUM_BANKS_MAX
 #define NUM_HIL_BUFFERS		1
 #define NUM_TEMP_BUFFERS	1
 
 #define DRAM_BYTES_OTHER	((NUM_COPY_BUFFERS + NUM_FTL_BUFFERS + NUM_HIL_BUFFERS + NUM_TEMP_BUFFERS) * BYTES_PER_PAGE \
-+ BAD_BLK_BMP_BYTES + PAGE_MAP_BYTES + VCOUNT_BYTES)
++ SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + CACHED_SMT_BYTES)
 
 #define WR_BUF_PTR(BUF_ID)	(WR_BUF_ADDR + ((UINT32)(BUF_ID)) * BYTES_PER_PAGE)
 #define WR_BUF_ID(BUF_PTR)	((((UINT32)BUF_PTR) - WR_BUF_ADDR) / BYTES_PER_PAGE)
@@ -47,7 +43,6 @@
 
 #define _COPY_BUF(RBANK)	(COPY_BUF_ADDR + (RBANK) * BYTES_PER_PAGE)
 #define COPY_BUF(BANK)		_COPY_BUF(REAL_BANK(BANK))
-#define FTL_BUF(BANK)       (FTL_BUF_ADDR + ((BANK) * BYTES_PER_PAGE))
 
 //modified by RED
 //////////////////////
@@ -73,7 +68,7 @@
 #define RD_BUF_ADDR			DRAM_BASE										// base address of SATA read buffers
 #define RD_BUF_BYTES		(NUM_RD_BUFFERS * BYTES_PER_PAGE)
 
-#define WR_BUF_ADDR			(RD_BUF_ADDR + RD_BUF_BYTES)					// base address of SATA write buffers
+#define WR_BUF_ADDR         (RD_BUF_ADDR + RD_BUF_BYTES)					// base address of SATA write buffers
 #define WR_BUF_BYTES		(NUM_WR_BUFFERS * BYTES_PER_PAGE)
 
 #define COPY_BUF_ADDR		(WR_BUF_ADDR + WR_BUF_BYTES)					// base address of flash copy buffers
@@ -88,23 +83,14 @@
 #define TEMP_BUF_ADDR		(HIL_BUF_ADDR + HIL_BUF_BYTES)					// general purpose buffer
 #define TEMP_BUF_BYTES		(NUM_TEMP_BUFFERS * BYTES_PER_PAGE)
 
-#define BAD_BLK_BMP_ADDR	(TEMP_BUF_ADDR + TEMP_BUF_BYTES)				// bitmap of initial bad blocks
-#define BAD_BLK_BMP_BYTES	(((NUM_VBLKS / 8) + DRAM_ECC_UNIT - 1) / DRAM_ECC_UNIT * DRAM_ECC_UNIT)
+#define SCAN_LIST_ADDR		(TEMP_BUF_ADDR + TEMP_BUF_BYTES)				// list of initial bad blocks
+#define SCAN_LIST_BYTES		(SCAN_LIST_SIZE * NUM_BANKS)
 
-#define PAGE_MAP_ADDR		(BAD_BLK_BMP_ADDR + BAD_BLK_BMP_BYTES)			// page mapping table
-#define PAGE_MAP_BYTES		((NUM_LPAGES * sizeof(UINT32) + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR * BYTES_PER_SECTOR)
-
-#define VCOUNT_ADDR			(PAGE_MAP_ADDR + PAGE_MAP_BYTES)
-#define VCOUNT_BYTES		((NUM_BANKS * VBLKS_PER_BANK * sizeof(UINT16) + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR * BYTES_PER_SECTOR)
-
-#define MERGE_BUFFER_ADDR	(VCOUNT_ADDR + VCOUNT_BYTES)				// merge buffer
+#define MERGE_BUFFER_ADDR	(SCAN_LIST_ADDR + SCAN_LIST_BYTES)				// merge buffer
 #define MERGE_BUFFER_BYTES	(((NUM_BANKS * BYTES_PER_PAGE + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR ) * BYTES_PER_SECTOR)
 
 #define CACHED_SMT_ADDR     (MERGE_BUFFER_ADDR + MERGE_BUFFER_BYTES)        // cached SMT
 #define CACHED_SMT_BYTES    (((BYTES_PER_BUNDLE * BUNDLES_ON_CACHE + BYTES_PER_SECTOR - 1) /  BYTES_PER_SECTOR) * BYTES_PER_SECTOR)
-
-// #define BLKS_PER_BANK		VBLKS_PER_BANK
-
 
 ///////////////////////////////
 // FTL public functions
@@ -113,8 +99,9 @@
 void ftl_open(void);
 void ftl_read(UINT32 const lba, UINT32 const num_sectors);
 void ftl_write(UINT32 const lba, UINT32 const num_sectors);
-void ftl_test_write(UINT32 const lba, UINT32 const num_sectors);
 void ftl_flush(void);
 void ftl_isr(void);
+void ftl_write_sector(UINT32 const lba);
+void ftl_read_sector(UINT32 const lba,UINT32 const);
 
 #endif //FTL_H
