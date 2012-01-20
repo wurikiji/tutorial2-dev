@@ -95,7 +95,6 @@ UINT32 g_bytes_per_vp = BYTES_PER_PAGE;
 UINT32 g_sectors_per_bank = SECTORS_PER_BANK;
 UINT32 g_pages_per_blk = PAGES_PER_BLK;
 UINT32 g_pages_per_vblk = PAGES_PER_VBLK;
-UINT32 pblk = PAGES_PER_PBLK;
 
 void logging_misc_meta()
 {
@@ -728,11 +727,11 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	//UINT32 size = sizeof(UINT32) * totals;
 	//mem_copy(dst,src,size);
 	UINT32 dst, bank, block, sector;
-	UINT32 sectors_per_mblk = (SECTORS_PER_BANK + NUM_BANKS_MAX -1 ) / NUM_BANKS_MAX;
+	UINT32 sectors_per_mblk = (SECTORS_PER_BANK) / NUM_BANKS_MAX;
 
 	bank = lba / SECTORS_PER_BANK;
-	block = ((lba % SECTORS_PER_BANK) + sectors_per_mblk -1) / (sectors_per_mblk);
-	sector = ((lba % SECTORS_PER_BANK) + sectors_per_mblk -1) % (sectors_per_mblk);
+	block = (lba % SECTORS_PER_BANK)  / (sectors_per_mblk);
+	sector = (lba % SECTORS_PER_BANK) % (sectors_per_mblk);
 
 	if( (smt_dram_bit[ bank ] & (1 << block)) == 0)
 	{
@@ -753,11 +752,11 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 	//mem_copy(dst,src,size);
 	UINT32 dst, bank, block, sector;
 
-	UINT32 sectors_per_mblk = (SECTORS_PER_BANK + NUM_BANKS_MAX -1 ) / NUM_BANKS_MAX;
+	UINT32 sectors_per_mblk = (SECTORS_PER_BANK) / NUM_BANKS_MAX;
 
 	bank = lba / SECTORS_PER_BANK;
-	block = ((lba % SECTORS_PER_BANK) + sectors_per_mblk -1) / (sectors_per_mblk);
-	sector = ((lba % SECTORS_PER_BANK) + sectors_per_mblk -1) % (sectors_per_mblk);
+	block = ((lba % SECTORS_PER_BANK)) / (sectors_per_mblk);
+	sector = ((lba % SECTORS_PER_BANK)) % (sectors_per_mblk);
 
 	if(( smt_dram_bit[ bank ] & (1 << block)) == 0)
 	{
