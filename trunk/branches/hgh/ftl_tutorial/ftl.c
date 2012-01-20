@@ -551,7 +551,7 @@ static void loadding_smt_buf_pieces(UINT32 const buf_index, UINT32 const piece_i
 }
 static void logging_smt_buf_piece(UINT32 const buf_index)
 {
-	UINT32 piece_index, row, ban, piece_offsetk;
+	UINT32 piece_index, row, bank, piece_offset;
 	piece_index = smt_buf_pindex[buf_index];
 	bank = piece_index / NUM_PIECES_PER_BANK;
 	piece_offset = piece_index % NUM_PIECES_PER_BANK;
@@ -791,7 +791,7 @@ static void format(void)
 	UINT32 vblk_offset, bank, count[bank];
 	for(bank = 0 ;  bank < NUM_BANKS; bank++)
 	{
-		count[bnak] = 0;
+		count[bank] = 0;
 	}
 	for (vblk_offset = 1; vblk_offset < VBLKS_PER_BANK; vblk_offset++)
 	{
