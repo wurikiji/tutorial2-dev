@@ -34,7 +34,7 @@
 #define NUM_TEMP_BUFFERS	1
 
 #define DRAM_BYTES_OTHER	((NUM_COPY_BUFFERS + NUM_FTL_BUFFERS + NUM_HIL_BUFFERS + NUM_TEMP_BUFFERS) * BYTES_PER_PAGE \
-    + SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + SMT_PIECES_BYTES + VSECT_COUNT_BYTES)
+    + SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + SMT_PIECES_BYTES)
 // modified by GYUHWA, RED
 
 #define WR_BUF_PTR(BUF_ID)	(WR_BUF_ADDR + ((UINT32)(BUF_ID)) * BYTES_PER_PAGE)
@@ -44,20 +44,6 @@
 
 #define _COPY_BUF(RBANK)	(COPY_BUF_ADDR + (RBANK) * BYTES_PER_PAGE)
 #define COPY_BUF(BANK)		_COPY_BUF(REAL_BANK(BANK))
-
-//Sector Map Table on NAND
-#define SMT_BYTES_PER_BANK  	(SECTORS_PER_BANK * sizeof(UINT32))
-    // The bytes size of Sector Map Table in a bank
-#define SMT_PIECES_PER_BANK 	(1)
-    // The number of Sector Map Table Pieces per bank
-#define SMT_PIECE_BYTES     	(SMT_BYTES_PER_BANK / SMT_PIECES_PER_BANK)
-    // The bytes size of a Sector Map Table piece
-#define SECTS_PER_SMT_PIECE   	(SMT_PIECE_BYTES / sizeof(UINT32))
-    // Elements in a SMT piece
-#define NUM_SMT_PIECES      	(SMT_PIECES_PER_BANK * NUM_BANKS)
-    // The total number of Sector Map Table Pieces
-//*END//
-
 ///////////////////////////////
 // DRAM segmentation
 ///////////////////////////////
@@ -83,21 +69,12 @@
 #define SCAN_LIST_ADDR		(TEMP_BUF_ADDR + TEMP_BUF_BYTES)				// list of initial bad blocks
 #define SCAN_LIST_BYTES		(SCAN_LIST_SIZE * NUM_BANKS)
 
-//Removed by RED
-/*
-#define PAGE_MAP_ADDR		(SCAN_LIST_ADDR + SCAN_LIST_BYTES)				// page mapping table
-#define PAGE_MAP_BYTES		((NUM_LPAGES * sizeof(UINT32) + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR * BYTES_PER_SECTOR)
-*/
-
 #define MERGE_BUFFER_ADDR	(SCAN_LIST_ADDR + SCAN_LIST_BYTES)				// merge buffer (added by GYUHWA, modified by RED)
 #define MERGE_BUFFER_BYTES	(((NUM_BANKS * BYTES_PER_PAGE + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR )* BYTES_PER_SECTOR)
 
-#define SMT_PIECES_ADDR     (MERGE_BUFFER_ADDR + MERGE_BUFFER_BYTES)
-        // Sector-mapping table (by RED)
-#define SMT_PIECES_BYTES    (((SMT_PIECE_BYTES * SMT_PIECES_PER_BANK * NUM_BANKS + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR )* BYTES_PER_SECTOR)
-
-#define VSECT_COUNT_ADDR	(SMT_PIECES_ADDR + SMT_PIECES_BYTES)
-#define VSECT_COUNT_BYTES	(((NUM_BANKS * VBLKS_PER_BANK * sizeof(UINT32) + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR) * BYTES_PER_SECTOR)
+// added by RED
+#define SMT_PIECES_ADDR		 (MERGE_BUFFER_ADDR + MERGE_BUFFER_BYTES)       
+#define SMT_PIECES_BYTES     (((SECTORS_PER_BANK / 2) + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR * BYTES_PER_SECTOR)  //16MB
 
 ///////////////////////////////
 // FTL public functions
