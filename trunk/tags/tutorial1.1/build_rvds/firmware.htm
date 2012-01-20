@@ -1,0 +1,898 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+<title>Static Call Graph - [C:\Users\Jeff\Desktop\skku_internship\tutorial2_dev\tags\tutorial1.1\build_rvds\firmware.axf]</title></head>
+<body><HR>
+<H1>Static Call Graph for image C:\Users\Jeff\Desktop\skku_internship\tutorial2_dev\tags\tutorial1.1\build_rvds\firmware.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, RVCT4.0 [Build 400]: Last Updated: Thu Jan 19 10:22:02 2012
+<BR><P>
+<H3>Maximum Stack Usage =         84 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+Call chain for Maximum Stack Depth:</H3>
+ata_flush_cache &rArr; ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+<P>
+<H3>
+Functions with no stack information
+</H3><UL>
+ <LI><a href="#[2029694]">disable_interrupt</a>
+ <LI><a href="#[2029658]">enable_interrupt</a>
+ <LI><a href="#[202970c]">reset_handler</a>
+</UL>
+</UL>
+<P>
+<H3>
+Mutually Recursive functions
+</H3> <LI><a href="#[2028cf8]">logging_misc_metadata</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[2028cf8]">logging_misc_metadata</a><BR>
+</UL>
+<P>
+<H3>
+Function Pointers
+</H3><UL>
+ <LI><a href="#[202673c]">ata_not_supported</a>
+ <LI><a href="#[20267f0]">ata_nop</a>
+ <LI><a href="#[2026778]">ata_recalibrate</a>
+ <LI><a href="#[202682c]">ata_read_native_max_address</a>
+ <LI><a href="#[2026ac0]">ata_read_verify_sectors</a>
+ <LI><a href="#[2026ac0]">ata_read_verify_sectors</a>
+ <LI><a href="#[2026a48]">ata_seek</a>
+ <LI><a href="#[20266c4]">ata_execute_drive_diagnostics</a>
+ <LI><a href="#[20267b4]">ata_initialize_device_parameters</a>
+ <LI><a href="#[202691c]">ata_standby_immediate</a>
+ <LI><a href="#[20268a4]">ata_idle_immediate</a>
+ <LI><a href="#[2026958]">ata_standby</a>
+ <LI><a href="#[20268e0]">ata_idle</a>
+ <LI><a href="#[2026b74]">ata_check_power_mode</a>
+ <LI><a href="#[2026868]">ata_sleep</a>
+ <LI><a href="#[2026a0c]">ata_set_multiple_mode</a>
+ <LI><a href="#[202691c]">ata_standby_immediate</a>
+ <LI><a href="#[20268a4]">ata_idle_immediate</a>
+ <LI><a href="#[2026958]">ata_standby</a>
+ <LI><a href="#[20268e0]">ata_idle</a>
+ <LI><a href="#[20269d0]">ata_read_buffer</a>
+ <LI><a href="#[2026b74]">ata_check_power_mode</a>
+ <LI><a href="#[2026868]">ata_sleep</a>
+ <LI><a href="#[2026afc]">ata_flush_cache</a>
+ <LI><a href="#[2026994]">ata_write_buffer</a>
+ <LI><a href="#[2026afc]">ata_flush_cache</a>
+ <LI><a href="#[2026fac]">ata_identify_device</a>
+ <LI><a href="#[2026a84]">ata_set_features</a>
+ <LI><a href="#[202682c]">ata_read_native_max_address</a>
+ <LI><a href="#[2026700]">ata_srst</a>
+</UL>
+<P>
+<H3>
+Global Symbols
+</H3>
+<P><STRONG><a name="[2029694]"></a>disable_interrupt</STRONG> (ARM, 0 bytes, Stack size unknown bytes, init.o(init), UNUSED, KEPT)
+<BR><BR>[Called By]<UL><LI><a href="#[2025b0c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sata_reset
+</UL>
+
+<P><STRONG><a name="[2029658]"></a>enable_interrupt</STRONG> (ARM, 0 bytes, Stack size unknown bytes, init.o(init), UNUSED, KEPT)
+<BR><BR>[Called By]<UL><LI><a href="#[2025b0c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sata_reset
+</UL>
+
+<P><STRONG><a name="[2021408]"></a>__rt_lib_init_rand_2</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, libinit2.o(.ARM.Collect$$libinit$$0000000A), UNUSED)
+
+<P><STRONG><a name="[2027a38]"></a>ftl_flush</STRONG> (ARM, 16 bytes, Stack size 8 bytes, ftl.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 68 + Unknown Stack Size
+<LI>Call Chain = ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+<LI><a href="#[20268a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_idle_immediate
+<LI><a href="#[20268e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_idle
+<LI><a href="#[202691c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_standby_immediate
+<LI><a href="#[2026958]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_standby
+<LI><a href="#[2026afc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_flush_cache
+<LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+<LI><a href="#[2028c80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;format
+</UL>
+
+<P><STRONG><a name="[20279fc]"></a>ftl_open</STRONG> (ARM, 564 bytes, Stack size 32 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 116 + Unknown Stack Size
+<LI>Call Chain = ftl_open &rArr; format &rArr; ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+<LI><a href="#[2027600]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_clear_irq
+<LI><a href="#[20276b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_write_dram_16
+<LI><a href="#[202772c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_read_dram_16
+<LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+<LI><a href="#[2028c44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sanity_check
+<LI><a href="#[2028c80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;format
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[20279c0]"></a>ftl_read_sector</STRONG> (ARM, 272 bytes, Stack size 32 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = ftl_read_sector &rArr; get_psn
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+<LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+<LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+<LI><a href="#[2028c08]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_psn
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2027984]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read
+</UL>
+
+<P><STRONG><a name="[2027984]"></a>ftl_read</STRONG> (ARM, 296 bytes, Stack size 32 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 88 + Unknown Stack Size
+<LI>Call Chain = ftl_read &rArr; ftl_read_sector &rArr; get_psn
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[20279c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read_sector
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+<LI><a href="#[202925c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Main
+</UL>
+
+<P><STRONG><a name="[2027948]"></a>ftl_write_sector</STRONG> (ARM, 424 bytes, Stack size 40 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 100<LI>Call Chain = ftl_write_sector &rArr; get_free_page &rArr; is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+<LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+<LI><a href="#[2028b90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_free_page
+<LI><a href="#[2028bcc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_psn
+<LI><a href="#[2028c08]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_psn
+</UL>
+<BR>[Called By]<UL><LI><a href="#[202790c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write
+</UL>
+
+<P><STRONG><a name="[202790c]"></a>ftl_write</STRONG> (ARM, 168 bytes, Stack size 40 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 140 + Unknown Stack Size
+<LI>Call Chain = ftl_write &rArr; ftl_write_sector &rArr; get_free_page &rArr; is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[2027948]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write_sector
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[2023244]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fillup_dataspace
+<LI><a href="#[2023280]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aging_with_rw
+<LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+<LI><a href="#[202925c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Main
+</UL>
+
+<P><STRONG><a name="[20278d0]"></a>ftl_isr</STRONG> (ARM, 340 bytes, Stack size 4 bytes, ftl.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[20291a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;irq_handler
+</UL>
+
+<P><STRONG><a name="[2026fac]"></a>ata_identify_device</STRONG> (ARM, 300 bytes, Stack size 24 bytes, sata_identify.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = ata_identify_device &rArr; pio_sector_transfer &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026ef8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pio_sector_transfer
+<LI><a href="#[2027114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_string_data
+<LI><a href="#[2027150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_integrity_word
+<LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026b74]"></a>ata_check_power_mode</STRONG> (ARM, 144 bytes, Stack size 8 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ata_check_power_mode
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026b38]"></a>send_status_to_host</STRONG> (ARM, 172 bytes, Stack size 4 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = send_status_to_host
+</UL>
+<BR>[Called By]<UL><LI><a href="#[202673c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_not_supported
+<LI><a href="#[2026778]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_recalibrate
+<LI><a href="#[20267b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_initialize_device_parameters
+<LI><a href="#[20267f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_nop
+<LI><a href="#[2026868]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_sleep
+<LI><a href="#[20268a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_idle_immediate
+<LI><a href="#[20268e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_idle
+<LI><a href="#[202691c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_standby_immediate
+<LI><a href="#[2026958]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_standby
+<LI><a href="#[2026a0c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_set_multiple_mode
+<LI><a href="#[2026a48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_seek
+<LI><a href="#[2026a84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_set_features
+<LI><a href="#[2026ac0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_read_verify_sectors
+<LI><a href="#[2026afc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_flush_cache
+<LI><a href="#[2026ef8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pio_sector_transfer
+<LI><a href="#[2029220]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fiq_handler
+</UL>
+
+<P><STRONG><a name="[2026afc]"></a>ata_flush_cache</STRONG> (ARM, 32 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84 + Unknown Stack Size
+<LI>Call Chain = ata_flush_cache &rArr; ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026ac0]"></a>ata_read_verify_sectors</STRONG> (ARM, 28 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ata_read_verify_sectors &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026a84]"></a>ata_set_features</STRONG> (ARM, 300 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = ata_set_features &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026a48]"></a>ata_seek</STRONG> (ARM, 52 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ata_seek &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026a0c]"></a>ata_set_multiple_mode</STRONG> (ARM, 28 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ata_set_multiple_mode &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026ef8]"></a>pio_sector_transfer</STRONG> (ARM, 316 bytes, Stack size 28 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = pio_sector_transfer &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2026994]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_write_buffer
+<LI><a href="#[20269d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_read_buffer
+<LI><a href="#[2026fac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_identify_device
+</UL>
+
+<P><STRONG><a name="[20269d0]"></a>ata_read_buffer</STRONG> (ARM, 32 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = ata_read_buffer &rArr; pio_sector_transfer &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026ef8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pio_sector_transfer
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026994]"></a>ata_write_buffer</STRONG> (ARM, 32 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = ata_write_buffer &rArr; pio_sector_transfer &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026ef8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pio_sector_transfer
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026958]"></a>ata_standby</STRONG> (ARM, 32 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84 + Unknown Stack Size
+<LI>Call Chain = ata_standby &rArr; ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[202691c]"></a>ata_standby_immediate</STRONG> (ARM, 32 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84 + Unknown Stack Size
+<LI>Call Chain = ata_standby_immediate &rArr; ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[20268e0]"></a>ata_idle</STRONG> (ARM, 32 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84 + Unknown Stack Size
+<LI>Call Chain = ata_idle &rArr; ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[20268a4]"></a>ata_idle_immediate</STRONG> (ARM, 32 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84 + Unknown Stack Size
+<LI>Call Chain = ata_idle_immediate &rArr; ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026868]"></a>ata_sleep</STRONG> (ARM, 28 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ata_sleep &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[202682c]"></a>ata_read_native_max_address</STRONG> (ARM, 248 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = ata_read_native_max_address
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[20267f0]"></a>ata_nop</STRONG> (ARM, 28 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ata_nop &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[20267b4]"></a>ata_initialize_device_parameters</STRONG> (ARM, 160 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = ata_initialize_device_parameters &rArr; __aeabi_idivmod
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2022a10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
+<LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2026778]"></a>ata_recalibrate</STRONG> (ARM, 28 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ata_recalibrate &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[202673c]"></a>ata_not_supported</STRONG> (ARM, 28 bytes, Stack size 12 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ata_not_supported &rArr; send_status_to_host
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_main.o(.text)
+</UL>
+<P><STRONG><a name="[2026700]"></a>ata_srst</STRONG> (ARM, 156 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ata_srst
+</UL>
+<BR>[Calls]<UL><LI><a href="#[202664c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20266c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_execute_drive_diagnostics
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[20266c4]"></a>ata_execute_drive_diagnostics</STRONG> (ARM, 32 bytes, Stack size 16 bytes, sata_cmd.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = ata_execute_drive_diagnostics &rArr; ata_srst
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026700]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_srst
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> sata_table.o(.constdata)
+</UL>
+<P><STRONG><a name="[2029220]"></a>fiq_handler</STRONG> (ARM, 1792 bytes, Stack size 64 bytes, sata_isr.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2026250]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_blink
+<LI><a href="#[2026b38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_status_to_host
+</UL>
+
+<P><STRONG><a name="[202925c]"></a>Main</STRONG> (ARM, 208 bytes, Stack size 40 bytes, sata_main.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 180 + Unknown Stack Size
+<LI>Call Chain = Main &rArr; ftl_write &rArr; ftl_write_sector &rArr; get_free_page &rArr; is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2025e54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;eventq_get
+<LI><a href="#[2025e90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;eventq_get_count
+<LI><a href="#[20277a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_search_equ
+<LI><a href="#[202790c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write
+<LI><a href="#[2027984]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read
+</UL>
+<BR>[Called By]<UL><LI><a href="#[202970c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_handler
+</UL>
+
+<P><STRONG><a name="[202664c]"></a>delay</STRONG> (ARM, 32 bytes, Stack size 0 bytes, sata_main.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2025b0c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sata_reset
+<LI><a href="#[2026250]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_blink
+<LI><a href="#[2026700]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_srst
+<LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[2025b0c]"></a>sata_reset</STRONG> (ARM, 336 bytes, Stack size 8 bytes, sata_main.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2025ad0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_sram
+<LI><a href="#[202664c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay
+<LI><a href="#[2029658]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;enable_interrupt
+<LI><a href="#[2029694]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disable_interrupt
+</UL>
+
+<P><STRONG><a name="[20277e0]"></a>_mem_copy</STRONG> (ARM, 112 bytes, Stack size 12 bytes, mem_util.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = _mem_copy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2025044]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_clr_bit_dram
+<LI><a href="#[2025080]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_set_bit_dram
+<LI><a href="#[20250bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_write_dram_8
+<LI><a href="#[2026fac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_identify_device
+<LI><a href="#[2027678]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_write_dram_32
+<LI><a href="#[20276b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_write_dram_16
+<LI><a href="#[2027948]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write_sector
+<LI><a href="#[20279c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read_sector
+<LI><a href="#[2028aa0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loading_misc_metadata
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[2025170]"></a>_mem_bmp_find_sram</STRONG> (ARM, 112 bytes, Stack size 8 bytes, mem_util.o(.text), UNUSED)
+
+<P><STRONG><a name="[2025134]"></a>_mem_bmp_find_dram</STRONG> (ARM, 112 bytes, Stack size 8 bytes, mem_util.o(.text), UNUSED)
+
+<P><STRONG><a name="[2025ad0]"></a>_mem_set_sram</STRONG> (ARM, 108 bytes, Stack size 4 bytes, mem_util.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = _mem_set_sram
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2023820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test_nand_blocks
+<LI><a href="#[2025b0c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sata_reset
+<LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[2027768]"></a>_mem_set_dram</STRONG> (ARM, 108 bytes, Stack size 4 bytes, mem_util.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = _mem_set_dram
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+<LI><a href="#[2023820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test_nand_blocks
+<LI><a href="#[20279c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read_sector
+<LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+<LI><a href="#[2028adc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_metadata
+<LI><a href="#[2028b18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;write_format_mark
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+<LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[20250f8]"></a>_mem_search_min_max</STRONG> (ARM, 124 bytes, Stack size 8 bytes, mem_util.o(.text), UNUSED)
+
+<P><STRONG><a name="[20277a4]"></a>_mem_search_equ</STRONG> (ARM, 152 bytes, Stack size 12 bytes, mem_util.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = _mem_search_equ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2028cbc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_bad_block
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+<LI><a href="#[202925c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Main
+</UL>
+
+<P><STRONG><a name="[2027678]"></a>_write_dram_32</STRONG> (ARM, 48 bytes, Stack size 16 bytes, mem_util.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = _write_dram_32 &rArr; _mem_copy
+</UL>
+<BR>[Calls]<UL><LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2028bcc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_psn
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[20276b4]"></a>_write_dram_16</STRONG> (ARM, 112 bytes, Stack size 32 bytes, mem_util.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = _write_dram_16 &rArr; _mem_copy
+</UL>
+<BR>[Calls]<UL><LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[20250bc]"></a>_write_dram_8</STRONG> (ARM, 112 bytes, Stack size 32 bytes, mem_util.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+</UL>
+
+<P><STRONG><a name="[2025080]"></a>_set_bit_dram</STRONG> (ARM, 116 bytes, Stack size 32 bytes, mem_util.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+</UL>
+
+<P><STRONG><a name="[2025044]"></a>_clr_bit_dram</STRONG> (ARM, 116 bytes, Stack size 32 bytes, mem_util.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+</UL>
+
+<P><STRONG><a name="[2025008]"></a>_tst_bit_dram</STRONG> (ARM, 76 bytes, Stack size 16 bytes, mem_util.o(.text), UNUSED)
+
+<P><STRONG><a name="[2024fcc]"></a>_read_dram_8</STRONG> (ARM, 72 bytes, Stack size 8 bytes, mem_util.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2024f54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_cmp_dram
+</UL>
+
+<P><STRONG><a name="[202772c]"></a>_read_dram_16</STRONG> (ARM, 76 bytes, Stack size 8 bytes, mem_util.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = _read_dram_16
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[20276f0]"></a>_read_dram_32</STRONG> (ARM, 44 bytes, Stack size 0 bytes, mem_util.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+<LI><a href="#[2028aa0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loading_misc_metadata
+<LI><a href="#[2028c08]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_psn
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[2024f90]"></a>_mem_cmp_sram</STRONG> (ARM, 88 bytes, Stack size 16 bytes, mem_util.o(.text), UNUSED)
+
+<P><STRONG><a name="[2024f54]"></a>_mem_cmp_dram</STRONG> (ARM, 128 bytes, Stack size 36 bytes, mem_util.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2024fcc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_read_dram_8
+</UL>
+
+<P><STRONG><a name="[2027588]"></a>flash_issue_cmd</STRONG> (ARM, 116 bytes, Stack size 0 bytes, flash.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2024270]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_block_erase_sync
+<LI><a href="#[20242ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_modified_copyback
+<LI><a href="#[20242e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_copyback
+<LI><a href="#[2024324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptprogram_from_host
+<LI><a href="#[2024360]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_program_from_host
+<LI><a href="#[202439c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_program
+<LI><a href="#[20243d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptread_to_host
+<LI><a href="#[2024414]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_read_to_host
+<LI><a href="#[2024450]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_read
+<LI><a href="#[2024810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_reset
+<LI><a href="#[2027498]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptread
+<LI><a href="#[20274d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptprogram
+<LI><a href="#[2027510]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_block_erase
+<LI><a href="#[2027948]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write_sector
+<LI><a href="#[20279c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read_sector
+<LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+<LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[20248c4]"></a>flash_copy</STRONG> (ARM, 128 bytes, Stack size 0 bytes, flash.o(.text), UNUSED)
+
+<P><STRONG><a name="[2024888]"></a>flash_modify_copy</STRONG> (ARM, 156 bytes, Stack size 12 bytes, flash.o(.text), UNUSED)
+
+<P><STRONG><a name="[202484c]"></a>flash_erase</STRONG> (ARM, 112 bytes, Stack size 0 bytes, flash.o(.text), UNUSED)
+
+<P><STRONG><a name="[20275c4]"></a>flash_finish</STRONG> (ARM, 24 bytes, Stack size 0 bytes, flash.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+<LI><a href="#[2024810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_reset
+<LI><a href="#[2028aa0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loading_misc_metadata
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[2027600]"></a>flash_clear_irq</STRONG> (ARM, 48 bytes, Stack size 0 bytes, flash.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2023820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test_nand_blocks
+<LI><a href="#[2024810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_reset
+<LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+<LI><a href="#[2028b54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_format_mark
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+<LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[2024810]"></a>flash_reset</STRONG> (ARM, 364 bytes, Stack size 28 bytes, flash.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = flash_reset
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+<LI><a href="#[20275c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_finish
+<LI><a href="#[2027600]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_clear_irq
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[2024450]"></a>nand_page_read</STRONG> (ARM, 128 bytes, Stack size 24 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[2027498]"></a>nand_page_ptread</STRONG> (ARM, 140 bytes, Stack size 40 bytes, flash_wrapper.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = nand_page_ptread
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2028aa0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loading_misc_metadata
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[2024414]"></a>nand_page_read_to_host</STRONG> (ARM, 168 bytes, Stack size 24 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[20243d8]"></a>nand_page_ptread_to_host</STRONG> (ARM, 176 bytes, Stack size 32 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[202439c]"></a>nand_page_program</STRONG> (ARM, 128 bytes, Stack size 24 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[20274d4]"></a>nand_page_ptprogram</STRONG> (ARM, 136 bytes, Stack size 32 bytes, flash_wrapper.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = nand_page_ptprogram
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[2024360]"></a>nand_page_program_from_host</STRONG> (ARM, 168 bytes, Stack size 24 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[2024324]"></a>nand_page_ptprogram_from_host</STRONG> (ARM, 176 bytes, Stack size 32 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[20242e8]"></a>nand_page_copyback</STRONG> (ARM, 384 bytes, Stack size 40 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[20242ac]"></a>nand_page_modified_copyback</STRONG> (ARM, 580 bytes, Stack size 48 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[2027510]"></a>nand_block_erase</STRONG> (ARM, 108 bytes, Stack size 16 bytes, flash_wrapper.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = nand_block_erase
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[2024270]"></a>nand_block_erase_sync</STRONG> (ARM, 108 bytes, Stack size 16 bytes, flash_wrapper.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+</UL>
+
+<P><STRONG><a name="[20291e4]"></a>init_jasmine</STRONG> (ARM, 540 bytes, Stack size 16 bytes, initialize.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 236 + Unknown Stack Size
+<LI>Call Chain = init_jasmine &rArr; ftl_test &rArr; tc_write_seq &rArr; ftl_write &rArr; ftl_write_sector &rArr; get_free_page &rArr; is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2023eb0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_test
+<LI><a href="#[2024810]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_reset
+<LI><a href="#[2025ad0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_sram
+<LI><a href="#[202664c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay
+<LI><a href="#[202754c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led
+<LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+<LI><a href="#[2027600]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_clear_irq
+<LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+<LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+</UL>
+<BR>[Called By]<UL><LI><a href="#[202970c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reset_handler
+</UL>
+
+<P><STRONG><a name="[202754c]"></a>led</STRONG> (ARM, 40 bytes, Stack size 0 bytes, misc.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+<LI><a href="#[2026250]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_blink
+<LI><a href="#[2028b90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_free_page
+<LI><a href="#[2028c80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;format
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+<LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[2026250]"></a>led_blink</STRONG> (ARM, 44 bytes, Stack size 8 bytes, misc.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = led_blink
+</UL>
+<BR>[Calls]<UL><LI><a href="#[202664c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay
+<LI><a href="#[202754c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+<LI><a href="#[20291a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;irq_handler
+<LI><a href="#[2029220]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fiq_handler
+</UL>
+
+<P><STRONG><a name="[202385c]"></a>swi_handler</STRONG> (ARM, 4 bytes, Stack size 0 bytes, misc.o(.text), UNUSED)
+
+<P><STRONG><a name="[20291a8]"></a>irq_handler</STRONG> (ARM, 220 bytes, Stack size 32 bytes, misc.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2026250]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_blink
+<LI><a href="#[20278d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_isr
+</UL>
+
+<P><STRONG><a name="[2023820]"></a>test_nand_blocks</STRONG> (ARM, 1116 bytes, Stack size 32 bytes, misc.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2022ca4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand (via Veneer)
+<LI><a href="#[2022d1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;srand (via Veneer)
+<LI><a href="#[2025ad0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_sram
+<LI><a href="#[2027600]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_clear_irq
+<LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+</UL>
+
+<P><STRONG><a name="[20237e4]"></a>start_interval_measurement</STRONG> (ARM, 84 bytes, Stack size 0 bytes, misc.o(.text), UNUSED)
+
+<P><STRONG><a name="[20237a8]"></a>start_timer</STRONG> (ARM, 80 bytes, Stack size 0 bytes, misc.o(.text), UNUSED)
+
+<P><STRONG><a name="[2023eb0]"></a>ftl_test</STRONG> (ARM, 28 bytes, Stack size 8 bytes, tc_synth.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 220 + Unknown Stack Size
+<LI>Call Chain = ftl_test &rArr; tc_write_seq &rArr; ftl_write &rArr; ftl_write_sector &rArr; get_free_page &rArr; is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[20232bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_seq
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+</UL>
+
+<P><STRONG><a name="[2022d1c]"></a>srand</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, rand.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2022ce0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_rand_init
+<LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand (via Veneer)
+<LI><a href="#[2023280]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aging_with_rw (via Veneer)
+<LI><a href="#[2023820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test_nand_blocks (via Veneer)
+</UL>
+
+<P><STRONG><a name="[2022ce0]"></a>_rand_init</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, rand.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2022d1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;srand
+</UL>
+
+<P><STRONG><a name="[2022ca4]"></a>rand</STRONG> (Thumb, 56 bytes, Stack size 12 bytes, rand.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand (via Veneer)
+<LI><a href="#[2023280]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aging_with_rw (via Veneer)
+<LI><a href="#[2023820]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;test_nand_blocks (via Veneer)
+</UL>
+
+<P><STRONG><a name="[2022a4c]"></a>__aeabi_idiv</STRONG> (ARM, 0 bytes, Stack size 8 bytes, aeabi_sdiv.o(.text), UNUSED)
+
+<P><STRONG><a name="[2022a10]"></a>__aeabi_idivmod</STRONG> (ARM, 384 bytes, Stack size 8 bytes, aeabi_sdiv.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_idivmod
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2023208]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tc_write_rand
+<LI><a href="#[2023280]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;aging_with_rw
+<LI><a href="#[20267b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_initialize_device_parameters
+</UL>
+
+<P><STRONG><a name="[20229d4]"></a>__aeabi_uidiv</STRONG> (ARM, 0 bytes, Stack size 0 bytes, aeabi_sdiv.o(.text_udiv), UNUSED)
+
+<P><STRONG><a name="[2022998]"></a>__aeabi_uidivmod</STRONG> (ARM, 28 bytes, Stack size 0 bytes, aeabi_sdiv.o(.text_udiv))
+<BR><BR>[Calls]<UL><LI><a href="#[2022a88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__arm_div_large
+<LI><a href="#[2022ac4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__arm_div4
+<LI><a href="#[2022b00]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__arm_div8
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2024324]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptprogram_from_host
+<LI><a href="#[2024360]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_program_from_host
+<LI><a href="#[20243d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptread_to_host
+<LI><a href="#[2024414]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_read_to_host
+<LI><a href="#[202790c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write
+<LI><a href="#[2027984]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+<P>
+<H3>
+Local Symbols
+</H3>
+<P><STRONG><a name="[202970c]"></a>reset_handler</STRONG> (ARM, 0 bytes, Stack size unknown bytes, init.o(init), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 236 + Unknown Stack Size
+<LI>Call Chain = reset_handler &rArr; init_jasmine &rArr; ftl_test &rArr; tc_write_seq &rArr; ftl_write &rArr; ftl_write_sector &rArr; get_free_page &rArr; is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[20291e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_jasmine
+<LI><a href="#[202925c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Main
+</UL>
+
+<P><STRONG><a name="[2028cf8]"></a>logging_misc_metadata</STRONG> (ARM, 192 bytes, Stack size 16 bytes, ftl.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 60 + Unknown Stack Size
+ + In Cycle
+<LI>Call Chain = logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+<LI><a href="#[2027498]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptread
+<LI><a href="#[20274d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptprogram
+<LI><a href="#[2027510]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_block_erase
+<LI><a href="#[202754c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led
+<LI><a href="#[2027588]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_issue_cmd
+<LI><a href="#[20275c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_finish
+<LI><a href="#[2027600]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_clear_irq
+<LI><a href="#[2027678]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_write_dram_32
+<LI><a href="#[20276b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_write_dram_16
+<LI><a href="#[20276f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_read_dram_32
+<LI><a href="#[202772c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_read_dram_16
+<LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+<LI><a href="#[20277a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_search_equ
+<LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+<LI><a href="#[2028cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;logging_misc_metadata
+</UL>
+
+<P><STRONG><a name="[2028cbc]"></a>is_bad_block</STRONG> (ARM, 184 bytes, Stack size 24 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[20277a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_search_equ
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2028b90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_free_page
+<LI><a href="#[2028c80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;format
+</UL>
+
+<P><STRONG><a name="[2028c80]"></a>format</STRONG> (ARM, 200 bytes, Stack size 16 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 84 + Unknown Stack Size
+<LI>Call Chain = format &rArr; ftl_flush &rArr; logging_misc_metadata &rArr;  logging_misc_metadata (Cycle)
+</UL>
+<BR>[Calls]<UL><LI><a href="#[202754c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+<LI><a href="#[2028cbc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_bad_block
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+</UL>
+
+<P><STRONG><a name="[2028c44]"></a>sanity_check</STRONG> (ARM, 28 bytes, Stack size 0 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Called By]<UL><LI><a href="#[20279fc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_open
+</UL>
+
+<P><STRONG><a name="[2028c08]"></a>get_psn</STRONG> (ARM, 64 bytes, Stack size 24 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = get_psn
+</UL>
+<BR>[Calls]<UL><LI><a href="#[20276f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_read_dram_32
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2027948]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write_sector
+<LI><a href="#[20279c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read_sector
+</UL>
+
+<P><STRONG><a name="[2028bcc]"></a>set_psn</STRONG> (ARM, 72 bytes, Stack size 24 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = set_psn &rArr; _write_dram_32 &rArr; _mem_copy
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2027678]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_write_dram_32
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2027948]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write_sector
+</UL>
+
+<P><STRONG><a name="[2028b90]"></a>get_free_page</STRONG> (ARM, 144 bytes, Stack size 24 bytes, ftl.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = get_free_page &rArr; is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[202754c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led
+<LI><a href="#[2028cbc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;is_bad_block
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2027948]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write_sector
+</UL>
+
+<P><STRONG><a name="[2028b54]"></a>check_format_mark</STRONG> (ARM, 284 bytes, Stack size 24 bytes, ftl.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027600]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_clear_irq
+</UL>
+
+<P><STRONG><a name="[2028b18]"></a>write_format_mark</STRONG> (ARM, 200 bytes, Stack size 16 bytes, ftl.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+</UL>
+
+<P><STRONG><a name="[2028adc]"></a>init_metadata</STRONG> (ARM, 116 bytes, Stack size 16 bytes, ftl.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+</UL>
+
+<P><STRONG><a name="[2028aa0]"></a>loading_misc_metadata</STRONG> (ARM, 172 bytes, Stack size 56 bytes, ftl.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2027498]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;nand_page_ptread
+<LI><a href="#[20275c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_finish
+<LI><a href="#[20276f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_read_dram_32
+<LI><a href="#[20277e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_copy
+</UL>
+
+<P><STRONG><a name="[2027150]"></a>get_integrity_word</STRONG> (ARM, 80 bytes, Stack size 0 bytes, sata_identify.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2026fac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_identify_device
+</UL>
+
+<P><STRONG><a name="[2027114]"></a>set_string_data</STRONG> (ARM, 172 bytes, Stack size 8 bytes, sata_identify.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = set_string_data
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2026fac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ata_identify_device
+</UL>
+
+<P><STRONG><a name="[2025e90]"></a>eventq_get_count</STRONG> (ARM, 20 bytes, Stack size 0 bytes, sata_main.o(.text), UNUSED, KEPT)
+<BR><BR>[Called By]<UL><LI><a href="#[202925c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Main
+</UL>
+
+<P><STRONG><a name="[2025e54]"></a>eventq_get</STRONG> (ARM, 188 bytes, Stack size 0 bytes, sata_main.o(.text), UNUSED, KEPT)
+<BR><BR>[Called By]<UL><LI><a href="#[202925c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Main
+</UL>
+
+<P><STRONG><a name="[20232bc]"></a>tc_write_seq</STRONG> (ARM, 432 bytes, Stack size 72 bytes, tc_synth.o(.text), UNUSED, KEPT)
+<BR><BR>[Stack]<UL><LI>Max Depth = 212 + Unknown Stack Size
+<LI>Call Chain = tc_write_seq &rArr; ftl_write &rArr; ftl_write_sector &rArr; get_free_page &rArr; is_bad_block &rArr; _mem_search_equ
+</UL>
+<BR>[Calls]<UL><LI><a href="#[2026250]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_blink
+<LI><a href="#[202754c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led
+<LI><a href="#[20275c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_finish
+<LI><a href="#[20276f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_read_dram_32
+<LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+<LI><a href="#[202790c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write
+<LI><a href="#[2027984]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+</UL>
+<BR>[Called By]<UL><LI><a href="#[2023eb0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_test
+</UL>
+
+<P><STRONG><a name="[2023280]"></a>aging_with_rw</STRONG> (ARM, 108 bytes, Stack size 24 bytes, tc_synth.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2022a10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
+<LI><a href="#[2022ca4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand (via Veneer)
+<LI><a href="#[2022d1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;srand (via Veneer)
+<LI><a href="#[202790c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write
+</UL>
+
+<P><STRONG><a name="[2023244]"></a>fillup_dataspace</STRONG> (ARM, 52 bytes, Stack size 16 bytes, tc_synth.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[202790c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write
+</UL>
+
+<P><STRONG><a name="[2023208]"></a>tc_write_rand</STRONG> (ARM, 416 bytes, Stack size 56 bytes, tc_synth.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[2022a10]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
+<LI><a href="#[2022ca4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand (via Veneer)
+<LI><a href="#[2022d1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;srand (via Veneer)
+<LI><a href="#[2026250]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_blink
+<LI><a href="#[202754c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led
+<LI><a href="#[20275c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_finish
+<LI><a href="#[20276f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_read_dram_32
+<LI><a href="#[2027768]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_mem_set_dram
+<LI><a href="#[202790c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_write
+<LI><a href="#[2027984]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_read
+<LI><a href="#[2027a38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ftl_flush
+</UL>
+
+<P><STRONG><a name="[2022b00]"></a>__arm_div8</STRONG> (ARM, 0 bytes, Stack size unknown bytes, aeabi_sdiv.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+</UL>
+
+<P><STRONG><a name="[2022ac4]"></a>__arm_div4</STRONG> (ARM, 0 bytes, Stack size unknown bytes, aeabi_sdiv.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+</UL>
+
+<P><STRONG><a name="[2022a88]"></a>__arm_div_large</STRONG> (ARM, 0 bytes, Stack size unknown bytes, aeabi_sdiv.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[2022998]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
+</UL>
+<P>
+<H3>
+Undefined Global Symbols
+</H3><HR></body></html>

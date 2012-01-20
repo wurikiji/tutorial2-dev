@@ -1,0 +1,23 @@
+Write operation
+    Host로부터 전달된 데이터는 merge buffer에 buffering
+    현재 처리하고 있는 쓰기 연산에 대한 실제 host data는 아직 SATA write buffer에 도착하지 않았을 수도 있기 때문에, 여기에 대한 flow control 필요. 즉, NAND랑 SATA랑 commnunication하지 않기 때문에 FTL이 flow control을 해줘야 함.
+   
+    SATA write buffer에서 merge buffer로 mem_copy 후에 BM_WRITE_LIMIT을 update해줘야 함
+    즉, SATA write buffer frame 데이터는 NAND에 직접기록되지 않고, memory에만 copy되기 때문에, FTL이 flow control(BM_WRITE_LIMIT)해줘야 함. 물론 virtual page 단위로
+
+    이후, merge buffer의 데이터를 NAND에 기록해 줄 때에는 FO_B_SATA_W flag가 아닌 FO_B_W_DRDY flag를 줘야 함.
+
+Read operation
+    NAND에서 SATA read buffer로 data loading할 때에는 virtual page 단위가 아닌, sector 단위로 하기 때문에, 매 FCP command 마다 BM_READ_LIMIT값을 update하면 안됨. 즉, FCP read command 시 FO_B_SATA_R flag를 제거해야 함.
+
+    Host가 요청한 lba, sector_cnt 에 대해 NAND에서 SATA read buffer로 data loading을 완료했으면, 이 시점에 FTL이 BM_READ_LIMIT 값을 update해야함.
+
+    추가로, slow SATA의 경우도 고려해서 SATA가 아직 host로 퍼가지 않은 read buffer frame에 NAND로부터 data loading하지 않도록 하는 부분도 빼놓지 말것.
+    -->
+	    while (1)
+	    {
+		UINT32 sata_id = GETREG(SATA_RBUF_PTR);
+
+		 if (g_ftl_read_buf_id != sata_id)
+		    break;
+	    }
