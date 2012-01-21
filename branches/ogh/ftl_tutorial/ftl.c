@@ -188,6 +188,7 @@ void loading_misc_meta()
 /* g_smt_target, g_smt_victim */
 void load_smt_piece(UINT32 idx){
 	UINT32 bank,row,block;
+	UINT32 dest;
 	bank = idx / NUM_BANKS_MAX;
 	block = idx % NUM_BANKS_MAX;
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
@@ -209,7 +210,8 @@ void load_smt_piece(UINT32 idx){
 	smt_piece_map[idx] = g_smt_target;
 	smt_bit_map[bank] &= ~( 1 <<block );
 	if(( g_misc_meta[bank].smt_init & ( 1 << block ) ) == 0){
-		mem_set_dram( SMT_ADDR + (g_smt_target * SMT_PIECE_BYTES), 0 , SMT_PIECE_BYTES);
+		dest = SMT_ADDR + (g_smt_target * SMT_PIECE_BYTES);
+		mem_set_dram( dest, 0x00, SMT_PIECE_BYTES);
 		g_misc_meta[bank].smt_init |= (1 <<block);
 	}
 	g_smt_target++;
