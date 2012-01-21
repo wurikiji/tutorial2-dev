@@ -377,10 +377,13 @@ void ftl_write_sector(UINT32 const lba)
 		// copy sata host data to dram memory merge buffer page 
 		//vsect_num = g_misc_meta[new_bank].g_merge_buff_sect;
 		vsect_num = g_target_sect;
-        
+		
 		mem_copy(MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR,
                  WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR,
                  BYTES_PER_SECTOR);
+		
+		while(_BSP_FSM(new_bank) != BANK_IDLE);
+
 		// set psn to -1 , it means that data is in dram 
 		set_psn(lba, ((UINT32)BIT31 ^ vsect_num ));
         
@@ -724,11 +727,13 @@ static UINT32 select_victim_bundle()                // added by RED
 static void update_bundle_lives()                  // added by RED
 {
     // Update the remaining lives of each bundles on DRAM.
-    UINT32 b_index;
+    UINT32 b_index, life;
+	life = 0;
     for (b_index = 0; b_index < BUNDLES_ON_CACHE; b_index++)
     {
         // if the remaining life is not 0, decrease it by 1.
-        if (get_life_on_cache(b_index) == 0)
+        life = get_life_on_cache(b_index);
+		if (life == 0 && life == NOT_EXIST)
             continue;
         dec_life_on_cache(b_index);
     }
@@ -758,7 +763,8 @@ static UINT32 get_psn(UINT32 const lba)		//modified by RED
             evict_smt_bundle(b_index);
         fetch_smt_bundle(b_index, bundle);
     }
-    
+    ASSERT(b_index != NOT_EXIST);
+
     // update bundle life status.
     update_bundle_lives();          // decrease lives of each bundles.
     reset_life_on_cache(b_index);   // extend the life of bundle which is used just now. (because of LRU policy)
@@ -795,7 +801,8 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//modified by RED
             evict_smt_bundle(b_index);
         fetch_smt_bundle(b_index, bundle);
     }
-    
+    ASSERT(b_index != NOT_EXIST);
+
     // update bundle life status.
     update_bundle_lives();          // decrease lives of each bundles.
     reset_life_on_cache(b_index);   // extend the life of bundle which is used just now. (because of LRU policy)
@@ -1015,7 +1022,7 @@ static void logging_misc_metadata(void)
 			g_misc_meta[bank].cur_miscblk_vpn = MISCBLK_VBN * PAGES_PER_BLK;
 		}
 		ftl_buf = FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE);
-		mem_copy(ftl_buf, &g_misc_meta[bank], sizeof(misc_metadata));
+		mem_copy(ftl_buf, &(g_misc_meta[bank]), sizeof(misc_metadata));
 		nand_page_ptprogram(bank,
                             MISCBLK_VBN,
                             g_misc_meta[bank].cur_miscblk_vpn % PAGES_PER_BLK,
@@ -1072,7 +1079,7 @@ static void loading_misc_metadata(void)
     
     for (bank = 0; bank < NUM_BANKS; bank++)
     {
-        mem_copy(&g_misc_meta[bank], FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE), sizeof(misc_metadata));
+        mem_copy(&(g_misc_meta[bank]), FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE), sizeof(misc_metadata));
     }
     
 	enable_irq();
