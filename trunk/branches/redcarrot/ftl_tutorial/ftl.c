@@ -552,7 +552,7 @@ static void logging_smt_cache(void)     // modified by RED
         vpn = get_bundle_map_vpn(bundle, 0);        // get the vpn of the bundle's first bank.
         
         // check if there is sufficient space for logging SMT cache.
-        if (vpn % PAGES_PER_VBLK == PAGES_PER_VBLK - PIECES_PER_BUNDLE)
+        if (vpn % PAGES_PER_VBLK >= PAGES_PER_VBLK - PIECES_PER_BUNDLE)
         {
             for (bank = 0; bank < NUM_BANKS; bank++) 
             {            
@@ -604,7 +604,7 @@ static void evict_smt_bundle(UINT32 const b_index)  // modified by RED
     vpn = get_bundle_map_vpn(bundle, 0);    // get the vpn of the bundle's first bank.
     
     // check if there is sufficient space for logging SMT cache.
-    if (vpn % PAGES_PER_VBLK == PAGES_PER_VBLK - PIECES_PER_BUNDLE) 
+    if (vpn % PAGES_PER_VBLK >= PAGES_PER_VBLK - PIECES_PER_BUNDLE) 
     {
         for (bank = 0; bank < NUM_BANKS; bank++) 
         {            
