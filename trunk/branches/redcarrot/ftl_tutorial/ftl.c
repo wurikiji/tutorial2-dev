@@ -559,6 +559,7 @@ static void logging_smt_cache(void)     // modified by RED
                 vpn = get_bundle_map_vpn(bundle, bank);
                 vblock = vpn / PAGES_PER_VBLK;
                 nand_block_erase(bank, vblock);
+				set_bundle_map_vpn(bundle, vblock * PAGES_PER_VBLK); 
             }
         }
         
@@ -611,6 +612,7 @@ static void evict_smt_bundle(UINT32 const b_index)  // modified by RED
             vpn = get_bundle_map_vpn(bundle, bank);
             vblock = vpn / PAGES_PER_VBLK;
             nand_block_erase(bank, vblock);
+			set_bundle_map_vpn(bundle, vblock * PAGES_PER_VBLK); 
         }
     }
     
