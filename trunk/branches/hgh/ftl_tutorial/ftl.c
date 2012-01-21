@@ -202,7 +202,7 @@ void load_smt_piece(UINT32 idx){
 	UINT32 bank,row,block;
 	bank = idx / NUM_BANKS_MAX;
 	block = idx % NUM_BANKS_MAX;
-	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + ((PHYPAGES_PER_PAGE * PAGES_PER_VBLK) * g_bad_list[bank][block]);
+	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
 	if( g_smt_target == NUM_BANKS_MAX){
 		g_smt_target = 0;
 		flush_smt_piece(smt_dram_map[g_smt_victim]);
@@ -240,7 +240,7 @@ void flush_smt_piece(UINT32 idx)
 		}
 		//update and flash 
 		g_misc_meta[bank].smt_pieces[block] = (g_misc_meta[bank].smt_pieces[block] + 1) % SMT_LIMIT;
-		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PHYPAGES_PER_PAGE * PAGES_PER_VBLK * g_bad_list[bank][block]);
+		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
 		// flash map data to nand
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
@@ -592,7 +592,14 @@ void ftl_write_sector(UINT32 const lba)
 
 		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
 		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
+
+		// Because Firmware does not know 
+		// about status of previous nand flash command, 
+		// wait until target bank is IDLE 
+		// ( target DRAM space is fully flashed ) 
+		while(_BSP_FSM(new_bank) != BANK_IDLE);
 		mem_copy(dst, src, BYTES_PER_SECTOR);
+
 		// set psn to -1 , it means that data is in dram 
 		set_psn(lba, ((UINT32)BIT31 | vsect_num ));
 
@@ -739,10 +746,11 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	//UINT32 size = sizeof(UINT32) * totals;
 	//mem_copy(dst,src,size);
 	UINT32 dst, bank, block, sector;
-	UINT32 sectors_per_phybank = SECTORS_PER_PHYPAGE * PHYPAGES_PER_PAGE * PAGES_PER_BANK;
-	bank = lba / sectors_per_phybank;
-	block = (lba % sectors_per_phybank ) / (SECTORS_PER_PHYPAGE * PHYPAGES_PER_PAGE * PAGES_PER_VBLK * ((PBLKS_PER_BANK + NUM_BANKS_MAX -1) / NUM_BANKS_MAX));
-	sector = (lba % sectors_per_phybank ) % (SECTORS_PER_PHYPAGE * PHYPAGES_PER_PAGE * PAGES_PER_VBLK * ((PBLKS_PER_BANK + NUM_BANKS_MAX -1) / NUM_BANKS_MAX));
+	UINT32 sectors_per_mblk = (SECTORS_PER_BANK) / NUM_BANKS_MAX;
+
+	bank = lba / SECTORS_PER_BANK;
+	block = (lba % SECTORS_PER_BANK)  / (sectors_per_mblk);
+	sector = (lba % SECTORS_PER_BANK) % (sectors_per_mblk);
 	if( (smt_dram_bit[ bank ] & (1 << block)) == 0)
 	{
 		load_smt_piece( bank * NUM_BANKS_MAX + block);
@@ -761,10 +769,12 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 	//int i;
 	//mem_copy(dst,src,size);
 	UINT32 dst, bank, block, sector;
-	UINT32 sectors_per_phybank = SECTORS_PER_PHYPAGE * PHYPAGES_PER_PAGE * PAGES_PER_BANK;
-	bank = lba / sectors_per_phybank;
-	block = (lba % sectors_per_phybank ) / (SECTORS_PER_PHYPAGE * PHYPAGES_PER_PAGE * PAGES_PER_VBLK * ((PBLKS_PER_BANK + NUM_BANKS_MAX -1) / NUM_BANKS_MAX));
-	sector = (lba % sectors_per_phybank ) % (SECTORS_PER_PHYPAGE * PHYPAGES_PER_PAGE * PAGES_PER_VBLK * ((PBLKS_PER_BANK + NUM_BANKS_MAX -1) / NUM_BANKS_MAX));
+	UINT32 sectors_per_mblk = (SECTORS_PER_BANK) / NUM_BANKS_MAX;
+
+	bank = lba / SECTORS_PER_BANK;
+	block = (lba % SECTORS_PER_BANK)  / (sectors_per_mblk);
+	sector = (lba % SECTORS_PER_BANK) % (sectors_per_mblk);
+
 	if(( smt_dram_bit[ bank ] & (1 << block)) == 0)
 	{
 		load_smt_piece( bank * NUM_BANKS_MAX + block);

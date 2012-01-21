@@ -583,10 +583,7 @@ void ftl_write_sector(UINT32 const lba)
 		// about status of previous nand flash command, 
 		// wait until target bank is IDLE 
 		// ( target DRAM space is fully flashed ) 
-		while(_BSP_FSM(new_bank) != BANK_IDLE)
-		{
-			dst = dst;
-		}
+		while(_BSP_FSM(new_bank) != BANK_IDLE);
 		mem_copy(dst, src, BYTES_PER_SECTOR);
 
 		// set psn to -1 , it means that data is in dram 
