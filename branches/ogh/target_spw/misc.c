@@ -342,7 +342,7 @@ void ptimer_start(void)
 {
     start_interval_measurement(TIMER_CH1, TIMER_PRESCALE_0);
 }
-UINT32 ptimer_stop_and_uart_print(void)
+void ptimer_stop_and_uart_print(void)
 {
     UINT32 rtime;
     char buf[21];
@@ -352,8 +352,6 @@ UINT32 ptimer_stop_and_uart_print(void)
     rtime = (UINT32)((UINT64)rtime * 2 * 1000000 * PRESCALE_TO_DIV(TIMER_PRESCALE_0) / CLOCK_SPEED);
     sprintf(buf, "%u", rtime);
     uart_print(buf);
-
-    return rtime;
 }
 int  __HEAP_START[BYTES_PER_SECTOR]; // 2KB Byte HEAP
 

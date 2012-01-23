@@ -26,7 +26,7 @@ void start_interval_measurement(UINT32 const timer, UINT32 const prescale);
 void start_timer(UINT32 const timer, UINT32 const prescale, UINT32 const init_val);
 #if OPTION_UART_DEBUG
 void ptimer_start(void);
-UINT32 ptimer_stop_and_uart_print(void);
+void ptimer_stop_and_uart_print(void);
 #endif
 
 #endif // MISC_H
