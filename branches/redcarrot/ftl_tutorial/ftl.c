@@ -241,7 +241,7 @@ void ftl_open(void)
 	enable_irq();
 }
 
-void ftl_read(UINT32 const lba, UINT32 const total_sectors)
+void ftl_read(UINT32 const lba, UINT32 const total_sectors)				//modified by GYUHWA
 {
 	UINT32 sect_offset, count,  next_read_buf_id;
 	sect_offset = lba % SECTORS_PER_PAGE;					//sect_offset : offset of RD_BUFFER
@@ -251,14 +251,15 @@ void ftl_read(UINT32 const lba, UINT32 const total_sectors)
 		if(sect_offset == SECTORS_PER_PAGE )				//One page is read complete
 		{
 			next_read_buf_id = (g_ftl_read_buf_id + 1) % NUM_RD_BUFFERS;
-            
-#if OPTION_FTL_TEST == 0
+
+			#if OPTION_FTL_TEST == 0
 			while (next_read_buf_id == GETREG(SATA_RBUF_PTR));	// wait if the read buffer is full (slow host)
-#endif
-            
+			#endif
+
 			g_ftl_read_buf_id = (g_ftl_read_buf_id + 1) % NUM_RD_BUFFERS;
-			while (GETREG(MON_CHABANKIDLE) != 0);	// This while() loop ensures that Waiting Room is empty and all the banks are idle.		
-            
+			while (GETREG(MON_CHABANKIDLE) != 0);	// This while() loop ensures that Waiting Room is empty and all the banks are idle.
+				
+		
 			SETREG(BM_STACK_RDSET, next_read_buf_id);	// change bm_read_limit
 			SETREG(BM_STACK_RESET, 0x02);				// change bm_read_limit
 			sect_offset = 0;
@@ -267,37 +268,41 @@ void ftl_read(UINT32 const lba, UINT32 const total_sectors)
 	if(sect_offset != 0)								//no complete page -> make read command, example : only 4 sector read command
 	{
 		next_read_buf_id = (g_ftl_read_buf_id + 1) % NUM_RD_BUFFERS;
-        
-#if OPTION_FTL_TEST == 0
+
+		#if OPTION_FTL_TEST == 0
 		while (next_read_buf_id == GETREG(SATA_RBUF_PTR));	// wait if the read buffer is full (slow host)
-#endif
+		#endif
 		g_ftl_read_buf_id = (g_ftl_read_buf_id + 1) % NUM_RD_BUFFERS;
-        while (GETREG(MON_CHABANKIDLE) != 0);	// This while() loop ensures that Waiting Room is empty and all the banks are idle.		
-        SETREG(BM_STACK_RDSET, next_read_buf_id);	// change bm_read_limit
-        SETREG(BM_STACK_RESET, 0x02);				// change bm_read_limit			// change bm_read_limit
+			while (GETREG(MON_CHABANKIDLE) != 0);	// This while() loop ensures that Waiting Room is empty and all the banks are idle.
+		
+SETREG(BM_STACK_RDSET, next_read_buf_id);	// change bm_read_limit
+			SETREG(BM_STACK_RESET, 0x02);				// change bm_read_limit			// change bm_read_limit
 	}
 }
-void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)
+void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added by GYUHWA
 {
 	UINT32 psn, bank, row, buf_offset, nand_offset;
 	UINT32 t1;
+	UINT32 src,dst;
 	psn = get_psn(lba);									//physical sector nomber
 	//bank = lba % NUM_BANKS;	
 	bank = psn / SECTORS_PER_BANK;
 	t1 = psn % SECTORS_PER_BANK;
 	row = t1 / SECTORS_PER_PAGE;		
 	nand_offset = t1 % SECTORS_PER_PAGE;				//physical nand offset
-    
+
 	if((psn & (UINT32)BIT31) != 0 )					//data is in merge buffer
 	{
 		buf_offset = (psn ^ (UINT32)BIT31);
-		mem_copy(RD_BUF_PTR(g_ftl_read_buf_id) + sect_offset * BYTES_PER_SECTOR, 
-                 MERGE_BUFFER_ADDR + bank * BYTES_PER_PAGE + BYTES_PER_SECTOR * buf_offset, 
-                 BYTES_PER_SECTOR);					
+		bank = g_target_bank;
+		dst = RD_BUF_PTR(g_ftl_read_buf_id) + sect_offset * BYTES_PER_SECTOR;
+		src = MERGE_BUFFER_ADDR + bank * BYTES_PER_PAGE + BYTES_PER_SECTOR * buf_offset;
+
+		mem_copy(dst, src, BYTES_PER_SECTOR);					
 		//find collect data -> mem_copy to RD_BUFFER
 	}
 	else if (psn != NULL)							//data is in nand flash
-    {
+		{
 		SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);		//FCP command for read one sector
 		SETREG(FCP_DMA_CNT, BYTES_PER_SECTOR);
 		SETREG(FCP_COL, nand_offset);						
@@ -306,7 +311,7 @@ void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)
 		SETREG(FCP_OPTION, FO_P | FO_E );		
 		SETREG(FCP_ROW_L(bank), row);				
 		SETREG(FCP_ROW_H(bank), row);// change bm_read_limit
-        
+
 		flash_issue_cmd(bank, RETURN_ON_ISSUE);
 		//Because we don't increase BM_STACK_RD_LIMIT to collect sectors 
 	}
@@ -316,13 +321,15 @@ void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)
 	}
 }
 
+// modified by ogh
+
 void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 {
 	UINT32 i, num_sectors_to_write;
 	UINT32 remain_sectors = total_sectors;
 	UINT32 next_lba = lba;
 	UINT32 sect_offset = lba % SECTORS_PER_PAGE;
-    
+
 	/* until write operations end */
 	while(remain_sectors != 0)
 	{
@@ -339,7 +346,7 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 		{
 			num_sectors_to_write = remain_sectors;
 		}
-		for(i = 0 ; i < num_sectors_to_write; i++)
+		for(i = 0 ;i < num_sectors_to_write;i++)
 		{
 			/* call sector level write function */
 			ftl_write_sector( next_lba + i);
@@ -357,41 +364,47 @@ void ftl_write_sector(UINT32 const lba)
 {
 	UINT32 new_bank, vsect_num, new_row;
 	UINT32 new_psn;
-	UINT32 index = lba % SECTORS_PER_PAGE;
 	UINT32 temp;
+	UINT32 dst,src;
+	UINT32 index = lba % SECTORS_PER_PAGE;
 	int i;
 	//new_bank = lba % NUM_BANKS; // get bank number of sector
 	new_bank = g_target_bank;
 	
 	temp = get_psn(lba);
-    
+
 	if( (temp & (UINT32)BIT31) != 0 ){
 		// If data, which located in same lba, is already in dram
 		// copy sata host data to same merge buffer sector
 		vsect_num = (temp ^ (UINT32)BIT31); 
-		mem_copy(MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR,
-                 WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR,
-                 BYTES_PER_SECTOR);
+
+		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
+		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
+		mem_copy(dst,src, BYTES_PER_SECTOR);
 	}
 	else{
 		// copy sata host data to dram memory merge buffer page 
 		//vsect_num = g_misc_meta[new_bank].g_merge_buff_sect;
 		vsect_num = g_target_sect;
-		
-		mem_copy(MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR,
-                 WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR,
-                 BYTES_PER_SECTOR);
-		
+
+		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
+		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
+
+		// Because Firmware does not know 
+		// about status of previous nand flash command, 
+		// wait until target bank is IDLE 
+		// ( target DRAM space is fully flashed ) 
 		while(_BSP_FSM(new_bank) != BANK_IDLE);
+		mem_copy(dst, src, BYTES_PER_SECTOR);
 
 		// set psn to -1 , it means that data is in dram 
-		set_psn(lba, ((UINT32)BIT31 ^ vsect_num ));
-        
+		set_psn(lba, ((UINT32)BIT31 | vsect_num ));
+
 		// for change psn 
 		g_merge_buffer_lsn[vsect_num] = lba;
-        
+
 		vsect_num++;
-        
+
 		// If merge_buffer of bank is full ,
 		// than flush the merge buffer page to nand flash
 		// and set a psn number of all sectors.
@@ -405,16 +418,16 @@ void ftl_write_sector(UINT32 const lba)
 			SETREG(FCP_COL,0);
 			SETREG(FCP_ROW_L(new_bank),new_row);
 			SETREG(FCP_ROW_H(new_bank),new_row);
-            
+
 			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
-            
+
 			/* initialize merge buffer page's sector point */
-            //	g_misc_meta[new_bank].g_merge_buff_sect = 0;
+		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
 			g_target_sect = 0;
 			g_target_bank = (g_target_bank + 1 ) % NUM_BANKS;
 			// allocate new psn 
 			//new_psn = new_row * SECTORS_PER_PAGE;
-            
+
 			new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
 			// vsn - > psn mapping  
 			for(i = 0 ;i < SECTORS_PER_PAGE; i++ )
