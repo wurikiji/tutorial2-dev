@@ -226,7 +226,7 @@ void flush_smt_piece(UINT32 idx)
 		//  smt piece data
 		if( g_misc_meta[bank].smt_pieces[block] >= SMT_LIMIT - 1){
 			// erase 
-			nand_block_erase_sync(bank,g_bad_list[bank][block]);
+			nand_block_erase(bank,g_bad_list[bank][block]);
 		}
 		//update and flash 
 		g_misc_meta[bank].smt_pieces[block] = (g_misc_meta[bank].smt_pieces[block] + 1) % SMT_LIMIT;
@@ -250,7 +250,6 @@ void logging_map_table()
 	for(i = 0 ;i < NUM_BANKS_MAX;i++){
 		flash_finish();
 		if( smt_dram_map[i] != (UINT32)-1 ){
-			g_smt_victim = i;
 			flush_smt_piece(i);
 		}
 		flash_finish();
@@ -435,7 +434,7 @@ void ftl_open(void)
 void ftl_read(UINT32 const lba, UINT32 const total_sectors)				//modified by GYUHWA
 {
 	UINT32 sect_offset, count,  next_read_buf_id;
-	sect_offset = lba % SECTORS_PER_PAGE;					//sect_offset : offset of RD_BUFFER
+	sect_offset = lba % SECTORS_PER_PAGE;		//sect_offset : offset of RD_BUFFER
 	for(count = 0; count < total_sectors; count++)
 	{
 		ftl_read_sector(lba+count, sect_offset++);			//read one sector
@@ -726,7 +725,7 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	//UINT32 size = sizeof(UINT32) * totals;
 	//mem_copy(dst,src,size);
 	UINT32 dst, bank, block, sector;
-	UINT32 sectors_per_mblk = (SECTORS_PER_BANK) / NUM_BANKS_MAX;
+	UINT32 sectors_per_mblk = (SECTORS_PER_BANK + NUM_BANKS_MAX - 1) / NUM_BANKS_MAX;
 
 	bank = lba / SECTORS_PER_BANK;
 	block = (lba % SECTORS_PER_BANK)  / (sectors_per_mblk);
