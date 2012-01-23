@@ -2,732 +2,732 @@ ARM Linker, RVCT4.0 [Build 400]
 
 ==============================================================================
 
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing sata_identify.o(.debug_macinfo), (1144 bytes).
     Removing sata_identify.o(.debug_line), (56 bytes).
     Removing sata_identify.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing sata_identify.o(.debug_macinfo), (6664 bytes).
     Removing sata_identify.o(.debug_line), (56 bytes).
     Removing sata_identify.o(.debug_info), (624 bytes).
     Removing sata_identify.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing sata_identify.o(.debug_macinfo), (3224 bytes).
     Removing sata_identify.o(.debug_line), (64 bytes).
     Removing sata_identify.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing sata_identify.o(.debug_macinfo), (84 bytes).
     Removing sata_identify.o(.debug_line), (60 bytes).
     Removing sata_identify.o(.debug_info), (924 bytes).
     Removing sata_identify.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing sata_identify.o(.debug_macinfo), (1288 bytes).
     Removing sata_identify.o(.debug_line), (88 bytes).
     Removing sata_identify.o(.debug_info), (2184 bytes).
     Removing sata_identify.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing sata_identify.o(.debug_macinfo), (2924 bytes).
     Removing sata_identify.o(.debug_line), (60 bytes).
     Removing sata_identify.o(.debug_info), (200 bytes).
     Removing sata_identify.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing sata_identify.o(.debug_macinfo), (5912 bytes).
     Removing sata_identify.o(.debug_line), (56 bytes).
     Removing sata_identify.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing sata_identify.o(.debug_macinfo), (13520 bytes).
     Removing sata_identify.o(.debug_line), (56 bytes).
     Removing sata_identify.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing sata_identify.o(.debug_macinfo), (1988 bytes).
     Removing sata_identify.o(.debug_line), (92 bytes).
     Removing sata_identify.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing sata_identify.o(.debug_macinfo), (6628 bytes).
     Removing sata_identify.o(.debug_line), (56 bytes).
     Removing sata_identify.o(.debug_info), (196 bytes).
     Removing sata_identify.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing sata_identify.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing sata_identify.o(.debug_macinfo), (2368 bytes).
     Removing sata_identify.o(.debug_line), (60 bytes).
     Removing sata_identify.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing sata_identify.o(.debug_macinfo), (16 bytes).
     Removing sata_identify.o(.debug_line), (60 bytes).
     Removing sata_identify.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing sata_identify.o(.debug_macinfo), (400 bytes).
     Removing sata_identify.o(.debug_line), (56 bytes).
     Removing sata_identify.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing sata_identify.o(.debug_macinfo), (2764 bytes).
     Removing sata_identify.o(.debug_line), (220 bytes).
     Removing sata_identify.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing sata_identify.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (1144 bytes).
     Removing sata_cmd.o(.debug_line), (56 bytes).
     Removing sata_cmd.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (6664 bytes).
     Removing sata_cmd.o(.debug_line), (56 bytes).
     Removing sata_cmd.o(.debug_info), (624 bytes).
     Removing sata_cmd.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (3224 bytes).
     Removing sata_cmd.o(.debug_line), (64 bytes).
     Removing sata_cmd.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (84 bytes).
     Removing sata_cmd.o(.debug_line), (60 bytes).
     Removing sata_cmd.o(.debug_info), (924 bytes).
     Removing sata_cmd.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (1288 bytes).
     Removing sata_cmd.o(.debug_line), (88 bytes).
     Removing sata_cmd.o(.debug_info), (2184 bytes).
     Removing sata_cmd.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (2924 bytes).
     Removing sata_cmd.o(.debug_line), (60 bytes).
     Removing sata_cmd.o(.debug_info), (200 bytes).
     Removing sata_cmd.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (5912 bytes).
     Removing sata_cmd.o(.debug_line), (56 bytes).
     Removing sata_cmd.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (13520 bytes).
     Removing sata_cmd.o(.debug_line), (56 bytes).
     Removing sata_cmd.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (1988 bytes).
     Removing sata_cmd.o(.debug_line), (92 bytes).
     Removing sata_cmd.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (6628 bytes).
     Removing sata_cmd.o(.debug_line), (56 bytes).
     Removing sata_cmd.o(.debug_info), (196 bytes).
     Removing sata_cmd.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing sata_cmd.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing sata_cmd.o(.debug_macinfo), (2368 bytes).
     Removing sata_cmd.o(.debug_line), (60 bytes).
     Removing sata_cmd.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (16 bytes).
     Removing sata_cmd.o(.debug_line), (60 bytes).
     Removing sata_cmd.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (400 bytes).
     Removing sata_cmd.o(.debug_line), (56 bytes).
     Removing sata_cmd.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing sata_cmd.o(.debug_macinfo), (2764 bytes).
     Removing sata_cmd.o(.debug_line), (220 bytes).
     Removing sata_cmd.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing sata_cmd.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing sata_isr.o(.debug_macinfo), (1144 bytes).
     Removing sata_isr.o(.debug_line), (56 bytes).
     Removing sata_isr.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing sata_isr.o(.debug_macinfo), (6664 bytes).
     Removing sata_isr.o(.debug_line), (56 bytes).
     Removing sata_isr.o(.debug_info), (624 bytes).
     Removing sata_isr.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing sata_isr.o(.debug_macinfo), (3224 bytes).
     Removing sata_isr.o(.debug_line), (64 bytes).
     Removing sata_isr.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing sata_isr.o(.debug_macinfo), (84 bytes).
     Removing sata_isr.o(.debug_line), (60 bytes).
     Removing sata_isr.o(.debug_info), (924 bytes).
     Removing sata_isr.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing sata_isr.o(.debug_macinfo), (1288 bytes).
     Removing sata_isr.o(.debug_line), (88 bytes).
     Removing sata_isr.o(.debug_info), (2184 bytes).
     Removing sata_isr.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing sata_isr.o(.debug_macinfo), (2924 bytes).
     Removing sata_isr.o(.debug_line), (60 bytes).
     Removing sata_isr.o(.debug_info), (200 bytes).
     Removing sata_isr.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing sata_isr.o(.debug_macinfo), (5912 bytes).
     Removing sata_isr.o(.debug_line), (56 bytes).
     Removing sata_isr.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing sata_isr.o(.debug_macinfo), (13520 bytes).
     Removing sata_isr.o(.debug_line), (56 bytes).
     Removing sata_isr.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing sata_isr.o(.debug_macinfo), (1988 bytes).
     Removing sata_isr.o(.debug_line), (92 bytes).
     Removing sata_isr.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing sata_isr.o(.debug_macinfo), (6628 bytes).
     Removing sata_isr.o(.debug_line), (56 bytes).
     Removing sata_isr.o(.debug_info), (196 bytes).
     Removing sata_isr.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing sata_isr.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing sata_isr.o(.debug_macinfo), (2368 bytes).
     Removing sata_isr.o(.debug_line), (60 bytes).
     Removing sata_isr.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing sata_isr.o(.debug_macinfo), (16 bytes).
     Removing sata_isr.o(.debug_line), (60 bytes).
     Removing sata_isr.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing sata_isr.o(.debug_macinfo), (400 bytes).
     Removing sata_isr.o(.debug_line), (56 bytes).
     Removing sata_isr.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing sata_isr.o(.debug_macinfo), (2764 bytes).
     Removing sata_isr.o(.debug_line), (220 bytes).
     Removing sata_isr.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing sata_isr.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing sata_main.o(.debug_macinfo), (1144 bytes).
     Removing sata_main.o(.debug_line), (56 bytes).
     Removing sata_main.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing sata_main.o(.debug_macinfo), (6664 bytes).
     Removing sata_main.o(.debug_line), (56 bytes).
     Removing sata_main.o(.debug_info), (624 bytes).
     Removing sata_main.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing sata_main.o(.debug_macinfo), (3224 bytes).
     Removing sata_main.o(.debug_line), (64 bytes).
     Removing sata_main.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing sata_main.o(.debug_macinfo), (84 bytes).
     Removing sata_main.o(.debug_line), (60 bytes).
     Removing sata_main.o(.debug_info), (924 bytes).
     Removing sata_main.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing sata_main.o(.debug_macinfo), (2924 bytes).
     Removing sata_main.o(.debug_line), (60 bytes).
     Removing sata_main.o(.debug_info), (200 bytes).
     Removing sata_main.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing sata_main.o(.debug_macinfo), (5912 bytes).
     Removing sata_main.o(.debug_line), (56 bytes).
     Removing sata_main.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing sata_main.o(.debug_macinfo), (13520 bytes).
     Removing sata_main.o(.debug_line), (56 bytes).
     Removing sata_main.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing sata_main.o(.debug_macinfo), (1988 bytes).
     Removing sata_main.o(.debug_line), (92 bytes).
     Removing sata_main.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing sata_main.o(.debug_macinfo), (6628 bytes).
     Removing sata_main.o(.debug_line), (56 bytes).
     Removing sata_main.o(.debug_info), (196 bytes).
     Removing sata_main.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing sata_main.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing sata_main.o(.debug_macinfo), (2368 bytes).
     Removing sata_main.o(.debug_line), (60 bytes).
     Removing sata_main.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing sata_main.o(.debug_macinfo), (16 bytes).
     Removing sata_main.o(.debug_line), (60 bytes).
     Removing sata_main.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing sata_main.o(.debug_macinfo), (400 bytes).
     Removing sata_main.o(.debug_line), (56 bytes).
     Removing sata_main.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing sata_main.o(.debug_macinfo), (2764 bytes).
     Removing sata_main.o(.debug_line), (220 bytes).
     Removing sata_main.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing sata_main.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing sata_table.o(.debug_macinfo), (1144 bytes).
     Removing sata_table.o(.debug_line), (56 bytes).
     Removing sata_table.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing sata_table.o(.debug_macinfo), (6664 bytes).
     Removing sata_table.o(.debug_line), (56 bytes).
     Removing sata_table.o(.debug_info), (624 bytes).
     Removing sata_table.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing sata_table.o(.debug_macinfo), (3224 bytes).
     Removing sata_table.o(.debug_line), (64 bytes).
     Removing sata_table.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing sata_table.o(.debug_macinfo), (1288 bytes).
     Removing sata_table.o(.debug_line), (88 bytes).
     Removing sata_table.o(.debug_info), (2184 bytes).
     Removing sata_table.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing sata_table.o(.debug_macinfo), (2924 bytes).
     Removing sata_table.o(.debug_line), (60 bytes).
     Removing sata_table.o(.debug_info), (200 bytes).
     Removing sata_table.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing sata_table.o(.debug_macinfo), (5912 bytes).
     Removing sata_table.o(.debug_line), (56 bytes).
     Removing sata_table.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing sata_table.o(.debug_macinfo), (13520 bytes).
     Removing sata_table.o(.debug_line), (56 bytes).
     Removing sata_table.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing sata_table.o(.debug_macinfo), (1988 bytes).
     Removing sata_table.o(.debug_line), (92 bytes).
     Removing sata_table.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing sata_table.o(.debug_macinfo), (6628 bytes).
     Removing sata_table.o(.debug_line), (56 bytes).
     Removing sata_table.o(.debug_info), (196 bytes).
     Removing sata_table.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing sata_table.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing sata_table.o(.debug_macinfo), (2368 bytes).
     Removing sata_table.o(.debug_line), (60 bytes).
     Removing sata_table.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing sata_table.o(.debug_macinfo), (16 bytes).
     Removing sata_table.o(.debug_line), (60 bytes).
     Removing sata_table.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing sata_table.o(.debug_macinfo), (400 bytes).
     Removing sata_table.o(.debug_line), (56 bytes).
     Removing sata_table.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing sata_table.o(.debug_macinfo), (2764 bytes).
     Removing sata_table.o(.debug_line), (220 bytes).
     Removing sata_table.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing sata_table.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing mem_util.o(.debug_macinfo), (1144 bytes).
     Removing mem_util.o(.debug_line), (56 bytes).
     Removing mem_util.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing mem_util.o(.debug_macinfo), (6664 bytes).
     Removing mem_util.o(.debug_line), (56 bytes).
     Removing mem_util.o(.debug_info), (624 bytes).
     Removing mem_util.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing mem_util.o(.debug_macinfo), (3224 bytes).
     Removing mem_util.o(.debug_line), (64 bytes).
     Removing mem_util.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing mem_util.o(.debug_macinfo), (84 bytes).
     Removing mem_util.o(.debug_line), (60 bytes).
     Removing mem_util.o(.debug_info), (924 bytes).
     Removing mem_util.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing mem_util.o(.debug_macinfo), (1288 bytes).
     Removing mem_util.o(.debug_line), (88 bytes).
     Removing mem_util.o(.debug_info), (2184 bytes).
     Removing mem_util.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing mem_util.o(.debug_macinfo), (5912 bytes).
     Removing mem_util.o(.debug_line), (56 bytes).
     Removing mem_util.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing mem_util.o(.debug_macinfo), (13520 bytes).
     Removing mem_util.o(.debug_line), (56 bytes).
     Removing mem_util.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing mem_util.o(.debug_macinfo), (1988 bytes).
     Removing mem_util.o(.debug_line), (92 bytes).
     Removing mem_util.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing mem_util.o(.debug_macinfo), (6628 bytes).
     Removing mem_util.o(.debug_line), (56 bytes).
     Removing mem_util.o(.debug_info), (196 bytes).
     Removing mem_util.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing mem_util.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing mem_util.o(.debug_macinfo), (2368 bytes).
     Removing mem_util.o(.debug_line), (60 bytes).
     Removing mem_util.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing mem_util.o(.debug_macinfo), (16 bytes).
     Removing mem_util.o(.debug_line), (60 bytes).
     Removing mem_util.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing mem_util.o(.debug_macinfo), (400 bytes).
     Removing mem_util.o(.debug_line), (56 bytes).
     Removing mem_util.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing mem_util.o(.debug_macinfo), (2764 bytes).
     Removing mem_util.o(.debug_line), (220 bytes).
     Removing mem_util.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing mem_util.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing flash.o(.debug_macinfo), (1144 bytes).
     Removing flash.o(.debug_line), (56 bytes).
     Removing flash.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing flash.o(.debug_macinfo), (3224 bytes).
     Removing flash.o(.debug_line), (64 bytes).
     Removing flash.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing flash.o(.debug_macinfo), (84 bytes).
     Removing flash.o(.debug_line), (60 bytes).
     Removing flash.o(.debug_info), (924 bytes).
     Removing flash.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing flash.o(.debug_macinfo), (1288 bytes).
     Removing flash.o(.debug_line), (88 bytes).
     Removing flash.o(.debug_info), (2184 bytes).
     Removing flash.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing flash.o(.debug_macinfo), (2924 bytes).
     Removing flash.o(.debug_line), (60 bytes).
     Removing flash.o(.debug_info), (200 bytes).
     Removing flash.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing flash.o(.debug_macinfo), (5912 bytes).
     Removing flash.o(.debug_line), (56 bytes).
     Removing flash.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing flash.o(.debug_macinfo), (13520 bytes).
     Removing flash.o(.debug_line), (56 bytes).
     Removing flash.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing flash.o(.debug_macinfo), (1988 bytes).
     Removing flash.o(.debug_line), (92 bytes).
     Removing flash.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing flash.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing flash.o(.debug_macinfo), (2368 bytes).
     Removing flash.o(.debug_line), (60 bytes).
     Removing flash.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing flash.o(.debug_macinfo), (16 bytes).
     Removing flash.o(.debug_line), (60 bytes).
     Removing flash.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing flash.o(.debug_macinfo), (400 bytes).
     Removing flash.o(.debug_line), (56 bytes).
     Removing flash.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing flash.o(.debug_macinfo), (2764 bytes).
     Removing flash.o(.debug_line), (220 bytes).
     Removing flash.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing flash.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (1144 bytes).
     Removing flash_wrapper.o(.debug_line), (56 bytes).
     Removing flash_wrapper.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (6664 bytes).
     Removing flash_wrapper.o(.debug_line), (56 bytes).
     Removing flash_wrapper.o(.debug_info), (624 bytes).
     Removing flash_wrapper.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (3224 bytes).
     Removing flash_wrapper.o(.debug_line), (64 bytes).
     Removing flash_wrapper.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (84 bytes).
     Removing flash_wrapper.o(.debug_line), (60 bytes).
     Removing flash_wrapper.o(.debug_info), (924 bytes).
     Removing flash_wrapper.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (1288 bytes).
     Removing flash_wrapper.o(.debug_line), (88 bytes).
     Removing flash_wrapper.o(.debug_info), (2184 bytes).
     Removing flash_wrapper.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (2924 bytes).
     Removing flash_wrapper.o(.debug_line), (60 bytes).
     Removing flash_wrapper.o(.debug_info), (200 bytes).
     Removing flash_wrapper.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (5912 bytes).
     Removing flash_wrapper.o(.debug_line), (56 bytes).
     Removing flash_wrapper.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (13520 bytes).
     Removing flash_wrapper.o(.debug_line), (56 bytes).
     Removing flash_wrapper.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (1988 bytes).
     Removing flash_wrapper.o(.debug_line), (92 bytes).
     Removing flash_wrapper.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (6628 bytes).
     Removing flash_wrapper.o(.debug_line), (56 bytes).
     Removing flash_wrapper.o(.debug_info), (196 bytes).
     Removing flash_wrapper.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing flash_wrapper.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing flash_wrapper.o(.debug_macinfo), (2368 bytes).
     Removing flash_wrapper.o(.debug_line), (60 bytes).
     Removing flash_wrapper.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (16 bytes).
     Removing flash_wrapper.o(.debug_line), (60 bytes).
     Removing flash_wrapper.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (400 bytes).
     Removing flash_wrapper.o(.debug_line), (56 bytes).
     Removing flash_wrapper.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing flash_wrapper.o(.debug_macinfo), (2764 bytes).
     Removing flash_wrapper.o(.debug_line), (220 bytes).
     Removing flash_wrapper.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing flash_wrapper.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing initialize.o(.debug_macinfo), (1144 bytes).
     Removing initialize.o(.debug_line), (56 bytes).
     Removing initialize.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing initialize.o(.debug_macinfo), (6664 bytes).
     Removing initialize.o(.debug_line), (56 bytes).
     Removing initialize.o(.debug_info), (624 bytes).
     Removing initialize.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing initialize.o(.debug_macinfo), (3224 bytes).
     Removing initialize.o(.debug_line), (64 bytes).
     Removing initialize.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing initialize.o(.debug_macinfo), (84 bytes).
     Removing initialize.o(.debug_line), (60 bytes).
     Removing initialize.o(.debug_info), (924 bytes).
     Removing initialize.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing initialize.o(.debug_macinfo), (1288 bytes).
     Removing initialize.o(.debug_line), (88 bytes).
     Removing initialize.o(.debug_info), (2184 bytes).
     Removing initialize.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing initialize.o(.debug_macinfo), (2924 bytes).
     Removing initialize.o(.debug_line), (60 bytes).
     Removing initialize.o(.debug_info), (200 bytes).
     Removing initialize.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing initialize.o(.debug_macinfo), (5912 bytes).
     Removing initialize.o(.debug_line), (56 bytes).
     Removing initialize.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing initialize.o(.debug_macinfo), (13520 bytes).
     Removing initialize.o(.debug_line), (56 bytes).
     Removing initialize.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing initialize.o(.debug_macinfo), (1988 bytes).
     Removing initialize.o(.debug_line), (92 bytes).
     Removing initialize.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing initialize.o(.debug_macinfo), (6628 bytes).
     Removing initialize.o(.debug_line), (56 bytes).
     Removing initialize.o(.debug_info), (196 bytes).
     Removing initialize.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing initialize.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing initialize.o(.debug_macinfo), (2368 bytes).
     Removing initialize.o(.debug_line), (60 bytes).
     Removing initialize.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing initialize.o(.debug_macinfo), (16 bytes).
     Removing initialize.o(.debug_line), (60 bytes).
     Removing initialize.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing initialize.o(.debug_macinfo), (400 bytes).
     Removing initialize.o(.debug_line), (56 bytes).
     Removing initialize.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing initialize.o(.debug_macinfo), (2764 bytes).
     Removing initialize.o(.debug_line), (220 bytes).
     Removing initialize.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing initialize.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing misc.o(.debug_macinfo), (1144 bytes).
     Removing misc.o(.debug_line), (56 bytes).
     Removing misc.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing misc.o(.debug_macinfo), (6664 bytes).
     Removing misc.o(.debug_line), (56 bytes).
     Removing misc.o(.debug_info), (624 bytes).
     Removing misc.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing misc.o(.debug_macinfo), (3224 bytes).
     Removing misc.o(.debug_line), (64 bytes).
     Removing misc.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing misc.o(.debug_macinfo), (84 bytes).
     Removing misc.o(.debug_line), (60 bytes).
     Removing misc.o(.debug_info), (924 bytes).
     Removing misc.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing misc.o(.debug_macinfo), (1288 bytes).
     Removing misc.o(.debug_line), (88 bytes).
     Removing misc.o(.debug_info), (2184 bytes).
     Removing misc.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing misc.o(.debug_macinfo), (2924 bytes).
     Removing misc.o(.debug_line), (60 bytes).
     Removing misc.o(.debug_info), (200 bytes).
     Removing misc.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing misc.o(.debug_macinfo), (5912 bytes).
     Removing misc.o(.debug_line), (56 bytes).
     Removing misc.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing misc.o(.debug_macinfo), (13520 bytes).
     Removing misc.o(.debug_line), (56 bytes).
     Removing misc.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing misc.o(.debug_macinfo), (1988 bytes).
     Removing misc.o(.debug_line), (92 bytes).
     Removing misc.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing misc.o(.debug_macinfo), (6628 bytes).
     Removing misc.o(.debug_line), (56 bytes).
     Removing misc.o(.debug_info), (196 bytes).
     Removing misc.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing misc.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing misc.o(.debug_macinfo), (2368 bytes).
     Removing misc.o(.debug_line), (60 bytes).
     Removing misc.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing misc.o(.debug_macinfo), (16 bytes).
     Removing misc.o(.debug_line), (60 bytes).
     Removing misc.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing misc.o(.debug_macinfo), (400 bytes).
     Removing misc.o(.debug_line), (56 bytes).
     Removing misc.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing misc.o(.debug_macinfo), (2764 bytes).
     Removing misc.o(.debug_line), (220 bytes).
     Removing misc.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing misc.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing uart.o(.debug_macinfo), (1144 bytes).
     Removing uart.o(.debug_line), (56 bytes).
     Removing uart.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing uart.o(.debug_macinfo), (6664 bytes).
     Removing uart.o(.debug_line), (56 bytes).
     Removing uart.o(.debug_info), (624 bytes).
     Removing uart.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing uart.o(.debug_macinfo), (3224 bytes).
     Removing uart.o(.debug_line), (64 bytes).
     Removing uart.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing uart.o(.debug_macinfo), (84 bytes).
     Removing uart.o(.debug_line), (60 bytes).
     Removing uart.o(.debug_info), (924 bytes).
     Removing uart.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing uart.o(.debug_macinfo), (1288 bytes).
     Removing uart.o(.debug_line), (88 bytes).
     Removing uart.o(.debug_info), (2184 bytes).
     Removing uart.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing uart.o(.debug_macinfo), (2924 bytes).
     Removing uart.o(.debug_line), (60 bytes).
     Removing uart.o(.debug_info), (200 bytes).
     Removing uart.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing uart.o(.debug_macinfo), (5912 bytes).
     Removing uart.o(.debug_line), (56 bytes).
     Removing uart.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing uart.o(.debug_macinfo), (13520 bytes).
     Removing uart.o(.debug_line), (56 bytes).
     Removing uart.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing uart.o(.debug_macinfo), (1988 bytes).
     Removing uart.o(.debug_line), (92 bytes).
     Removing uart.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing uart.o(.debug_macinfo), (6628 bytes).
     Removing uart.o(.debug_line), (56 bytes).
     Removing uart.o(.debug_info), (196 bytes).
     Removing uart.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing uart.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing uart.o(.debug_macinfo), (2368 bytes).
     Removing uart.o(.debug_line), (60 bytes).
     Removing uart.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing uart.o(.debug_macinfo), (16 bytes).
     Removing uart.o(.debug_line), (60 bytes).
     Removing uart.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing uart.o(.debug_macinfo), (400 bytes).
     Removing uart.o(.debug_line), (56 bytes).
     Removing uart.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing uart.o(.debug_macinfo), (2764 bytes).
     Removing uart.o(.debug_line), (220 bytes).
     Removing uart.o(.debug_info), (412 bytes).
     Removing COMDAT group __ARM_grp..debug_abbrev.group.2_Am0000_lbphKItke$2_000000 from the image.
     Removing uart.o(.debug_abbrev), (1444 bytes).
-    Removing COMDAT group __ARM_grp.nand.h.2_E_0000__RiHmM84cj3_300000 from the image.
+    Removing COMDAT group __ARM_grp.nand.h.2_E_0000_Nap7c01ECva_300000 from the image.
     Removing tc_synth.o(.debug_macinfo), (1144 bytes).
     Removing tc_synth.o(.debug_line), (56 bytes).
     Removing tc_synth.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_0xgSzU44QY2_V00000 from the image.
+    Removing COMDAT group __ARM_grp.flash.h.2_iC7000_uhrrNTcvRUb_V00000 from the image.
     Removing tc_synth.o(.debug_macinfo), (6664 bytes).
     Removing tc_synth.o(.debug_line), (56 bytes).
     Removing tc_synth.o(.debug_info), (624 bytes).
     Removing tc_synth.o(.debug_pubnames), (34 bytes).
-    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_zZ5golWry40_300000 from the image.
+    Removing COMDAT group __ARM_grp.sata_registers.h.2_402000_y_J8C7gvXE8_300000 from the image.
     Removing tc_synth.o(.debug_macinfo), (3224 bytes).
     Removing tc_synth.o(.debug_line), (64 bytes).
     Removing tc_synth.o(.debug_info), (176 bytes).
-    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_pEHYPVLdxi9_j00000 from the image.
+    Removing COMDAT group __ARM_grp.sata_cmd.h.2_EY2000_LLSdr79w650_j00000 from the image.
     Removing tc_synth.o(.debug_macinfo), (84 bytes).
     Removing tc_synth.o(.debug_line), (60 bytes).
     Removing tc_synth.o(.debug_info), (924 bytes).
     Removing tc_synth.o(.debug_pubnames), (112 bytes).
-    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_FyoFQNXhk9a_V00000 from the image.
+    Removing COMDAT group __ARM_grp.sata.h.2_ct4000_F_A1PMz5zD0_V00000 from the image.
     Removing tc_synth.o(.debug_macinfo), (1288 bytes).
     Removing tc_synth.o(.debug_line), (88 bytes).
     Removing tc_synth.o(.debug_info), (2184 bytes).
     Removing tc_synth.o(.debug_pubnames), (76 bytes).
-    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_4Z48UpJ5tf8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.mem_util.h.2_VF4000_AAw29pR83c4_f00000 from the image.
     Removing tc_synth.o(.debug_macinfo), (2924 bytes).
     Removing tc_synth.o(.debug_line), (60 bytes).
     Removing tc_synth.o(.debug_info), (200 bytes).
     Removing tc_synth.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_ofe$mS1UKL4_300000 from the image.
+    Removing COMDAT group __ARM_grp.peri.h.2_Ej3000_N5WLJDc89H1_300000 from the image.
     Removing tc_synth.o(.debug_macinfo), (5912 bytes).
     Removing tc_synth.o(.debug_line), (56 bytes).
     Removing tc_synth.o(.debug_info), (164 bytes).
-    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_c7NuMAv1OE4_b00000 from the image.
+    Removing COMDAT group __ARM_grp.sdram.h.2_YT7000_ZB_esAxoTs2_b00000 from the image.
     Removing tc_synth.o(.debug_macinfo), (13520 bytes).
     Removing tc_synth.o(.debug_line), (56 bytes).
     Removing tc_synth.o(.debug_info), (260 bytes).
-    Removing COMDAT group __ARM_grp.target.h.2_gq1000_N0lwtKm2ISe_300000 from the image.
+    Removing COMDAT group __ARM_grp.target.h.2_gq1000_bqgqcWcAbt6_300000 from the image.
     Removing tc_synth.o(.debug_macinfo), (1988 bytes).
     Removing tc_synth.o(.debug_line), (92 bytes).
     Removing tc_synth.o(.debug_info), (172 bytes).
-    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_ZbOgMbSPPn8_f00000 from the image.
+    Removing COMDAT group __ARM_grp.bank.h.2_dn7000_BaRCmKcxuI3_f00000 from the image.
     Removing tc_synth.o(.debug_macinfo), (6628 bytes).
     Removing tc_synth.o(.debug_line), (56 bytes).
     Removing tc_synth.o(.debug_info), (196 bytes).
     Removing tc_synth.o(.debug_pubnames), (33 bytes).
-    Removing COMDAT group __ARM_grp.ftl.h.2_sO1000_BV7wL0Fpt4e_300000 from the image.
-    Removing tc_synth.o(.debug_macinfo), (2796 bytes).
+    Removing COMDAT group __ARM_grp.ftl.h.2_4B1000_jGarO4eIn3b_300000 from the image.
+    Removing tc_synth.o(.debug_macinfo), (2368 bytes).
     Removing tc_synth.o(.debug_line), (60 bytes).
     Removing tc_synth.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_k3dD5xNo2N0_300000 from the image.
+    Removing COMDAT group __ARM_grp.misc.h.2_Ar0000_r6bVt49YdRd_300000 from the image.
     Removing tc_synth.o(.debug_macinfo), (16 bytes).
     Removing tc_synth.o(.debug_line), (60 bytes).
     Removing tc_synth.o(.debug_info), (168 bytes).
-    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_qdzhuxkCktc_300000 from the image.
+    Removing COMDAT group __ARM_grp.uart.h.2_sH0000_4b6z8ICl9Y9_300000 from the image.
     Removing tc_synth.o(.debug_macinfo), (400 bytes).
     Removing tc_synth.o(.debug_line), (56 bytes).
     Removing tc_synth.o(.debug_info), (424 bytes).
-    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_Q9R$A6syEs1_300000 from the image.
+    Removing COMDAT group __ARM_grp.jasmine.h.2_gW1000_2fygV7MCYt0_300000 from the image.
     Removing tc_synth.o(.debug_macinfo), (2764 bytes).
     Removing tc_synth.o(.debug_line), (220 bytes).
     Removing tc_synth.o(.debug_info), (412 bytes).
@@ -810,7 +810,7 @@ ARM Linker, RVCT4.0 [Build 400]
     Removing __raise.o(i.__ARM_common_call_via_r2), (2 bytes).
     Removing __raise.o(.debug_frame), (60 bytes).
 
-607 rejected COMDAT group section(s) (total 680752 bytes) removed from the image.
+607 rejected COMDAT group section(s) (total 675616 bytes) removed from the image.
 
 ==============================================================================
 
@@ -861,169 +861,169 @@ Image Symbol Table
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
     init                                     0x00000000   Section      112  init.o(init)
-    ../../angel/rt.s                         0x00000000   Number         0  rt_div0.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  rt_heap_descriptor.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  rt_locale.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  aeabi_ldiv0_sigfpe.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  rt_raise.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  rt_ctype_table.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  rt_locale_intlibspace.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  rt_heap_descriptor_intlibspace.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  rt_errno_addr_intlibspace.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  rt_errno_addr.o ABSOLUTE
-    ../../angel/rt.s                         0x00000000   Number         0  aeabi_idiv0.o ABSOLUTE
     ../../angel/rt.s                         0x00000000   Number         0  aeabi_idiv0_sigfpe.o ABSOLUTE
     ../../angel/rt.s                         0x00000000   Number         0  aeabi_ldiv0.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  aeabi_ldiv0_sigfpe.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_div0.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_locale_intlibspace.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_errno_addr_intlibspace.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_errno_addr.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_ctype_table.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_heap_descriptor_intlibspace.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_raise.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_heap_descriptor.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  rt_locale.o ABSOLUTE
+    ../../angel/rt.s                         0x00000000   Number         0  aeabi_idiv0.o ABSOLUTE
     ../../angel/sys.s                        0x00000000   Number         0  mutex_dummy.o ABSOLUTE
+    ../../angel/sys.s                        0x00000000   Number         0  libspace.o ABSOLUTE
     ../../angel/sys.s                        0x00000000   Number         0  sys_exit.o ABSOLUTE
     ../../angel/sys.s                        0x00000000   Number         0  use_no_semi.o ABSOLUTE
-    ../../angel/sys.s                        0x00000000   Number         0  libspace.o ABSOLUTE
+    ../../angel/sysapp.c                     0x00000000   Number         0  sys_io.o ABSOLUTE
     ../../angel/sysapp.c                     0x00000000   Number         0  sys_wrch.o ABSOLUTE
     ../../angel/sysapp.c                     0x00000000   Number         0  sys_command.o ABSOLUTE
-    ../../angel/sysapp.c                     0x00000000   Number         0  sys_io.o ABSOLUTE
+    ../../armsys.c                           0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../../armsys.c                           0x00000000   Number         0  no_argv.o ABSOLUTE
-    ../../armsys.c                           0x00000000   Number         0  _get_argv.o ABSOLUTE
-    ../../armsys.c                           0x00000000   Number         0  argv_veneer.o ABSOLUTE
-    ../../armsys.c                           0x00000000   Number         0  argv_veneer.o ABSOLUTE
     ../../armsys.c                           0x00000000   Number         0  _get_argv_nomalloc.o ABSOLUTE
+    ../../armsys.c                           0x00000000   Number         0  argv_veneer.o ABSOLUTE
+    ../../armsys.c                           0x00000000   Number         0  _get_argv.o ABSOLUTE
     ../../division.s                         0x00000000   Number         0  rtudiv10.o ABSOLUTE
     ../../division.s                         0x00000000   Number         0  aeabi_sdiv.o ABSOLUTE
     ../../division.s                         0x00000000   Number         0  aeabi_sdiv_div0.o ABSOLUTE
     ../../divrt.s                            0x00000000   Number         0  divrt_7tdmi.o ABSOLUTE
     ../../divrt.s                            0x00000000   Number         0  divrt_7tdmi_div0.o ABSOLUTE
-    ../../heap1.c                            0x00000000   Number         0  h1_alloc.o ABSOLUTE
-    ../../heap1.c                            0x00000000   Number         0  h1_extend.o ABSOLUTE
     ../../heap1.c                            0x00000000   Number         0  h1_init.o ABSOLUTE
-    ../../heap1.c                            0x00000000   Number         0  h1_final_mt.o ABSOLUTE
-    ../../heap1.c                            0x00000000   Number         0  h1_free_mt.o ABSOLUTE
-    ../../heap1.c                            0x00000000   Number         0  h1_final.o ABSOLUTE
-    ../../heap1.c                            0x00000000   Number         0  h1_extend_mt.o ABSOLUTE
-    ../../heap1.c                            0x00000000   Number         0  h1_free.o ABSOLUTE
+    ../../heap1.c                            0x00000000   Number         0  h1_extend.o ABSOLUTE
     ../../heap1.c                            0x00000000   Number         0  h1_alloc_mt.o ABSOLUTE
+    ../../heap1.c                            0x00000000   Number         0  h1_alloc.o ABSOLUTE
+    ../../heap1.c                            0x00000000   Number         0  h1_free.o ABSOLUTE
+    ../../heap1.c                            0x00000000   Number         0  h1_extend_mt.o ABSOLUTE
+    ../../heap1.c                            0x00000000   Number         0  h1_final_mt.o ABSOLUTE
+    ../../heap1.c                            0x00000000   Number         0  h1_final.o ABSOLUTE
     ../../heap1.c                            0x00000000   Number         0  h1_init_mt.o ABSOLUTE
-    ../../heap2.c                            0x00000000   Number         0  heap2mt.o ABSOLUTE
+    ../../heap1.c                            0x00000000   Number         0  h1_free_mt.o ABSOLUTE
     ../../heap2.c                            0x00000000   Number         0  fdtree.o ABSOLUTE
     ../../heap2.c                            0x00000000   Number         0  heap2.o ABSOLUTE
-    ../../heapalloc.c                        0x00000000   Number         0  hrguard.o ABSOLUTE
-    ../../heapalloc.c                        0x00000000   Number         0  malloc.o ABSOLUTE
+    ../../heap2.c                            0x00000000   Number         0  heap2mt.o ABSOLUTE
+    ../../heapalloc.c                        0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
+    ../../heapalloc.c                        0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
+    ../../heapalloc.c                        0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
     ../../heapalloc.c                        0x00000000   Number         0  heapstubs.o ABSOLUTE
+    ../../heapalloc.c                        0x00000000   Number         0  malloc.o ABSOLUTE
     ../../heapalloc.c                        0x00000000   Number         0  init_alloc.o ABSOLUTE
     ../../heapalloc.c                        0x00000000   Number         0  hguard.o ABSOLUTE
     ../../heapalloc.c                        0x00000000   Number         0  term_alloc.o ABSOLUTE
-    ../../heapalloc.c                        0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
-    ../../heapalloc.c                        0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
     ../../heapalloc.c                        0x00000000   Number         0  free.o ABSOLUTE
-    ../../heapalloc.c                        0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
-    ../../heapalloc.c                        0x00000000   Number         0  maybetermalloc1.o ABSOLUTE
+    ../../heapalloc.c                        0x00000000   Number         0  maybetermalloc2.o ABSOLUTE
+    ../../heapalloc.c                        0x00000000   Number         0  hrguard.o ABSOLUTE
     ../../heapaux.c                          0x00000000   Number         0  heapauxi.o ABSOLUTE
     ../../heapaux.c                          0x00000000   Number         0  heapauxa.o ABSOLUTE
-    ../../libinit.s                          0x00000000   Number         0  libshutdown2.o ABSOLUTE
     ../../libinit.s                          0x00000000   Number         0  libinit2.o ABSOLUTE
+    ../../libinit.s                          0x00000000   Number         0  libshutdown2.o ABSOLUTE
     ../../locale.c                           0x00000000   Number         0  _wcrtomb.o ABSOLUTE
     ../../locale.s                           0x00000000   Number         0  lc_ctype_c.o ABSOLUTE
     ../../longlong.s                         0x00000000   Number         0  lludiv10.o ABSOLUTE
     ../../longlong.s                         0x00000000   Number         0  lludiv.o ABSOLUTE
-    ../../memcpset.s                         0x00000000   Number         0  strcmp.o ABSOLUTE
     ../../memcpset.s                         0x00000000   Number         0  rt_memcpy_w.o ABSOLUTE
     ../../memcpset.s                         0x00000000   Number         0  rt_memclr_w.o ABSOLUTE
+    ../../memcpset.s                         0x00000000   Number         0  strcmp.o ABSOLUTE
     ../../misc.s                             0x00000000   Number         0  printf_stubs.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  _printf_wchar.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  _printf_char.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __printf_nopercent.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  noretval__2sprintf.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __printf_flags_ss_wp.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __printf_ss_wp.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  vsnprintf.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __2sprintf.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  __printf_wp.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __printf_flags_ss.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __printf_ss.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __printf_flags.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  _printf_pad.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  _printf_longlong_dec.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_truncate.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_str.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  _printf_intcommon.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_charcount.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  _printf_dec.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_char_common.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __printf_flags_wp.o ABSOLUTE
-    ../../printf.c                           0x00000000   Number         0  __printf.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _sputc.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _snputc.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_wctomb.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  _printf_longlong_dec.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_oct_ll.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_oct_int.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  vsnprintf.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_oct_int_ll.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __2sprintf.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_hex_ll.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  noretval__2sprintf.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __printf.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_hex_int.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  _printf_dec.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_hex_int_ll.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __printf_flags.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __printf_ss.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __printf_flags_ss.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_hex_ptr.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __printf_flags_wp.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __printf_ss_wp.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __printf_flags_ss_wp.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_hex_int_ptr.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_hex_ll_ptr.o ABSOLUTE
     ../../printf.c                           0x00000000   Number         0  _printf_hex_int_ll_ptr.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  _printf_intcommon.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  __printf_nopercent.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  _printf_char.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  _printf_wchar.o ABSOLUTE
+    ../../printf.c                           0x00000000   Number         0  _printf_pad.o ABSOLUTE
     ../../printf1.s                          0x00000000   Number         0  printf1.o ABSOLUTE
     ../../printf2.s                          0x00000000   Number         0  printf2.o ABSOLUTE
     ../../printf2a.s                         0x00000000   Number         0  printf2a.o ABSOLUTE
     ../../printf2b.s                         0x00000000   Number         0  printf2b.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_a.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_s.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_percent_end.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_c.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_lli.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_f.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_p.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_u.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_e.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_llx.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_llo.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_percent.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_i.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_lld.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_ls.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_lc.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_d.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_x.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_g.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_o.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_n.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_l.o ABSOLUTE
-    ../../printf_percent.s                   0x00000000   Number         0  _printf_ll.o ABSOLUTE
     ../../printf_percent.s                   0x00000000   Number         0  _printf_llu.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_percent.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_p.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_e.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_s.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_g.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_n.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_a.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_i.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_percent_end.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_lli.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_c.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_llx.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_lld.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_ll.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_f.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_l.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_x.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_lc.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_o.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_ls.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_u.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_llo.o ABSOLUTE
+    ../../printf_percent.s                   0x00000000   Number         0  _printf_d.o ABSOLUTE
     ../../signal.c                           0x00000000   Number         0  defsig_rtmem_inner.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_rtmem_formal.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
     ../../signal.c                           0x00000000   Number         0  defsig_fpe_inner.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_general.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  __raise.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_fpe_formal.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_exit.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_rtmem_formal.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_fpe_outer.o ABSOLUTE
     ../../signal.c                           0x00000000   Number         0  defsig_rtred_formal.o ABSOLUTE
     ../../signal.c                           0x00000000   Number         0  defsig_rtred_outer.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_other.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
     ../../signal.c                           0x00000000   Number         0  defsig_abrt_inner.o ABSOLUTE
-    ../../signal.c                           0x00000000   Number         0  defsig_fpe_outer.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_stak_inner.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_other.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_exit.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_pvfn_inner.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_fpe_formal.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_rtred_inner.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_cppl_inner.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_rtmem_outer.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  __raise.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_segv_inner.o ABSOLUTE
+    ../../signal.c                           0x00000000   Number         0  defsig_general.o ABSOLUTE
     ../../signal.s                           0x00000000   Number         0  defsig.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  initio_locked.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  stdio_streams.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  streamlock.o ABSOLUTE
     ../../stdio.c                            0x00000000   Number         0  initio.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  stdio_streams.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  initio_locked.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  fflush.o ABSOLUTE
     ../../stdio.c                            0x00000000   Number         0  fclose_locked.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  fclose.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  stdio.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  fseek.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  setvbuf_locked.o ABSOLUTE
     ../../stdio.c                            0x00000000   Number         0  fopen.o ABSOLUTE
     ../../stdio.c                            0x00000000   Number         0  setvbuf.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  ftell.o ABSOLUTE
     ../../stdio.c                            0x00000000   Number         0  fflush_locked.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  ftell.o ABSOLUTE
     ../../stdio.c                            0x00000000   Number         0  fopen_locked.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  fflush.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  setvbuf_locked.o ABSOLUTE
-    ../../stdio.c                            0x00000000   Number         0  streamlock.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  stdio.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  fclose.o ABSOLUTE
+    ../../stdio.c                            0x00000000   Number         0  fseek.o ABSOLUTE
     ../../stdlib.c                           0x00000000   Number         0  rand.o ABSOLUTE
     ../../string.c                           0x00000000   Number         0  strlen.o ABSOLUTE
     ..\ftl_tutorial\ftl.c                    0x00000000   Number         0  ftl.o ABSOLUTE
@@ -1082,22 +1082,20 @@ Image Symbol Table
     .ARM.Collect$$libshutdown$$00000003      0x00000134   Section        0  libshutdown2.o(.ARM.Collect$$libshutdown$$00000003)
     .emb_text                                0x00000134   Section        0  maybetermalloc1.o(.emb_text)
     .text                                    0x00000134   Section     3884  ftl.o(.text)
-    sanity_check                             0x00000134   ARM Code       4  ftl.o(.text)
-    build_bad_blk_list                       0x00000138   ARM Code     480  ftl.o(.text)
-    write_format_mark                        0x00000318   ARM Code     164  ftl.o(.text)
-    logging_misc_metadata                    0x000003bc   ARM Code     252  ftl.o(.text)
-    logging_pmap_table                       0x000004b8   ARM Code     276  ftl.o(.text)
-    is_bad_block                             0x000005cc   ARM Code      48  ftl.o(.text)
-    init_metadata_sram                       0x000005fc   ARM Code     264  ftl.o(.text)
-    format                                   0x00000704   ARM Code     228  ftl.o(.text)
-    get_vcount                               0x00000858   ARM Code      16  ftl.o(.text)
-    set_vcount                               0x00000868   ARM Code      28  ftl.o(.text)
-    set_vpn                                  0x00000884   ARM Code      12  ftl.o(.text)
-    get_vpn                                  0x00000890   ARM Code     200  ftl.o(.text)
-    get_vt_vblock                            0x00000958   ARM Code      24  ftl.o(.text)
-    garbage_collection                       0x00000970   ARM Code     344  ftl.o(.text)
-    assign_new_write_vpn                     0x00000ac8   ARM Code     224  ftl.o(.text)
-    write_page                               0x00000ba8   ARM Code     476  ftl.o(.text)
+    update_bundle_lives                      0x00000134   ARM Code      52  ftl.o(.text)
+    logging_smt_cache                        0x00000168   ARM Code     284  ftl.o(.text)
+    logging_misc_metadata                    0x00000284   ARM Code     152  ftl.o(.text)
+    fetch_smt_bundle                         0x0000031c   ARM Code     196  ftl.o(.text)
+    evict_smt_bundle                         0x000003e0   ARM Code     284  ftl.o(.text)
+    select_victim_bundle                     0x000004fc   ARM Code      52  ftl.o(.text)
+    where_bundle_cached                      0x00000530   ARM Code      44  ftl.o(.text)
+    set_psn                                  0x0000055c   ARM Code     160  ftl.o(.text)
+    is_bad_block                             0x000005fc   ARM Code     140  ftl.o(.text)
+    get_free_page                            0x00000688   ARM Code     120  ftl.o(.text)
+    write_format_mark                        0x000007d4   ARM Code     164  ftl.o(.text)
+    format                                   0x00000878   ARM Code     140  ftl.o(.text)
+    sanity_check                             0x00000904   ARM Code       4  ftl.o(.text)
+    get_psn                                  0x00000b1c   ARM Code     152  ftl.o(.text)
     .text                                    0x00001060   Section      512  sata_identify.o(.text)
     get_integrity_word                       0x00001060   ARM Code      80  sata_identify.o(.text)
     set_string_data                          0x000010b0   ARM Code     140  sata_identify.o(.text)
@@ -1202,40 +1200,43 @@ Image Symbol Table
     locale$$data                             0x0000531c   Section      272  lc_ctype_c.o(locale$$data)
     __lcctype_c_name                         0x00005320   Data           2  lc_ctype_c.o(locale$$data)
     __lcctype_c_start                        0x00005328   Data           0  lc_ctype_c.o(locale$$data)
-    .data                                    0x0000542c   Section        8  ftl.o(.data)
+    .data                                    0x0000542c   Section       36  ftl.o(.data)
     __lcctype_c_end                          0x0000542c   Data           0  lc_ctype_c.o(locale$$data)
-    .data                                    0x00005434   Section      512  sata_identify.o(.data)
-    .data                                    0x00005634   Section        8  sata_main.o(.data)
-    temp                                     0x00005634   Data           4  sata_main.o(.data)
-    .data                                    0x0000563c   Section       16  misc.o(.data)
-    heap                                     0x0000563c   Data           4  misc.o(.data)
-    .data                                    0x0000564c   Section        4  stdio_streams.o(.data)
-    .data                                    0x00005650   Section        4  stdio_streams.o(.data)
-    .data                                    0x00005654   Section        4  stdio_streams.o(.data)
-    .data                                    0x00005658   Section        8  rand.o(.data)
-    _random_j                                0x00005658   Data           4  rand.o(.data)
-    _random_k                                0x0000565c   Data           4  rand.o(.data)
-    .data                                    0x00005660   Section        4  heapauxa.o(.data)
-    __rt_heap_escrow_base                    0x00005660   Data           4  heapauxa.o(.data)
-    .bss                                     0x00005664   Section     4352  ftl.o(.bss)
-    g_misc_meta                              0x00005664   Data        4256  ftl.o(.bss)
-    g_ftl_statistics                         0x00006704   Data          64  ftl.o(.bss)
-    g_bad_blk_count                          0x00006744   Data          32  ftl.o(.bss)
-    .bss                                     0x00006764   Section     1056  sata_main.o(.bss)
-    .bss                                     0x00006b84   Section      512  mem_util.o(.bss)
-    .bss                                     0x00006d84   Section     2112  misc.o(.bss)
-    g_test_result                            0x00006d84   Data          64  misc.o(.bss)
-    .bss                                     0x000075c4   Section       80  stdio_streams.o(.bss)
-    .bss                                     0x00007614   Section       80  stdio_streams.o(.bss)
-    .bss                                     0x00007664   Section       80  stdio_streams.o(.bss)
-    .bss                                     0x000076b4   Section      220  rand.o(.bss)
-    _random_number_seed                      0x000076b4   Data         220  rand.o(.bss)
-    .bss                                     0x00007790   Section        4  rt_heap_descriptor.o(.bss)
-    __rt_heap_descriptor_data                0x00007790   Data           4  rt_heap_descriptor.o(.bss)
-    .bss                                     0x00007794   Section        4  rt_errno_addr.o(.bss)
-    __aeabi_errno_addr_data                  0x00007794   Data           4  rt_errno_addr.o(.bss)
-    .bss                                     0x00007798   Section       20  rt_locale.o(.bss)
-    __rt_locale_data                         0x00007798   Data          20  rt_locale.o(.bss)
+    g_read_fail_count                        0x00005434   Data           4  ftl.o(.data)
+    g_program_fail_count                     0x00005438   Data           4  ftl.o(.data)
+    g_erase_fail_count                       0x0000543c   Data           4  ftl.o(.data)
+    g_bundles_on_cache                       0x00005440   Data           4  ftl.o(.data)
+    g_life_on_cache                          0x00005444   Data           4  ftl.o(.data)
+    .data                                    0x00005450   Section      512  sata_identify.o(.data)
+    .data                                    0x00005650   Section        8  sata_main.o(.data)
+    temp                                     0x00005650   Data           4  sata_main.o(.data)
+    .data                                    0x00005658   Section       16  misc.o(.data)
+    heap                                     0x00005658   Data           4  misc.o(.data)
+    .data                                    0x00005668   Section        4  stdio_streams.o(.data)
+    .data                                    0x0000566c   Section        4  stdio_streams.o(.data)
+    .data                                    0x00005670   Section        4  stdio_streams.o(.data)
+    .data                                    0x00005674   Section        8  rand.o(.data)
+    _random_j                                0x00005674   Data           4  rand.o(.data)
+    _random_k                                0x00005678   Data           4  rand.o(.data)
+    .data                                    0x0000567c   Section        4  heapauxa.o(.data)
+    __rt_heap_escrow_base                    0x0000567c   Data           4  heapauxa.o(.data)
+    .bss                                     0x00005680   Section      384  ftl.o(.bss)
+    g_misc_meta                              0x00005680   Data         128  ftl.o(.bss)
+    .bss                                     0x00005800   Section     1056  sata_main.o(.bss)
+    .bss                                     0x00005c20   Section      512  mem_util.o(.bss)
+    .bss                                     0x00005e20   Section     2112  misc.o(.bss)
+    g_test_result                            0x00005e20   Data          64  misc.o(.bss)
+    .bss                                     0x00006660   Section       80  stdio_streams.o(.bss)
+    .bss                                     0x000066b0   Section       80  stdio_streams.o(.bss)
+    .bss                                     0x00006700   Section       80  stdio_streams.o(.bss)
+    .bss                                     0x00006750   Section      220  rand.o(.bss)
+    _random_number_seed                      0x00006750   Data         220  rand.o(.bss)
+    .bss                                     0x0000682c   Section        4  rt_heap_descriptor.o(.bss)
+    __rt_heap_descriptor_data                0x0000682c   Data           4  rt_heap_descriptor.o(.bss)
+    .bss                                     0x00006830   Section        4  rt_errno_addr.o(.bss)
+    __aeabi_errno_addr_data                  0x00006830   Data           4  rt_errno_addr.o(.bss)
+    .bss                                     0x00006834   Section       20  rt_locale.o(.bss)
+    __rt_locale_data                         0x00006834   Data          20  rt_locale.o(.bss)
 
     Global Symbols
 
@@ -1302,18 +1303,21 @@ Image Symbol Table
     __rt_lib_init_stdio_2                    0x00000135   Thumb Code     0  libinit2.o(.ARM.Collect$$libinit$$00000021)
     __rt_lib_shutdown_stdio_2                0x00000135   Thumb Code     0  libshutdown2.o(.ARM.Collect$$libshutdown$$00000003)
     _maybe_terminate_alloc                   0x00000135   Thumb Code     0  maybetermalloc1.o(.emb_text)
-    Image$$ER_RW$$Length                     0x00000238   Number         0  anon$$obj.o ABSOLUTE
-    Image$$ER_RW$$RW$$Length                 0x00000238   Number         0  anon$$obj.o ABSOLUTE
+    Image$$ER_RW$$Length                     0x00000254   Number         0  anon$$obj.o ABSOLUTE
+    Image$$ER_RW$$RW$$Length                 0x00000254   Number         0  anon$$obj.o ABSOLUTE
     Image$$ER_FIQ_STACK$$ZI$$Length          0x00000400   Number         0  anon$$obj.o ABSOLUTE
     Image$$ER_IRQ_STACK$$ZI$$Length          0x00000400   Number         0  anon$$obj.o ABSOLUTE
-    ftl_open                                 0x000007e8   ARM Code      96  ftl.o(.text)
-    ftl_flush                                0x00000848   ARM Code      16  ftl.o(.text)
+    flush_merge_buffer                       0x00000700   ARM Code     192  ftl.o(.text)
+    ftl_flush                                0x000007c0   ARM Code      20  ftl.o(.text)
+    ftl_open                                 0x00000908   ARM Code     532  ftl.o(.text)
     Image$$ER_SYS_STACK$$ZI$$Length          0x00000a00   Number         0  anon$$obj.o ABSOLUTE
-    ftl_write                                0x00000d84   ARM Code      84  ftl.o(.text)
-    ftl_test_write                           0x00000dd8   ARM Code       4  ftl.o(.text)
-    ftl_read                                 0x00000ddc   ARM Code     200  ftl.o(.text)
-    ftl_isr                                  0x00000ea4   ARM Code     244  ftl.o(.text)
+    ftl_read_sector                          0x00000bb4   ARM Code     236  ftl.o(.text)
+    ftl_read                                 0x00000ca0   ARM Code     192  ftl.o(.text)
+    ftl_write_sector                         0x00000d60   ARM Code     368  ftl.o(.text)
+    ftl_write                                0x00000ed0   ARM Code     200  ftl.o(.text)
+    ftl_isr                                  0x00000f98   ARM Code     200  ftl.o(.text)
     ata_identify_device                      0x0000113c   ARM Code     216  sata_identify.o(.text)
+    Image$$ER_ZI$$ZI$$Length                 0x000011c8   Number         0  anon$$obj.o ABSOLUTE
     ata_check_power_mode                     0x00001260   ARM Code      92  sata_cmd.o(.text)
     send_status_to_host                      0x000012bc   ARM Code     128  sata_cmd.o(.text)
     ata_flush_cache                          0x0000133c   ARM Code      20  sata_cmd.o(.text)
@@ -1349,7 +1353,6 @@ Image Symbol Table
     _mem_search_equ                          0x0000209c   ARM Code     112  mem_util.o(.text)
     _write_dram_32                           0x0000210c   ARM Code      36  mem_util.o(.text)
     _write_dram_16                           0x00002130   ARM Code      80  mem_util.o(.text)
-    Image$$ER_ZI$$ZI$$Length                 0x00002148   Number         0  anon$$obj.o ABSOLUTE
     _write_dram_8                            0x00002180   ARM Code      80  mem_util.o(.text)
     _set_bit_dram                            0x000021d0   ARM Code      84  mem_util.o(.text)
     _clr_bit_dram                            0x00002224   ARM Code      84  mem_util.o(.text)
@@ -1540,24 +1543,27 @@ Image Symbol Table
     Load$$ER_RW$$Base                        0x0000542c   Number         0  anon$$obj.o ABSOLUTE
     g_ftl_read_buf_id                        0x0000542c   Data           4  ftl.o(.data)
     g_ftl_write_buf_id                       0x00005430   Data           4  ftl.o(.data)
-    ht_identify_data                         0x00005434   Data         512  sata_identify.o(.data)
-    g_sata_action_flags                      0x00005638   Data           4  sata_main.o(.data)
-    g_sdram_ecc_count                        0x00005640   Data           4  misc.o(.data)
-    g_sdram_ecc_fail_count                   0x00005644   Data           4  misc.o(.data)
-    g_timer_interrupt_count                  0x00005648   Data           4  misc.o(.data)
-    __aeabi_stdin                            0x0000564c   Data           4  stdio_streams.o(.data)
-    __aeabi_stdout                           0x00005650   Data           4  stdio_streams.o(.data)
-    __aeabi_stderr                           0x00005654   Data           4  stdio_streams.o(.data)
-    Image$$ER_RW$$Limit                      0x00005664   Number         0  heapauxa.o(.data)
-    Image$$ER_ZI$$ZI$$Base                   0x00005664   Number         0  ftl.o(.bss)
-    g_sata_context                           0x00006764   Data          28  sata_main.o(.bss)
-    g_sata_ncq                               0x00006780   Data        1028  sata_main.o(.bss)
-    g_temp_mem                               0x00006b84   Data         512  mem_util.o(.bss)
-    __HEAP_START                             0x00006dc4   Data        2048  misc.o(.bss)
-    __stdin                                  0x000075c4   Data          80  stdio_streams.o(.bss)
-    __stdout                                 0x00007614   Data          80  stdio_streams.o(.bss)
-    __stderr                                 0x00007664   Data          80  stdio_streams.o(.bss)
-    Image$$ER_ZI$$ZI$$Limit                  0x000077ac   Number         0  rt_locale.o(.bss)
+    g_target_bank                            0x00005448   Data           4  ftl.o(.data)
+    g_target_sect                            0x0000544c   Data           4  ftl.o(.data)
+    ht_identify_data                         0x00005450   Data         512  sata_identify.o(.data)
+    g_sata_action_flags                      0x00005654   Data           4  sata_main.o(.data)
+    g_sdram_ecc_count                        0x0000565c   Data           4  misc.o(.data)
+    g_sdram_ecc_fail_count                   0x00005660   Data           4  misc.o(.data)
+    g_timer_interrupt_count                  0x00005664   Data           4  misc.o(.data)
+    __aeabi_stdin                            0x00005668   Data           4  stdio_streams.o(.data)
+    __aeabi_stdout                           0x0000566c   Data           4  stdio_streams.o(.data)
+    __aeabi_stderr                           0x00005670   Data           4  stdio_streams.o(.data)
+    Image$$ER_RW$$Limit                      0x00005680   Number         0  heapauxa.o(.data)
+    Image$$ER_ZI$$ZI$$Base                   0x00005680   Number         0  ftl.o(.bss)
+    g_merge_buffer_lsn                       0x00005700   Data         256  ftl.o(.bss)
+    g_sata_context                           0x00005800   Data          28  sata_main.o(.bss)
+    g_sata_ncq                               0x0000581c   Data        1028  sata_main.o(.bss)
+    g_temp_mem                               0x00005c20   Data         512  mem_util.o(.bss)
+    __HEAP_START                             0x00005e60   Data        2048  misc.o(.bss)
+    __stdin                                  0x00006660   Data          80  stdio_streams.o(.bss)
+    __stdout                                 0x000066b0   Data          80  stdio_streams.o(.bss)
+    __stderr                                 0x00006700   Data          80  stdio_streams.o(.bss)
+    Image$$ER_ZI$$ZI$$Limit                  0x00006848   Number         0  rt_locale.o(.bss)
     Image$$ER_IRQ_STACK$$ZI$$Base            0x00016e00   Number         0  anon$$obj.o(ER_IRQ_STACK.bss)
     Image$$ER_FIQ_STACK$$ZI$$Base            0x00017200   Number         0  anon$$obj.o(ER_FIQ_STACK.bss)
     Image$$ER_IRQ_STACK$$ZI$$Limit           0x00017200   Number         0  anon$$obj.o(ER_IRQ_STACK.bss)
@@ -1573,7 +1579,7 @@ Memory Map of the image
 
   Image Entry point : 0x00000000
 
-  Load Region LR_IMAGE (Base: 0x00000000, Size: 0x00005664, Max: 0x00018000, ABSOLUTE)
+  Load Region LR_IMAGE (Base: 0x00000000, Size: 0x00005680, Max: 0x00018000, ABSOLUTE)
 
     Execution Region ER_CODE (Base: 0x00000000, Size: 0x0000542c, Max: 0xffffffff, ABSOLUTE)
 
@@ -1732,36 +1738,36 @@ Memory Map of the image
     0x0000531c   0x00000110   Data   RO          677    locale$$data        lc_ctype_c.o(c_t.l)
 
 
-    Execution Region ER_RW (Base: 0x0000542c, Size: 0x00000238, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Base: 0x0000542c, Size: 0x00000254, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x0000542c   0x00000008   Data   RW           11    .data               ftl.o
-    0x00005434   0x00000200   Data   RW           75    .data               sata_identify.o
-    0x00005634   0x00000008   Data   RW          115    .data               sata_main.o
-    0x0000563c   0x00000010   Data   RW          219    .data               misc.o
-    0x0000564c   0x00000004   Data   RW          315    .data               stdio_streams.o(c_t.l)
-    0x00005650   0x00000004   Data   RW          316    .data               stdio_streams.o(c_t.l)
-    0x00005654   0x00000004   Data   RW          317    .data               stdio_streams.o(c_t.l)
-    0x00005658   0x00000008   Data   RW          322    .data               rand.o(c_t.l)
-    0x00005660   0x00000004   Data   RW          691    .data               heapauxa.o(c_t.l)
+    0x0000542c   0x00000024   Data   RW           11    .data               ftl.o
+    0x00005450   0x00000200   Data   RW           75    .data               sata_identify.o
+    0x00005650   0x00000008   Data   RW          115    .data               sata_main.o
+    0x00005658   0x00000010   Data   RW          219    .data               misc.o
+    0x00005668   0x00000004   Data   RW          315    .data               stdio_streams.o(c_t.l)
+    0x0000566c   0x00000004   Data   RW          316    .data               stdio_streams.o(c_t.l)
+    0x00005670   0x00000004   Data   RW          317    .data               stdio_streams.o(c_t.l)
+    0x00005674   0x00000008   Data   RW          322    .data               rand.o(c_t.l)
+    0x0000567c   0x00000004   Data   RW          691    .data               heapauxa.o(c_t.l)
 
 
-    Execution Region ER_ZI (Base: 0x00005664, Size: 0x00002148, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Base: 0x00005680, Size: 0x000011c8, Max: 0xffffffff, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x00005664   0x00001100   Zero   RW           10    .bss                ftl.o
-    0x00006764   0x00000420   Zero   RW          114    .bss                sata_main.o
-    0x00006b84   0x00000200   Zero   RW          151    .bss                mem_util.o
-    0x00006d84   0x00000840   Zero   RW          217    .bss                misc.o
-    0x000075c4   0x00000050   Zero   RW          312    .bss                stdio_streams.o(c_t.l)
-    0x00007614   0x00000050   Zero   RW          313    .bss                stdio_streams.o(c_t.l)
-    0x00007664   0x00000050   Zero   RW          314    .bss                stdio_streams.o(c_t.l)
-    0x000076b4   0x000000dc   Zero   RW          321    .bss                rand.o(c_t.l)
-    0x00007790   0x00000004   Zero   RW          604    .bss                rt_heap_descriptor.o(c_t.l)
-    0x00007794   0x00000004   Zero   RW          609    .bss                rt_errno_addr.o(c_t.l)
-    0x00007798   0x00000014   Zero   RW          659    .bss                rt_locale.o(c_t.l)
+    0x00005680   0x00000180   Zero   RW           10    .bss                ftl.o
+    0x00005800   0x00000420   Zero   RW          114    .bss                sata_main.o
+    0x00005c20   0x00000200   Zero   RW          151    .bss                mem_util.o
+    0x00005e20   0x00000840   Zero   RW          217    .bss                misc.o
+    0x00006660   0x00000050   Zero   RW          312    .bss                stdio_streams.o(c_t.l)
+    0x000066b0   0x00000050   Zero   RW          313    .bss                stdio_streams.o(c_t.l)
+    0x00006700   0x00000050   Zero   RW          314    .bss                stdio_streams.o(c_t.l)
+    0x00006750   0x000000dc   Zero   RW          321    .bss                rand.o(c_t.l)
+    0x0000682c   0x00000004   Zero   RW          604    .bss                rt_heap_descriptor.o(c_t.l)
+    0x00006830   0x00000004   Zero   RW          609    .bss                rt_errno_addr.o(c_t.l)
+    0x00006834   0x00000014   Zero   RW          659    .bss                rt_locale.o(c_t.l)
 
 
     Execution Region ER_IRQ_STACK (Base: 0x00016e00, Size: 0x00000400, Max: 0x00000400, ABSOLUTE, UNINIT)
@@ -1794,7 +1800,7 @@ Image component sizes
 
        740         20          8          0          0       2841   flash.o
       1412         24          0          0          0       5454   flash_wrapper.o
-      3884        388          0          8       4352      17108   ftl.o
+      3884         52          0         36        384      18276   ftl.o
        112         12          0          0          0        292   init.o
        488         56          0          0          0        751   initialize.o
       1324          8          0          0        512       7686   mem_util.o
@@ -1808,7 +1814,7 @@ Image component sizes
        412          8          0          0          0       2300   uart.o
 
     ----------------------------------------------------------------------
-     14056        940        638        544      12640      61305   Object Totals
+     14056        604        638        572       8672      62473   Object Totals
         72         24          0          0       4608          0   (incl. Generated)
          0          0          0          0          0          1   (incl. Padding)
 
@@ -1926,15 +1932,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     20560       1314        988        568      13128      63612   Grand Totals
-     20560       1314        988        568      13128      63612   ELF Image Totals
-     20560       1314        988        568          0          0   ROM Totals
+     20560        978        988        596       9160      64780   Grand Totals
+     20560        978        988        596       9160      64780   ELF Image Totals
+     20560        978        988        596          0          0   ROM Totals
 
 ==============================================================================
 
     Total RO  Size (Code + RO Data)                21548 (  21.04kB)
-    Total RW  Size (RW Data + ZI Data)             13696 (  13.38kB)
-    Total ROM Size (Code + RO Data + RW Data)      22116 (  21.60kB)
+    Total RW  Size (RW Data + ZI Data)              9756 (   9.53kB)
+    Total ROM Size (Code + RO Data + RW Data)      22144 (  21.63kB)
 
 ==============================================================================
 
