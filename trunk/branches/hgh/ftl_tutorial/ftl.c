@@ -454,9 +454,9 @@ void flush_merge_buffer()
 }
 void ftl_flush(void)
 {
-	flush_merge_buffer();
-	logging_misc_metadata();
-	logging_smt_buf_pieces();
+	//flush_merge_buffer();
+	//logging_misc_metadata();
+	//logging_smt_buf_pieces();
 }
 
 static BOOL32 is_bad_block(UINT32 const bank, UINT32 const vblk_offset)
@@ -534,7 +534,7 @@ static void loadding_smt_buf_pieces(UINT32 const buf_index, UINT32 const piece_i
 	UINT32 bank, row, piece_offset;
 	bank = piece_index / NUM_PIECES_PER_BANK;
 	piece_offset = piece_index % NUM_PIECES_PER_BANK;
-	row = g_misc_meta[bank].position_smt[(piece_index % NUM_PIECES_PER_BANK)]  * PAGES_PER_VBLK + g_misc_meta[bank].smt_piece_index[piece_offset] * (SECTORS_PER_SMT_PIECES / SECTORS_PER_PAGE);
+	row = g_misc_meta[bank].position_smt[piece_offset]  * PAGES_PER_VBLK + g_misc_meta[bank].smt_piece_index[piece_offset] * ((SECTORS_PER_SMT_PIECE + SECTORS_PER_PAGE - 1) / SECTORS_PER_PAGE);
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);		//FCP command for read one sector
 	SETREG(FCP_DMA_CNT, SECTORS_PER_SMT_PIECES * sizeof(UINT32));
 	SETREG(FCP_COL, 0);						
@@ -551,11 +551,11 @@ static void logging_smt_buf_piece(UINT32 const buf_index)
 	piece_index = smt_buf_pindex[buf_index];
 	bank = piece_index / NUM_PIECES_PER_BANK;
 	piece_offset = piece_index % NUM_PIECES_PER_BANK;
-	if(g_misc_meta[bank].smt_piece_index[piece_offset] == (PAGES_PER_VBLK / (SECTORS_PER_SMT_PIECES / SECTORS_PER_PAGE)) - 1)
+	if(g_misc_meta[bank].smt_piece_index[piece_offset] == (PAGES_PER_VBLK / ((SECTORS_PER_SMT_PIECE + SECTORS_PER_PAGE - 1) / SECTORS_PER_PAGE)) - 1)
 		g_misc_meta[bank].smt_piece_index[piece_offset] = 0;
 	else
 		g_misc_meta[bank].smt_piece_index[piece_offset]++;
-	row = g_misc_meta[bank].position_smt[(piece_index % NUM_PIECES_PER_BANK)] * PAGES_PER_VBLK + g_misc_meta[bank].smt_piece_index[piece_offset] * (SECTORS_PER_SMT_PIECES / SECTORS_PER_PAGE);
+	row = g_misc_meta[bank].position_smt[piece_offset] * PAGES_PER_VBLK + g_misc_meta[bank].smt_piece_index[piece_offset] * ((SECTORS_PER_SMT_PIECE + SECTORS_PER_PAGE - 1) / SECTORS_PER_PAGE);
 	SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 	SETREG(FCP_BANK, bank);
 	SETREG(FCP_OPTION, FO_E | FO_B_W_DRDY);

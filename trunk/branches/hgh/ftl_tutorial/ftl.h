@@ -29,7 +29,7 @@
 #define NUM_RD_BUFFERS		(((NUM_RW_BUFFERS / 8) + NUM_BANKS - 1) / NUM_BANKS * NUM_BANKS)
 #define NUM_WR_BUFFERS		(NUM_RW_BUFFERS - NUM_RD_BUFFERS)
 #define NUM_COPY_BUFFERS	NUM_BANKS_MAX
-#define NUM_FTL_BUFFERS		1
+#define NUM_FTL_BUFFERS		NUM_BANKS_MAX
 #define NUM_HIL_BUFFERS		1
 #define NUM_TEMP_BUFFERS	1
 
@@ -77,7 +77,7 @@
 
 #define NUM_BUF_PIECES 16
 #define NUM_PIECES_PER_BANK 32
-#define SECTORS_PER_SMT_PIECES (SECTORS_PER_BANK / 32)
+#define SECTORS_PER_SMT_PIECES (SECTORS_PER_BANK / NUM_PIECES_PER_BANK)
 ///////////////////////////////
 // FTL public functions
 ///////////////////////////////
