@@ -43,9 +43,7 @@ static UINT32 get_victim_smt(void);
 UINT32 g_ftl_read_buf_id;
 UINT32 g_ftl_write_buf_id;
 
-#define NUM_BUF_PIECES 16
-#define NUM_PIECES_PER_BANK 32
-#define SECTORS_PER_SMT_PIECES (SECTORS_PER_BANK / 32)
+
 static volatile UINT32 g_read_fail_count;
 static volatile UINT32 g_program_fail_count;
 static volatile UINT32 g_erase_fail_count;
