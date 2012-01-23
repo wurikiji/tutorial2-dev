@@ -238,7 +238,7 @@ static void tc_read(const UINT32 start_lsn, const UINT32 io_num, const UINT32 se
 {
     UINT32 io_cnt = io_num;
 
-    ptimer_start();
+    
     for (UINT32 loop = 0; loop < io_cnt; loop++) {
 	    ftl_read(loop, sector_size);
     }
