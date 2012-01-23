@@ -72,7 +72,7 @@ static misc_metadata  g_misc_meta[NUM_BANKS];
 UINT32 g_target_bank;
 UINT32 g_target_sect;
 UINT32 g_merge_buffer_lsn[SECTORS_PER_PAGE];
-
+UINT32 g_target_smt_buf;
 UINT32 smt_buf_pindex[NUM_BUF_PIECES];
 UINT32 smt_buf_dirty[NUM_BUF_PIECES];
 UINT32 smt_buf_prio[NUM_BUF_PIECES];
@@ -93,6 +93,7 @@ void ftl_open(void)
 	//ogh
 	g_target_bank = 0;
 	g_target_sect = 0;
+	g_target_smt_buf = 0;
 	for (bank = 0; bank < NUM_BANKS; bank++)
 	{
 		//g_misc_meta[bank].g_merge_buff_sect = 0;
@@ -527,7 +528,11 @@ static void init_smt(void)
 			g_misc_meta[bank].smt_piece_index[index] = 0;
 	}
 	for(index = 0; index < NUM_BUF_PIECES; index++)
+	{
 		smt_buf_pindex[index] = 0;
+		smt_buf_dirty[index] = 0;
+		smt_buf_prio[index] = 0;
+	}
 }
 static void loadding_smt_buf_pieces(UINT32 const buf_index, UINT32 const piece_index)
 {
@@ -631,6 +636,12 @@ static UINT32 get_victim_smt(void)
 	UINT32 victim, index, result;
 	victim = 0xffffffff;
 	result = 0;
+	if(g_target_smt_buf < NUM_BUF_PIECES)
+	{
+		result = g_target_smt_buf;
+		g_target_smt_buf++;
+		return result;
+	}
 	for(index = 0 ; index < NUM_BUF_PIECES;index++)
 	{
 		if(victim > smt_buf_prio[index])
