@@ -672,9 +672,11 @@ void flush_merge_buffer()
 }
 void ftl_flush(void)
 {
+#if OPTION_FTL_TEST == 0
 	flush_merge_buffer();
 	logging_map_table();
 	logging_misc_meta();
+#endif
 }
 
 static BOOL32 is_bad_block(UINT32 const bank, UINT32 const vblk_offset)
