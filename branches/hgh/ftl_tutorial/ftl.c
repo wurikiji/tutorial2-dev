@@ -556,7 +556,7 @@ static void logging_smt_buf_piece(UINT32 const buf_index)
 	piece_index = smt_buf_pindex[buf_index];
 	bank = piece_index / NUM_PIECES_PER_BANK;
 	piece_offset = piece_index % NUM_PIECES_PER_BANK;
-	if(g_misc_meta[bank].smt_piece_index[piece_offset] == (UINT32)(PAGES_PER_VBLK / ((SECTORS_PER_SMT_PIECES + SECTORS_PER_PAGE - 1) / SECTORS_PER_PAGE)) - 1)
+	if(g_misc_meta[bank].smt_piece_index[piece_offset] == (UINT32)(PAGES_PER_VBLK * SECTORS_PER_PAGE) / SECTORS_PER_SMT_PIECES)
 		g_misc_meta[bank].smt_piece_index[piece_offset] = 0;
 	else
 		g_misc_meta[bank].smt_piece_index[piece_offset]++;
@@ -607,6 +607,7 @@ static UINT32 get_psn(UINT32 const lba)
 	}
     
     // Get PSN from the SMT piece.
+	smt_buf_prio[buf_index]++;
     return read_dram_32(SMT_PIECES_ADDR + buf_index * (sizeof(UINT32) * SECTORS_PER_SMT_PIECES) + sect_offset * sizeof(UINT32));
 }
 static void set_psn(UINT32 const lba, UINT32 const psn)		
@@ -629,6 +630,7 @@ static void set_psn(UINT32 const lba, UINT32 const psn)
     
     // Update PSN on the SMT piece.
 	smt_buf_dirty[buf_index] = 1;
+	smt_buf_prio[buf_index]++;
     write_dram_32(SMT_PIECES_ADDR + buf_index * (sizeof(UINT32) * SECTORS_PER_SMT_PIECES) + sect_offset * sizeof(UINT32), psn);
 }
 static UINT32 get_victim_smt(void)
