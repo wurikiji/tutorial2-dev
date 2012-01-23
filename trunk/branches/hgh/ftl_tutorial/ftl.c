@@ -396,7 +396,7 @@ void ftl_write_sector(UINT32 const lba)
 			SETREG(FCP_ROW_L(new_bank),new_row);
 			SETREG(FCP_ROW_H(new_bank),new_row);
 
-			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
+			flash_issue_cmd(new_bank,RETURN_WHEN_DONE);
 
 			/* initialize merge buffer page's sector point */
 		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
@@ -813,6 +813,11 @@ static void format(void)
 			if(count[bank] < NUM_PIECES_PER_BANK)
 			{
 				g_misc_meta[bank].position_smt[count[bank]] = vblk_offset;
+			}
+			if(count[bank] == NUM_PIECES_PER_BANK)
+			{
+				g_misc_meta[bank].g_target_row = vblk_offset * PAGES_PER_VBLK;
+				count[bank]++;
 			}
 			SETREG(FCP_CMD, FC_ERASE);
 			SETREG(FCP_BANK, REAL_BANK(bank));
