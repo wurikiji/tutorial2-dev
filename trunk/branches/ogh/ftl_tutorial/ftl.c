@@ -86,16 +86,16 @@ UINT32 g_target_sect;
 UINT32 g_merge_buffer_lsn[SECTORS_PER_PAGE];
 
 //debug
-UINT32 g_debug_pages = PAGES_PER_VBLK;
-UINT32 g_debug_smt_limit = SMT_LIMIT;
-UINT32 g_debug_smt_inc_size = SMT_INC_SIZE;
-UINT32 g_smt_size = SMT_BYTES;
-UINT32 g_smt_piece_size = SMT_PIECE_BYTES;
-UINT32 g_bytes_per_phyp = BYTES_PER_PHYPAGE;
-UINT32 g_bytes_per_vp = BYTES_PER_PAGE;
-UINT32 g_sectors_per_bank = SECTORS_PER_BANK;
-UINT32 g_pages_per_blk = PAGES_PER_BLK;
-UINT32 g_pages_per_vblk = PAGES_PER_VBLK;
+static volatile UINT32 g_debug_pages = PAGES_PER_VBLK;
+static volatile UINT32 g_debug_smt_limit = SMT_LIMIT;
+static volatile UINT32 g_debug_smt_inc_size = SMT_INC_SIZE;
+static volatile UINT32 g_smt_size = SMT_BYTES;
+static volatile UINT32 g_smt_piece_size = SMT_PIECE_BYTES;
+static volatile UINT32 g_bytes_per_phyp = BYTES_PER_PHYPAGE;
+static volatile UINT32 g_bytes_per_vp = BYTES_PER_PAGE;
+static volatile UINT32 g_sectors_per_bank = SECTORS_PER_BANK;
+static volatile UINT32 g_pages_per_blk = PAGES_PER_BLK;
+static volatile UINT32 g_pages_per_vblk = PAGES_PER_VBLK;
 
 void logging_misc_meta()
 {
@@ -192,7 +192,7 @@ void load_smt_piece(UINT32 idx){
 	UINT32 dest;
 	bank = idx / NUM_BANKS_MAX;
 	block = idx % NUM_BANKS_MAX;
-	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
+	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][block]);
 	if( g_smt_target == NUM_BANKS_MAX || g_smt_full == 1){
 		g_smt_full = 1;
 		flush_smt_piece(g_smt_victim);
@@ -232,7 +232,7 @@ void flush_smt_piece(UINT32 idx)
 		}
 		//update and flash 
 		g_misc_meta[bank].smt_pieces[block] = (g_misc_meta[bank].smt_pieces[block] + 1) % SMT_LIMIT;
-		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + ( PAGES_PER_BLK * g_bad_list[bank][block]);
+		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + ( PAGES_PER_VBLK * g_bad_list[bank][block]);
 		// flash map data to nand
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
