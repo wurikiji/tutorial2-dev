@@ -1051,8 +1051,12 @@ static void format(void)
 		}
 	}
 
-	//for(bank = 0; bank < NUM_BANKS; bank++)
-		//write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) + g_misc_meta[bank].gc_blk * sizeof(UINT32), 0xffffffff);
+	for(bank = 0; bank < NUM_BANKS; bank++)
+	{
+		g_misc_meta[bank].gc_blk = g_free_start[bank];
+		g_free_start[bank]++;
+		write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) + g_misc_meta[bank].gc_blk * sizeof(UINT32), 0xffffffff);
+	}
 	// In general, write_format_mark() should be called upon completion of low level format in order to prevent
 	// format() from being called again.
 	// However, since the tutorial FTL does not support power off recovery,
