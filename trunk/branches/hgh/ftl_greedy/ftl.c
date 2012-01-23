@@ -878,6 +878,7 @@ static void logging_misc_metadata(void)
     }
     flash_finish();
 }
+
 static void logging_pmap_table(void)
 {
     UINT32 pmap_addr  = PAGE_MAP_ADDR;

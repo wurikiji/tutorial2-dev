@@ -7,7 +7,7 @@
 --debug
 --cpu=ARM7TDMI-S
 --fpu=None
--O1
+-O0
 --forceinline
 --split_ldm
 --apcs=interwork
