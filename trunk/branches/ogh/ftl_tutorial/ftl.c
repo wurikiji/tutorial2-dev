@@ -69,6 +69,7 @@ UINT32 smt_piece_map[ NUM_BANKS_MAX * NUM_BANKS_MAX ]; // where a smt is in dram
 // initialize 0 
 UINT32 g_smt_target;	// loading place on dram space
 UINT32 g_smt_victim;	// map,flush target
+UINT32 g_smt_full;	// map data area full check
 /* end smt */
 //
 //bad block
@@ -192,15 +193,17 @@ void load_smt_piece(UINT32 idx){
 	bank = idx / NUM_BANKS_MAX;
 	block = idx % NUM_BANKS_MAX;
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
-	if( g_smt_target == NUM_BANKS_MAX){
-		g_smt_target = 0;
+	if( g_smt_target == NUM_BANKS_MAX || g_smt_full == 1){
+		g_smt_full = 1;
 		flush_smt_piece(g_smt_victim);
-		g_smt_victim = (g_smt_victim +1 ) % NUM_BANKS_MAX;
+		g_smt_victim = (g_smt_victim + 1 ) % NUM_BANKS_MAX;
+		g_smt_target = (g_smt_target + 1 ) % NUM_BANKS_MAX;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
 	SETREG(FCP_DMA_CNT,SMT_PIECE_BYTES);
 	SETREG(FCP_COL, 0);
-	SETREG(FCP_DMA_ADDR, SMT_ADDR + (g_smt_target * SMT_PIECE_BYTES));
+	dest = SMT_ADDR + (g_smt_target * SMT_PIECE_BYTES);
+	SETREG(FCP_DMA_ADDR, dest);
 	SETREG(FCP_OPTION, FO_P | FO_E );		
 	SETREG(FCP_ROW_L(bank), row);
 	SETREG(FCP_ROW_H(bank), row);
@@ -210,7 +213,6 @@ void load_smt_piece(UINT32 idx){
 	smt_piece_map[idx] = g_smt_target;
 	smt_bit_map[bank] &= ~( 1 <<block );
 	if(( g_misc_meta[bank].smt_init & ( 1 << block ) ) == 0){
-		dest = SMT_ADDR + (g_smt_target * SMT_PIECE_BYTES);
 		mem_set_dram( dest, 0x00, SMT_PIECE_BYTES);
 		g_misc_meta[bank].smt_init |= (1 <<block);
 	}
@@ -219,7 +221,7 @@ void load_smt_piece(UINT32 idx){
 void flush_smt_piece(UINT32 idx)
 {
 	UINT32 bank,row,block;
-
+	UINT32 dest;
 	bank = smt_dram_map[idx] / NUM_BANKS_MAX;
 	block = smt_dram_map[idx] % NUM_BANKS_MAX;
 	if((smt_bit_map[bank] & (1<<block)) != 0){
@@ -234,7 +236,8 @@ void flush_smt_piece(UINT32 idx)
 		// flash map data to nand
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
-		SETREG(FCP_DMA_ADDR,SMT_ADDR + (idx * SMT_PIECE_BYTES));
+		dest = SMT_ADDR + (idx * SMT_PIECE_BYTES);
+		SETREG(FCP_DMA_ADDR,dest);
 		SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
 		SETREG(FCP_COL,0);
 		SETREG(FCP_ROW_L(bank),row);
@@ -275,6 +278,7 @@ void init_meta_data()
 	}
 	g_smt_target = 0;
 	g_smt_victim = 0;
+	g_smt_full   = 0 ;
 	g_target_bank = 0;
 	g_target_sect = 0;
 }
