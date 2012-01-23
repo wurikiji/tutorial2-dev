@@ -784,8 +784,7 @@ static void format(void)
 	// At the end of this function, you can put a call to led(1) to indicate that the low level format
 	// has been completed. When the LED is on, turn off the power, connect the SATA cable, and turn on
 	// the power again.
-
-	UINT32 vblk_offset, bank, count[bank];
+	UINT32 vblk_offset, bank, count[NUM_BANKS];
 	for(bank = 0 ;  bank < NUM_BANKS; bank++)
 	{
 		count[bank] = 0;
