@@ -1019,7 +1019,7 @@ static void format(void)
 	{
 		g_misc_meta[bank].full_blk_count = 1 + 33;
 		g_misc_meta[bank].gc_blk = 1;
-		write_dram_32(VSECT_COUNT_ADDR + bank * PBLKS_PER_BANK * sizeof(UINT32) , 0xffffffff);
+		write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) , 0xffffffff);
 	}
 	for (vblk_offset = 1; vblk_offset < VBLKS_PER_BANK; vblk_offset++)
 	{
@@ -1027,7 +1027,7 @@ static void format(void)
 		{
 			if (is_bad_block(bank, vblk_offset))
 			{
-				write_dram_32(VSECT_COUNT_ADDR + bank * PBLKS_PER_BANK * sizeof(UINT32) + vblk_offset * sizeof(UINT32), 0xffffffff);
+				write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) + vblk_offset * sizeof(UINT32), 0xffffffff);
 				g_misc_meta[bank].full_blk_count++;
 				continue;
 			}
@@ -1052,7 +1052,7 @@ static void format(void)
 	}
 
 	for(bank = 0; bank < NUM_BANKS; bank++)
-		write_dram_32(VSECT_COUNT_ADDR + bank * PBLKS_PER_BANK * sizeof(UINT32) + g_misc_meta[bank].gc_blk * sizeof(UINT32), 0xffffffff);
+		write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) + g_misc_meta[bank].gc_blk * sizeof(UINT32), 0xffffffff);
 	// In general, write_format_mark() should be called upon completion of low level format in order to prevent
 	// format() from being called again.
 	// However, since the tutorial FTL does not support power off recovery,
