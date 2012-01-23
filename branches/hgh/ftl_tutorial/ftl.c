@@ -189,7 +189,7 @@ void ftl_open(void)
 		format();
 	}
 
-
+	init_smt();
 	//*Red//
 	// STEP 3 - initialize sector mapping table pieces
 	// The page mapping table is too large to fit in SRAM and DRAM.
