@@ -118,7 +118,7 @@ void logging_misc_meta()
 	}
 	flash_finish();
 }
-void gc_test()
+/*void gc_test()
 {
 	UINT32 i, j, k, vcount;
 	for(i=0; ;i++)
@@ -128,7 +128,7 @@ void gc_test()
 	//	write_dram_32(VSECT_COUNT_ADDR + 0 * VBLKS_PER_BANK * sizeof(UINT32) + k * sizeof(UINT32), rand() % SECTORS_PER_BANK);
 
 	}
-}
+}*/
 void loading_misc_meta()
 {
 	/*int i;
