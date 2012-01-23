@@ -559,7 +559,7 @@ static void logging_smt_cache(void)     // modified by RED
                 vpn = get_bundle_map_vpn(bundle, bank);
                 vblock = vpn / PAGES_PER_VBLK;
                 nand_block_erase(bank, vblock);
-				set_bundle_map_vpn(bundle, vblock * PAGES_PER_VBLK); 
+				set_bundle_map_vpn(bundle, bank, vblock * PAGES_PER_VBLK); 
             }
         }
         
@@ -612,7 +612,7 @@ static void evict_smt_bundle(UINT32 const b_index)  // modified by RED
             vpn = get_bundle_map_vpn(bundle, bank);
             vblock = vpn / PAGES_PER_VBLK;
             nand_block_erase(bank, vblock);
-			set_bundle_map_vpn(bundle, vblock * PAGES_PER_VBLK); 
+			set_bundle_map_vpn(bundle, bank, vblock * PAGES_PER_VBLK); 
         }
     }
     
@@ -735,7 +735,7 @@ static void update_bundle_lives()                  // added by RED
     {
         // if the remaining life is not 0, decrease it by 1.
         life = get_life_on_cache(b_index);
-		if (life == 0 && life == NOT_EXIST)
+		if (life == 0 || life == NOT_EXIST)
             continue;
         dec_life_on_cache(b_index);
     }
