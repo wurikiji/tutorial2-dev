@@ -194,7 +194,7 @@ void load_smt_piece(UINT32 idx){
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
 	if( g_smt_target == NUM_BANKS_MAX){
 		g_smt_target = 0;
-		flush_smt_piece(smt_dram_map[g_smt_victim]);
+		flush_smt_piece(g_smt_victim);
 		g_smt_victim = (g_smt_victim +1 ) % NUM_BANKS_MAX;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
@@ -226,7 +226,7 @@ void flush_smt_piece(UINT32 idx)
 		//  smt piece data
 		if( g_misc_meta[bank].smt_pieces[block] >= SMT_LIMIT - 1){
 			// erase 
-			nand_block_erase(bank,g_bad_list[bank][block]);
+			nand_block_erase_sync(bank,g_bad_list[bank][block]);
 		}
 		//update and flash 
 		g_misc_meta[bank].smt_pieces[block] = (g_misc_meta[bank].smt_pieces[block] + 1) % SMT_LIMIT;
@@ -234,7 +234,7 @@ void flush_smt_piece(UINT32 idx)
 		// flash map data to nand
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
-		SETREG(FCP_DMA_ADDR,SMT_ADDR + (g_smt_victim * SMT_PIECE_BYTES));
+		SETREG(FCP_DMA_ADDR,SMT_ADDR + (idx * SMT_PIECE_BYTES));
 		SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
 		SETREG(FCP_COL,0);
 		SETREG(FCP_ROW_L(bank),row);
