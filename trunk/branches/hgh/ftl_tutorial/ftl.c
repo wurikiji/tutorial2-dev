@@ -70,7 +70,7 @@ UINT32 smt_bit_map[ NUM_BANKS_MAX ]; //dirty information
 UINT32 smt_dram_bit[ NUM_BANKS_MAX ]; // on dram information
 /* initialize -1 */
 UINT32 smt_dram_map[ NUM_BANKS_MAX ]; // smt table index information
-UINT32 smt_piece_map[ NUM_BANKS_MAX * NUM_BANKS_MAX ]; // smt 가 dram 의 어디에 있나
+UINT32 smt_piece_map[ NUM_BANKS_MAX * NUM_BANKS_MAX ]; // where a smt is in dram
 // initialize 0 
 UINT32 g_smt_target;	// loading place on dram space
 UINT32 g_smt_victim;	// map,flush target
@@ -97,6 +97,10 @@ UINT32 g_smt_size = SMT_BYTES;
 UINT32 g_smt_piece_size = SMT_PIECE_BYTES;
 UINT32 g_bytes_per_phyp = BYTES_PER_PHYPAGE;
 UINT32 g_bytes_per_vp = BYTES_PER_PAGE;
+UINT32 g_sectors_per_bank = SECTORS_PER_BANK;
+UINT32 g_pages_per_blk = PAGES_PER_BLK;
+UINT32 g_pages_per_vblk = PAGES_PER_VBLK;
+
 void logging_misc_meta()
 {
 	UINT32 bank;
@@ -118,17 +122,6 @@ void logging_misc_meta()
 	}
 	flash_finish();
 }
-/*void gc_test()
-{
-	UINT32 i, j, k, vcount;
-	for(i=0; ;i++)
-	{
-		j = get_free_page(0);
-		k = j / PAGES_PER_VBLK;
-	//	write_dram_32(VSECT_COUNT_ADDR + 0 * VBLKS_PER_BANK * sizeof(UINT32) + k * sizeof(UINT32), rand() % SECTORS_PER_BANK);
-
-	}
-}*/
 void loading_misc_meta()
 {
 	/*int i;
@@ -200,6 +193,7 @@ void loading_misc_meta()
 /* g_smt_target, g_smt_victim */
 void load_smt_piece(UINT32 idx){
 	UINT32 bank,row,block;
+	UINT32 dest;
 	bank = idx / NUM_BANKS_MAX;
 	block = idx % NUM_BANKS_MAX;
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
@@ -221,7 +215,8 @@ void load_smt_piece(UINT32 idx){
 	smt_piece_map[idx] = g_smt_target;
 	smt_bit_map[bank] &= ~( 1 <<block );
 	if(( g_misc_meta[bank].smt_init & ( 1 << block ) ) == 0){
-		mem_set_dram( SMT_ADDR + (g_smt_target * SMT_PIECE_BYTES), 0 , SMT_PIECE_BYTES);
+		dest = SMT_ADDR + (g_smt_target * SMT_PIECE_BYTES);
+		mem_set_dram( dest, 0x00, SMT_PIECE_BYTES);
 		g_misc_meta[bank].smt_init |= (1 <<block);
 	}
 	g_smt_target++;
@@ -240,7 +235,7 @@ void flush_smt_piece(UINT32 idx)
 		}
 		//update and flash 
 		g_misc_meta[bank].smt_pieces[block] = (g_misc_meta[bank].smt_pieces[block] + 1) % SMT_LIMIT;
-		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
+		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + ( PAGES_PER_BLK * g_bad_list[bank][block]);
 		// flash map data to nand
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
@@ -526,7 +521,6 @@ void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added b
 
 void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 {
-	gc_test();
 	UINT32 i, num_sectors_to_write;
 	UINT32 remain_sectors = total_sectors;
 	UINT32 next_lba = lba;
@@ -572,6 +566,7 @@ void ftl_write_sector(UINT32 const lba)
 	int i;
 	//new_bank = lba % NUM_BANKS; // get bank number of sector
 	new_bank = g_target_bank;
+	
 	temp = get_psn(lba);
 	old_bank = temp / SECTORS_PER_BANK;
 	old_blk = (temp % SECTORS_PER_BANK) / (SECTORS_PER_PAGE * PAGES_PER_BLK);
@@ -751,6 +746,7 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	bank = lba / SECTORS_PER_BANK;
 	block = (lba % SECTORS_PER_BANK)  / (sectors_per_mblk);
 	sector = (lba % SECTORS_PER_BANK) % (sectors_per_mblk);
+
 	if( (smt_dram_bit[ bank ] & (1 << block)) == 0)
 	{
 		load_smt_piece( bank * NUM_BANKS_MAX + block);
@@ -769,11 +765,12 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 	//int i;
 	//mem_copy(dst,src,size);
 	UINT32 dst, bank, block, sector;
+
 	UINT32 sectors_per_mblk = (SECTORS_PER_BANK) / NUM_BANKS_MAX;
 
 	bank = lba / SECTORS_PER_BANK;
-	block = (lba % SECTORS_PER_BANK)  / (sectors_per_mblk);
-	sector = (lba % SECTORS_PER_BANK) % (sectors_per_mblk);
+	block = ((lba % SECTORS_PER_BANK)) / (sectors_per_mblk);
+	sector = ((lba % SECTORS_PER_BANK)) % (sectors_per_mblk);
 
 	if(( smt_dram_bit[ bank ] & (1 << block)) == 0)
 	{
@@ -1053,6 +1050,7 @@ static void format(void)
 			SETREG(FCP_ISSUE, NULL);
 		}
 	}
+
 	for(bank = 0; bank < NUM_BANKS; bank++)
 		write_dram_32(VSECT_COUNT_ADDR + bank * PBLKS_PER_BANK * sizeof(UINT32) + g_misc_meta[bank].gc_blk * sizeof(UINT32), 0xffffffff);
 	// In general, write_format_mark() should be called upon completion of low level format in order to prevent
@@ -1113,7 +1111,7 @@ void ftl_isr(void)
 static void sanity_check(void)
 {
 	UINT32 dram_requirement = RD_BUF_BYTES + WR_BUF_BYTES + COPY_BUF_BYTES + FTL_BUF_BYTES
-		+ HIL_BUF_BYTES + TEMP_BUF_BYTES + SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + SMT_DRAM_BYTES;
+		+ HIL_BUF_BYTES + TEMP_BUF_BYTES + SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + SMT_DRAM_BYTES + VSECT_COUNT_BYTES;
 
 	if (dram_requirement > DRAM_SIZE)
 	{
