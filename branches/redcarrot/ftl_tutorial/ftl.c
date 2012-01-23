@@ -530,7 +530,7 @@ static BOOL32 is_bad_block(UINT32 const bank, UINT32 const vblock)
 
 static void init_smt_metadata(void)     // modified by RED
 {
-    UINT32 bank, vblock, bundle;
+    UINT32 bank, vblock, bundle, piece, ftl_buf;
     
     // for each bank, assign SMT blocks.
     for (bank = 0; bank < NUM_BANKS; bank++)
@@ -548,6 +548,43 @@ static void init_smt_metadata(void)     // modified by RED
         }
     	ASSERT(vblock < VBLKS_PER_BANK);
     }
+
+	// for each bundle, erase all SMT blocks.
+	for (bundle = 0; bundle < BUNDLES_ON_CACHE; bundle++)
+	{
+		flash_finish();
+		for (bank = 0; bank < NUM_BANKS; bank++)
+		{
+        	vblock = get_bundle_map_vpn(bundle, bank) / PAGES_PER_VBLK;
+            nand_block_erase(bank, vblock);
+		}
+	}
+	flash_finish();
+
+	// for each bundle, write initial SMT blocks.
+	mem_set_dram(FTL_BUF_ADDR, 0, BYTES_PER_PAGE * NUM_BANKS);
+	for (bundle = 0; bundle < BUNDLES_ON_CACHE; bundle++)
+	{
+        for (piece = 0; piece < PIECES_PER_BUNDLE; piece++) 
+        {
+            flash_finish();
+            // write the pages on FTL buffer to NAND.
+            for (bank = 0; bank < NUM_BANKS; bank++)
+            {
+                vpn = get_bundle_map_vpn(bundle, bank); // get vpn of the page to be written.
+                ftl_buf = FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE);
+                nand_page_ptprogram(bank,
+                                    vpn / PAGES_PER_VBLK,
+                                    vpn % PAGES_PER_VBLK,
+                                    0,
+                                    BYTES_PER_PAGE / BYTES_PER_SECTOR,
+                                    ftl_buf);
+                
+                inc_bundle_map_vpn(bundle, bank);   // increase SMT block cursor.
+            }
+            flash_finish();
+        }
+	}
 }
 
 static void logging_smt_cache(void)     // modified by RED
@@ -613,7 +650,7 @@ static void evict_smt_bundle(UINT32 const b_index)  // modified by RED
     UINT32 bundle, piece, bank, vpn, ftl_buf, cache_addr, vblock;
     
     bundle = get_bundle_on_cache(b_index);  // get the present bundle number.
-    ASSERT(bundle != NOT_EXIST)      // the bundle space on cache must not empty.
+    ASSERT(bundle != NOT_EXIST);      // the bundle space on cache must not empty.
     vpn = get_bundle_map_vpn(bundle, 0);    // get the vpn of the bundle's first bank.
     
     // check if there is sufficient space for logging SMT cache.
@@ -725,7 +762,7 @@ static UINT32 select_victim_bundle()                // added by RED
     UINT32 least_life, least, b_index, life;
     least_life = get_life_on_cache(0);
     life = least_life;
-    least = 0;
+	least = NOT_EXIST; // NOT_EXIST = (UINT32)0xFFFFFFFF (MAX VALUE)
     // select a bundle of which remaining life is the least, as victim bundle.
     for (b_index = 1; b_index < BUNDLES_ON_CACHE; b_index++)
     {
@@ -736,8 +773,10 @@ static UINT32 select_victim_bundle()                // added by RED
             least = b_index;
         }
     }
+	// If there is no victim bundle, return NOT_EXIST automatically.
     return least;
 }
+
 static void update_bundle_lives()                  // added by RED
 {
     // Update the remaining lives of each bundles on DRAM.
@@ -1013,7 +1052,7 @@ static void init_metadata()
 	{
 		g_misc_meta[bank].g_scan_list_entries = 0;
 		//g_misc_meta[bank].g_merge_buff_sect = 0;
-		//g_misc_meta[bank].cur_miscblk_vpn = MISCBLK_VBN * PAGES_PER_BLK - 1; 
+		//g_misc_meta[bank].cur_miscblk_vpn = MISCBLK_VBN * PAGES_PER_VBLK - 1; 
         //		
         //		for(sect_count = 0; sect_count < SECTORS_PER_PAGE; sect_count++)
         //		{
@@ -1030,16 +1069,16 @@ static void logging_misc_metadata(void)
 	for(bank = 0; bank < NUM_BANKS; bank++)
 	{
 		g_misc_meta[bank].cur_miscblk_vpn++;
-		if(g_misc_meta[bank].cur_miscblk_vpn / PAGES_PER_BLK != MISCBLK_VBN)
+		if(g_misc_meta[bank].cur_miscblk_vpn / PAGES_PER_VBLK != MISCBLK_VBN)
 		{
 			nand_block_erase(bank, MISCBLK_VBN);
-			g_misc_meta[bank].cur_miscblk_vpn = MISCBLK_VBN * PAGES_PER_BLK;
+			g_misc_meta[bank].cur_miscblk_vpn = MISCBLK_VBN * PAGES_PER_VBLK;
 		}
 		ftl_buf = FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE);
 		mem_copy(ftl_buf, &(g_misc_meta[bank]), sizeof(misc_metadata));
 		nand_page_ptprogram(bank,
                             MISCBLK_VBN,
-                            g_misc_meta[bank].cur_miscblk_vpn % PAGES_PER_BLK,
+                            g_misc_meta[bank].cur_miscblk_vpn % PAGES_PER_VBLK,
                             0,
                             NUM_MISC_META_SECT,
                             FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE));
@@ -1058,7 +1097,7 @@ static void loading_misc_metadata(void)
 	flash_clear_irq();	// clear any flash interrupt flags that might have been set
     
     // scan valid metadata in descending order from last page offset
-    for (page_num = PAGES_PER_BLK - 1; page_num != ((UINT32) - 1); page_num--)
+    for (page_num = PAGES_PER_VBLK - 1; page_num != ((UINT32) - 1); page_num--)
     {
         for (bank = 0; bank < NUM_BANKS; bank++)
         {
