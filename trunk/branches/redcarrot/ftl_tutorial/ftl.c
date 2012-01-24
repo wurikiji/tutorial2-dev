@@ -760,9 +760,9 @@ static UINT32 select_victim_bundle()                // added by RED
     // Select victim bundle for eviction when empty SMT space on DRAM is needed.
     // Victim selection algorithm : LRU(Least Recently Used)
     UINT32 least_life, least, b_index, life;
-    least_life = get_life_on_cache(0);
+    least_life = NOT_EXIST; // NOT_EXIST = (UINT32)0xFFFFFFFF (MAX VALUE)
     life = least_life;
-	least = NOT_EXIST; // NOT_EXIST = (UINT32)0xFFFFFFFF (MAX VALUE)
+	least = NOT_EXIST; // NOT_EXIST = (UINT32)0xFFFFFFFF (default return value)
     // select a bundle of which remaining life is the least, as victim bundle.
     for (b_index = 1; b_index < BUNDLES_ON_CACHE; b_index++)
     {
