@@ -252,7 +252,7 @@ void flush_smt_piece(UINT32 idx)
 		}
 		flash_issue_cmd(bank,RETURN_WHEN_DONE);
 	}
-	smt_piece_map[smt_dram_map[idx]] = -1;
+	smt_piece_map[smt_dram_map[idx]] = (UINT32)-1;
 }
 // flush SMT 
 void logging_map_table()
