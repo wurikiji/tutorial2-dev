@@ -188,7 +188,7 @@ void ftl_open(void)
 
 		format();
 	}
-
+	mem_set_dram(SMT_PIECES_ADDR, NULL, SMT_PIECES_BYTES);
 	init_smt();
 	//*Red//
 	// STEP 3 - initialize sector mapping table pieces
@@ -396,7 +396,7 @@ void ftl_write_sector(UINT32 const lba)
 			SETREG(FCP_ROW_L(new_bank),new_row);
 			SETREG(FCP_ROW_H(new_bank),new_row);
 
-			flash_issue_cmd(new_bank,RETURN_WHEN_DONE);
+			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
 
 			/* initialize merge buffer page's sector point */
 		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
@@ -532,6 +532,7 @@ static void init_smt(void)
 		smt_buf_pindex[index] = 0;
 		smt_buf_dirty[index] = 0;
 		smt_buf_prio[index] = 0;
+		smt_buf_pindex[index] = 0xffffffff;
 	}
 }
 static void loadding_smt_buf_pieces(UINT32 const buf_index, UINT32 const piece_index)
@@ -539,7 +540,7 @@ static void loadding_smt_buf_pieces(UINT32 const buf_index, UINT32 const piece_i
 	UINT32 bank, row, piece_offset;
 	bank = piece_index / NUM_PIECES_PER_BANK;
 	piece_offset = piece_index % NUM_PIECES_PER_BANK;
-	row = g_misc_meta[bank].position_smt[piece_offset]  * PAGES_PER_VBLK + g_misc_meta[bank].smt_piece_index[piece_offset] * ((SECTORS_PER_SMT_PIECES + SECTORS_PER_PAGE - 1) / SECTORS_PER_PAGE);
+	row = g_misc_meta[bank].position_smt[piece_offset] * PAGES_PER_VBLK + g_misc_meta[bank].smt_piece_index[piece_offset] * ((SECTORS_PER_SMT_PIECES + SECTORS_PER_PAGE - 1) / SECTORS_PER_PAGE);
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);		//FCP command for read one sector
 	SETREG(FCP_DMA_CNT, SECTORS_PER_SMT_PIECES * sizeof(UINT32));
 	SETREG(FCP_COL, 0);						
@@ -637,7 +638,7 @@ static UINT32 get_victim_smt(void)
 {
 	UINT32 victim, index, result;
 	victim = 0xffffffff;
-	result = 0;
+	result = 0xffffffff;
 	if(g_target_smt_buf < NUM_BUF_PIECES)
 	{
 		result = g_target_smt_buf;
@@ -653,6 +654,7 @@ static UINT32 get_victim_smt(void)
 		}
 		smt_buf_prio[index] = 0;
 	}
+	while(result == 0xfffffff);
 	return result;
 }
 static UINT32 get_free_page(UINT32 const bank)
