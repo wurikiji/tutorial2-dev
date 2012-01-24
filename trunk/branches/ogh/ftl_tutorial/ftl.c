@@ -236,12 +236,13 @@ void flush_smt_piece(UINT32 idx)
 		// flash map data to nand
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
-		dest = SMT_ADDR + (idx * SMT_PIECE_BYTES);
-		SETREG(FCP_DMA_ADDR,dest);
-		SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
 		SETREG(FCP_COL,0);
 		SETREG(FCP_ROW_L(bank),row);
 		SETREG(FCP_ROW_H(bank),row);
+		dest = SMT_ADDR + (idx * SMT_PIECE_BYTES);
+		SETREG(FCP_DMA_ADDR,dest);
+		SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
+		while(_BSP_FSM(bank) != BANK_IDLE);
 		flash_issue_cmd(bank,RETURN_WHEN_DONE);
 	}
 	smt_dram_bit[bank] ^= ( 1 <<block );
