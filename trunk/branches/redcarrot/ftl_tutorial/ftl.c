@@ -530,7 +530,7 @@ static BOOL32 is_bad_block(UINT32 const bank, UINT32 const vblock)
 
 static void init_smt_metadata(void)     // modified by RED
 {
-    UINT32 bank, vblock, bundle, piece, ftl_buf;
+    UINT32 bank, vblock, bundle, piece, ftl_buf, vpn;
     
     // for each bank, assign SMT blocks.
     for (bank = 0; bank < NUM_BANKS; bank++)
@@ -704,7 +704,7 @@ static void fetch_smt_bundle(UINT32 const b_index, UINT32 const bundle)    // mo
     // fetch a SMT bundle to cache.
     UINT32 piece, bank, vpn, ftl_buf, cache_addr;
     
-    ASSERT(bundle == NOT_EXIST);     // the bundle space on cache must empty.
+    ASSERT(get_bundle_on_cache(b_index) == NOT_EXIST);     // the bundle space on cache must empty.
     
     // for each piece in the bundle
     for (piece = 0; piece < PIECES_PER_BUNDLE; piece++) 
