@@ -205,7 +205,7 @@ void ftl_open(void)
     {
         UINT32 b_index;
         for (b_index = 0; b_index < BUNDLES_ON_CACHE; b_index++) {
-            // set as empty piece.
+            // set as empty bundle.
             set_bundle_on_cache(b_index, NOT_EXIST);
             clear_life_on_cache(b_index);
         }
@@ -226,7 +226,6 @@ void ftl_open(void)
     }
     
 	// STEP 4 - initialize global variables that belong to FTL
-    
 	g_ftl_read_buf_id = 0;
 	g_ftl_write_buf_id = 0;
     
@@ -553,6 +552,7 @@ static void init_smt_metadata(void)     // modified by RED
             vblock++;
         }
     	ASSERT(vblock < VBLKS_PER_BANK);
+		ASSERT(bundle == NUM_BUNDLES);
     }
 
 	// for each bundle, erase all SMT blocks.
@@ -604,9 +604,9 @@ static void logging_smt_cache(void)     // modified by RED
         bundle = get_bundle_on_cache(b_index);      // get the present bundle number.
         if (bundle == NOT_EXIST)             // if the bundle is empty, skip logging it.
             continue;
-        vpn = get_bundle_map_vpn(bundle, 0);        // get the vpn of the bundle's first bank.
         
         // check if there is sufficient space for logging SMT cache.
+        vpn = get_bundle_map_vpn(bundle, 0);        // get the vpn of the bundle's first bank.
         if (vpn % PAGES_PER_VBLK >= PAGES_PER_VBLK - PIECES_PER_BUNDLE)
         {
             for (bank = 0; bank < NUM_BANKS; bank++) 
@@ -657,9 +657,9 @@ static void evict_smt_bundle(UINT32 const b_index)  // modified by RED
     
     bundle = get_bundle_on_cache(b_index);  // get the present bundle number.
     ASSERT(bundle != NOT_EXIST);      // the bundle space on cache must not empty.
-    vpn = get_bundle_map_vpn(bundle, 0);    // get the vpn of the bundle's first bank.
     
     // check if there is sufficient space for logging SMT cache.
+    vpn = get_bundle_map_vpn(bundle, 0);    // get the vpn of the bundle's first bank.
     if (vpn % PAGES_PER_VBLK >= PAGES_PER_VBLK - PIECES_PER_BUNDLE) 
     {
         for (bank = 0; bank < NUM_BANKS; bank++) 
@@ -697,8 +697,9 @@ static void evict_smt_bundle(UINT32 const b_index)  // modified by RED
         }
         flash_finish();
     }
-    dec_num_bundles_on_cache();
+	// remove the bundle logically.
     set_bundle_on_cache(b_index, NOT_EXIST);
+    dec_num_bundles_on_cache();		// decrease the number of bundles on cache.
     
     // update bundle life status.
     clear_life_on_cache(b_index);   // clear life state of evicted bundle.
@@ -738,8 +739,9 @@ static void fetch_smt_bundle(UINT32 const b_index, UINT32 const bundle)    // mo
             mem_copy(cache_addr, ftl_buf, BYTES_PER_PAGE);
         }
     }
-    inc_num_bundles_cache();
+	// add the bundle on cache logically.
     set_bundle_on_cache(b_index, bundle);
+    inc_num_bundles_cache();		// increase the number of bundles on cache.
    	 
     // update bundle life status.
     reset_life_on_cache(b_index);   // reset life state of fetched bundle just now.
@@ -770,7 +772,7 @@ static UINT32 select_victim_bundle()                // added by RED
     life = least_life;
 	least = NOT_EXIST; // NOT_EXIST = (UINT32)0xFFFFFFFF (default return value)
     // select a bundle of which remaining life is the least, as victim bundle.
-    for (b_index = 1; b_index < BUNDLES_ON_CACHE; b_index++)
+    for (b_index = 0; b_index < BUNDLES_ON_CACHE; b_index++)
     {
         life = get_life_on_cache(b_index);
         if (least_life > life)
@@ -786,7 +788,7 @@ static UINT32 select_victim_bundle()                // added by RED
 static void update_bundle_lives()                  // added by RED
 {
     // Update the remaining lives of each bundles on DRAM.
-    UINT32 b_index, life = 0;
+    UINT32 b_index, life;
     for (b_index = 0; b_index < BUNDLES_ON_CACHE; b_index++)
     {
         // if the remaining life is not 0, decrease it by 1.
@@ -1087,7 +1089,7 @@ static UINT32 load_smt_bundle(UINT32 const bundle)		// modified by RED
 	}
 	else
 	{
-       	// select victim bundle to evict.
+       	// else, select victim bundle to evict.
        	b_index = select_victim_bundle();
         evict_smt_bundle(b_index);
 	}
