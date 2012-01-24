@@ -31,6 +31,7 @@ static void loading_misc_metadata(void);
 static void init_metadata(void);
 static void init_smt_metadata(void);                    // modified by RED
 static void logging_smt_cache(void);                    // modified by RED
+static UINT32 load_smt_bundle(UINT32 const bundle);		// modified by RED
 static void evict_smt_bundle(UINT32 const b_index);     // modified by RED
 static void fetch_smt_bundle(UINT32 const b_index, UINT32 const bundle);     // modified by RED
 static UINT32 get_psn(UINT32 const lba);                // modified by RED
@@ -66,6 +67,7 @@ typedef struct _misc_metadata
 static misc_metadata  g_misc_meta[NUM_BANKS];
 static UINT32 g_bundles_on_cache[BUNDLES_ON_CACHE];     // modified by RED
 static UINT32 g_life_on_cache[BUNDLES_ON_CACHE];        // added by RED
+static UINT32 g_num_bundles_on_cache;
 //----------------------------------
 
 //Macro for accessing global variables
@@ -80,6 +82,11 @@ static UINT32 g_life_on_cache[BUNDLES_ON_CACHE];        // added by RED
 #define get_life_on_cache(b_index)              (g_life_on_cache[b_index])
 #define dec_life_on_cache(b_index)              (g_life_on_cache[b_index]--)
 #define clear_life_on_cache(b_index)            (g_life_on_cache[b_index] = NOT_EXIST)
+
+#define get_num_bundles_on_cache()				(g_num_bundles_on_cache)
+#define clear_num_bundles_on_cache()			(g_num_bundles_on_cache = 0)
+#define inc_num_bundles_cache()					(g_num_bundles_on_cache++)
+#define dec_num_bundles_on_cache()				(g_num_bundles_on_cache--)
 
 #define get_smt_offset(lba)     (lba % ELMTS_PER_PAGE)
 #define get_smt_bank(lba)       ((lba % ELMTS_PER_PIECE) / ELMTS_PER_PAGE)
@@ -213,7 +220,6 @@ void ftl_open(void)
 		format();
         init_smt_metadata();    // Initialization of SMT metadata must be done at first time.
         logging_misc_metadata();
-        logging_smt_cache();
     } else {
         // If it's not first time, miscellaneous metadata should be loaded from NAND.
         loading_misc_metadata();    
@@ -668,7 +674,7 @@ static void evict_smt_bundle(UINT32 const b_index)  // modified by RED
     // for each piece in the bundle
     for (piece = 0; piece < PIECES_PER_BUNDLE; piece++) 
     {
-        // copy SMT page on cache to FTL buffer by bank.
+        // cope SMT page on cache to FTL buffer by bank.
         for (bank = 0; bank < NUM_BANKS; bank++) 
         {
             cache_addr = CACHED_SMT_ADDR + BYTES_PER_BUNDLE * b_index + BYTES_PER_PIECE * piece + BYTES_PER_PAGE * bank;
@@ -691,7 +697,7 @@ static void evict_smt_bundle(UINT32 const b_index)  // modified by RED
         }
         flash_finish();
     }
-    
+    dec_num_bundles_on_cache();
     set_bundle_on_cache(b_index, NOT_EXIST);
     
     // update bundle life status.
@@ -732,9 +738,9 @@ static void fetch_smt_bundle(UINT32 const b_index, UINT32 const bundle)    // mo
             mem_copy(cache_addr, ftl_buf, BYTES_PER_PAGE);
         }
     }
-    
+    inc_num_bundles_cache();
     set_bundle_on_cache(b_index, bundle);
-    
+   	 
     // update bundle life status.
     reset_life_on_cache(b_index);   // reset life state of fetched bundle just now.
     update_bundle_lives();          // decrease lives of each bundles.
@@ -802,19 +808,9 @@ static UINT32 get_psn(UINT32 const lba)		//modified by RED
     // Check if SMT piece is in 'dirty SMT piece' array.
     // If it is not in array, copy present SMT piece in DRAM to NAND and SMT piece needed in NAND to DRAM.
     b_index = where_bundle_cached(bundle);
-    // If bundle on demand does not exist, fetch the SMT bundle.
+    // If bundle on demand does not exist, load the SMT bundle.
     if(b_index == NOT_EXIST)
-    {
-        // select victim bundle to evict.
-        b_index = select_victim_bundle();
-        
-        if (b_index == NOT_EXIST)
-            b_index = 0;
-        else
-            evict_smt_bundle(b_index);
-
-       	fetch_smt_bundle(b_index, bundle);
-    }
+		b_index = load_smt_bundle(bundle);	
     ASSERT(b_index != NOT_EXIST);
 
     // update bundle life status.
@@ -841,19 +837,9 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//modified by RED
     // Check if SMT piece is in 'dirty SMT piece' array.
     // If it is not in array, copy present SMT piece in DRAM to NAND and SMT piece needed in NAND to DRAM.
     b_index = where_bundle_cached(bundle);
-    // If bundle on demand does not exist, fetch the SMT bundle.
+    // If bundle on demand does not exist, load the SMT bundle.
     if(b_index == NOT_EXIST)
-    {
-        // select victim bundle to evict.
-        b_index = select_victim_bundle();
-        
-        if (b_index == NOT_EXIST)
-            b_index = 0;
-        else
-            evict_smt_bundle(b_index);
-
-       	fetch_smt_bundle(b_index, bundle);
-    }
+		b_index = load_smt_bundle(bundle);	
     ASSERT(b_index != NOT_EXIST);
 
     // update bundle life status.
@@ -1059,6 +1045,7 @@ static void init_metadata()
         //			g_misc_meta[bank].g_merge_buffer_lsn[sect_count];
         //		}
 	}
+	clear_num_bundles_on_cache();
 	mem_set_dram(CACHED_SMT_ADDR, NULL, CACHED_SMT_BYTES);
 	mem_set_dram(SCAN_LIST_ADDR, 0, SCAN_LIST_BYTES);
 }
@@ -1084,6 +1071,28 @@ static void logging_misc_metadata(void)
                             FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE));
 	}
 	flash_finish();
+}
+static UINT32 load_smt_bundle(UINT32 const bundle)		// modified by RED
+{
+	// Load a SMT bundle on NAND to DRAM, on demand.
+	UINT32 b_index; 
+	if(get_num_bundles_on_cache() < BUNDLES_ON_CACHE)
+	{
+		// If SMT on cache has enough space, use empty space.
+		for(b_index = 0; b_index < BUNDLES_ON_CACHE; b_index++)
+		{
+			if(get_bundle_on_cache(b_index) == NOT_EXIST)
+				break;
+		}
+	}
+	else
+	{
+       	// select victim bundle to evict.
+       	b_index = select_victim_bundle();
+        evict_smt_bundle(b_index);
+	}
+    fetch_smt_bundle(b_index, bundle);
+	return b_index;
 }
 static void loading_misc_metadata(void)
 {
