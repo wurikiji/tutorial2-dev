@@ -81,8 +81,8 @@ static void set_psn(UINT32 const lba, UINT32 const psn);
 
 //non striping version.
 UINT32 g_target_bank;
-UINT32 g_target_sect;
-UINT32 g_merge_buffer_lsn[SECTORS_PER_PAGE];
+UINT32 g_target_sect[NUM_BANKS];
+UINT32 g_merge_buffer_lsn[NUM_BANKS][SECTORS_PER_PAGE];
 
 //debug
 static volatile UINT32 g_debug_pages = PAGES_PER_VBLK;
@@ -206,11 +206,6 @@ void load_smt_piece(UINT32 idx){
 	SETREG(FCP_OPTION, FO_P | FO_E );		
 	SETREG(FCP_ROW_L(bank), row);
 	SETREG(FCP_ROW_H(bank), row);
-	
-	// fully guarantee 
-	while(_BSP_FSM(bank) != BANK_IDLE){
-		bank = bank;
-	}
 	flash_issue_cmd(bank, RETURN_WHEN_DONE);
 
 	smt_dram_map[g_smt_target] = idx;
@@ -275,6 +270,7 @@ void init_meta_data()
 		}
 		g_misc_meta[i].smt_init = 0;
 		g_misc_meta[i].cur_miscblk_vpn = 0;
+		g_target_sect[i] = 0;
 	}
 	for(i = 0 ;i < NUM_BANKS_MAX;i++){
 		for(j = 0 ;j < NUM_BANKS_MAX;j++){
@@ -287,7 +283,6 @@ void init_meta_data()
 	g_smt_victim = 0;
 	g_smt_full   = 0 ;
 	g_target_bank = 0;
-	g_target_sect = 0;
 }
 void ftl_open(void)
 {
@@ -445,7 +440,7 @@ void ftl_open(void)
 void ftl_read(UINT32 const lba, UINT32 const total_sectors)				//modified by GYUHWA
 {
 	UINT32 sect_offset, count,  next_read_buf_id;
-	sect_offset = lba % SECTORS_PER_PAGE;		//sect_offset : offset of RD_BUFFER
+	sect_offset = lba % SECTORS_PER_PAGE;					//sect_offset : offset of RD_BUFFER
 	for(count = 0; count < total_sectors; count++)
 	{
 		ftl_read_sector(lba+count, sect_offset++);			//read one sector
@@ -485,7 +480,7 @@ void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added b
 	UINT32 psn, bank, row, buf_offset, nand_offset;
 	UINT32 t1;
 	UINT32 src,dst;
-	psn = get_psn(lba);									//physical sector nomber
+	psn = get_psn(lba);		//physical sector nomber
 	//bank = lba % NUM_BANKS;	
 	bank = psn / SECTORS_PER_BANK;
 	t1 = psn % SECTORS_PER_BANK;
@@ -495,7 +490,9 @@ void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added b
 	if((psn & (UINT32)BIT31) != 0 )					//data is in merge buffer
 	{
 		buf_offset = (psn ^ (UINT32)BIT31);
-		bank = g_target_bank;
+		//bank = g_target_bank;
+		bank = buf_offset / SECTORS_PER_PAGE;
+		buf_offset = buf_offset % SECTORS_PER_PAGE;
 		dst = RD_BUF_PTR(g_ftl_read_buf_id) + sect_offset * BYTES_PER_SECTOR;
 		src = MERGE_BUFFER_ADDR + bank * BYTES_PER_PAGE + BYTES_PER_SECTOR * buf_offset;
 
@@ -570,7 +567,6 @@ void ftl_write_sector(UINT32 const lba)
 	UINT32 index = lba % SECTORS_PER_PAGE;
 	int i;
 	//new_bank = lba % NUM_BANKS; // get bank number of sector
-	new_bank = g_target_bank;
 	
 	temp = get_psn(lba);
 
@@ -578,6 +574,8 @@ void ftl_write_sector(UINT32 const lba)
 		// If data, which located in same lba, is already in dram
 		// copy sata host data to same merge buffer sector
 		vsect_num = (temp ^ (UINT32)BIT31); 
+		new_bank = vsect_num / SECTORS_PER_PAGE;
+		vsect_num = vsect_num % SECTORS_PER_PAGE;
 
 		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
 		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
@@ -586,7 +584,8 @@ void ftl_write_sector(UINT32 const lba)
 	else{
 		// copy sata host data to dram memory merge buffer page 
 		//vsect_num = g_misc_meta[new_bank].g_merge_buff_sect;
-		vsect_num = g_target_sect;
+		new_bank = g_target_bank;
+		vsect_num = g_target_sect[new_bank];
 
 		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
 		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
@@ -599,10 +598,10 @@ void ftl_write_sector(UINT32 const lba)
 		mem_copy(dst, src, BYTES_PER_SECTOR);
 
 		// set psn to -1 , it means that data is in dram 
-		set_psn(lba, ((UINT32)BIT31 | vsect_num ));
+		set_psn(lba, ((UINT32)BIT31 | (new_bank * SECTORS_PER_PAGE + vsect_num)));
 
 		// for change psn 
-		g_merge_buffer_lsn[vsect_num] = lba;
+		g_merge_buffer_lsn[new_bank][vsect_num] = lba;
 
 		vsect_num++;
 
@@ -624,8 +623,7 @@ void ftl_write_sector(UINT32 const lba)
 
 			/* initialize merge buffer page's sector point */
 		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
-			g_target_sect = 0;
-			g_target_bank = (g_target_bank + 1 ) % NUM_BANKS;
+			g_target_sect[new_bank] = 0;
 			// allocate new psn 
 			//new_psn = new_row * SECTORS_PER_PAGE;
 
@@ -633,47 +631,52 @@ void ftl_write_sector(UINT32 const lba)
 			// vsn - > psn mapping  
 			for(i = 0 ;i < SECTORS_PER_PAGE; i++ )
 			{
-				set_psn( g_merge_buffer_lsn[i],
+				set_psn( g_merge_buffer_lsn[new_bank][i],
 						new_psn + i );
 			}
 		}
 		else
 		{
 			//g_misc_meta[new_bank].g_merge_buff_sect++;
-			g_target_sect++;
+			g_target_sect[new_bank]++;
 		}
+		g_target_bank = (g_target_bank + 1 ) % NUM_BANKS;
 	}
 }
 
 void flush_merge_buffer()
 {
 	UINT32 new_row, new_psn;
-	UINT32 new_bank = g_target_bank;
+	UINT32 new_bank;
 
-	int i;
-	if( g_target_sect != 0 ){
-		// get free page from target bank
-		new_row = get_free_page(new_bank);
+	int i, j;
+	for(i = 0 ;i < NUM_BANKS;i++){
+		// remain page on dram merge buffer
+		if( g_target_sect[i] != 0 ){
+			new_bank = i;
+			// get free page from target bank
+			new_row = get_free_page(new_bank);
 
-		// set registers to write a data to nand flash memory
-		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
-		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
-		// Address is merge buffer address which contains actual data
-		SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
-		SETREG(FCP_DMA_CNT, BYTES_PER_SECTOR * g_target_sect);
-		SETREG(FCP_COL,0);
-		SETREG(FCP_ROW_L(new_bank),new_row);
-		SETREG(FCP_ROW_H(new_bank),new_row);
+			// set registers to write a data to nand flash memory
+			SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
+			SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
+			// Address is merge buffer address which contains actual data
+			SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
+			SETREG(FCP_DMA_CNT, BYTES_PER_SECTOR * g_target_sect[i]);
+			SETREG(FCP_COL,0);
+			SETREG(FCP_ROW_L(new_bank),new_row);
+			SETREG(FCP_ROW_H(new_bank),new_row);
 
-		flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
-		
-		// for lba -> psn mapping information 
-		new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
-		// Update mapping information
-		for(i = 0 ;i < g_target_sect; i++ )
-		{
-			set_psn( g_merge_buffer_lsn[i],
-					new_psn + i );
+			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
+
+			// for lba -> psn mapping information 
+			new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
+			// Update mapping information
+			for(j = 0 ;j < g_target_sect[i]; i++ )
+			{
+				set_psn( g_merge_buffer_lsn[i][j],
+						new_psn + i );
+			}
 		}
 	}
 }
@@ -748,6 +751,7 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	if( dst == (UINT32)-1 )
 	{
 		load_smt_piece( bank * NUM_BANKS_MAX + block);
+		dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 	return read_dram_32((UINT32*)dst);
@@ -773,6 +777,7 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 	if(dst == (UINT32)-1)
 	{
 		load_smt_piece( bank * NUM_BANKS_MAX + block);
+		dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 	smt_bit_map[bank] |= ( 1 <<block );
