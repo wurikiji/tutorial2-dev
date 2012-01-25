@@ -223,8 +223,7 @@ void flush_smt_piece(UINT32 idx)
 	UINT32 dest;
 	bank = smt_dram_map[idx] / NUM_BANKS_MAX;
 	block = smt_dram_map[idx] % NUM_BANKS_MAX;
-	if((smt_bit_map[bank] & (1<<block)) != 0)
-	{
+	if((smt_bit_map[bank] & (1<<block)) != 0){
 		//  smt piece data
 		if( g_misc_meta[bank].smt_pieces[block] >= SMT_LIMIT - 1){
 			// erase 
@@ -482,15 +481,18 @@ void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added b
 	UINT32 t1;
 	UINT32 src,dst;
 	psn = get_psn(lba);		//physical sector nomber
-	bank = lba % NUM_BANKS;	
-	//bank = psn / SECTORS_PER_BANK;
-	row = psn / SECTORS_PER_PAGE;		
-	nand_offset = psn % SECTORS_PER_PAGE;				//physical nand offset
+	//bank = lba % NUM_BANKS;	
+	bank = psn / SECTORS_PER_BANK;
+	t1 = psn % SECTORS_PER_BANK;
+	row = t1 / SECTORS_PER_PAGE;		
+	nand_offset = t1 % SECTORS_PER_PAGE;				//physical nand offset
 
 	if((psn & (UINT32)BIT31) != 0 )					//data is in merge buffer
 	{
 		buf_offset = (psn ^ (UINT32)BIT31);
 		//bank = g_target_bank;
+		bank = buf_offset / SECTORS_PER_PAGE;
+		buf_offset = buf_offset % SECTORS_PER_PAGE;
 		dst = RD_BUF_PTR(g_ftl_read_buf_id) + sect_offset * BYTES_PER_SECTOR;
 		src = MERGE_BUFFER_ADDR + bank * BYTES_PER_PAGE + BYTES_PER_SECTOR * buf_offset;
 
@@ -564,7 +566,7 @@ void ftl_write_sector(UINT32 const lba)
 	UINT32 dst,src;
 	UINT32 index = lba % SECTORS_PER_PAGE;
 	int i;
-	new_bank = lba % NUM_BANKS; // get bank number of sector
+	//new_bank = lba % NUM_BANKS; // get bank number of sector
 	
 	temp = get_psn(lba);
 
@@ -572,6 +574,8 @@ void ftl_write_sector(UINT32 const lba)
 		// If data, which located in same lba, is already in dram
 		// copy sata host data to same merge buffer sector
 		vsect_num = (temp ^ (UINT32)BIT31); 
+		new_bank = vsect_num / SECTORS_PER_PAGE;
+		vsect_num = vsect_num % SECTORS_PER_PAGE;
 
 		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
 		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
@@ -580,6 +584,7 @@ void ftl_write_sector(UINT32 const lba)
 	else{
 		// copy sata host data to dram memory merge buffer page 
 		//vsect_num = g_misc_meta[new_bank].g_merge_buff_sect;
+		new_bank = g_target_bank;
 		vsect_num = g_target_sect[new_bank];
 
 		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
@@ -593,7 +598,7 @@ void ftl_write_sector(UINT32 const lba)
 		mem_copy(dst, src, BYTES_PER_SECTOR);
 
 		// set psn to -1 , it means that data is in dram 
-		set_psn(lba, ((UINT32)BIT31 | (vsect_num)));
+		set_psn(lba, ((UINT32)BIT31 | (new_bank * SECTORS_PER_PAGE + vsect_num)));
 
 		// for change psn 
 		g_merge_buffer_lsn[new_bank][vsect_num] = lba;
@@ -622,7 +627,7 @@ void ftl_write_sector(UINT32 const lba)
 			// allocate new psn 
 			//new_psn = new_row * SECTORS_PER_PAGE;
 
-			new_psn = new_row * SECTORS_PER_PAGE;
+			new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
 			// vsn - > psn mapping  
 			for(i = 0 ;i < SECTORS_PER_PAGE; i++ )
 			{
@@ -635,7 +640,7 @@ void ftl_write_sector(UINT32 const lba)
 			//g_misc_meta[new_bank].g_merge_buff_sect++;
 			g_target_sect[new_bank]++;
 		}
-		//g_target_bank = (g_target_bank + 1 ) % NUM_BANKS;
+		g_target_bank = (g_target_bank + 1 ) % NUM_BANKS;
 	}
 }
 
