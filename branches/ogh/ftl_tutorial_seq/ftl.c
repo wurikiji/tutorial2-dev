@@ -547,10 +547,16 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 		{
 			num_sectors_to_write = remain_sectors;
 		}
-		for(i = 0 ;i < num_sectors_to_write;i++)
+		if( num_sectors_to_write == SECTORS_PER_PAGE ){
+			ftl_write_page(next_lba);
+		}
+		else
 		{
-			/* call sector level write function */
-			ftl_write_sector( next_lba + i);
+			for(i = 0 ;i < num_sectors_to_write;i++)
+			{
+				/* call sector level write function */
+				ftl_write_sector( next_lba + i);
+			}
 		}
 		sect_offset = 0;
 		remain_sectors -= num_sectors_to_write;
@@ -560,6 +566,30 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 		SETREG(BM_STACK_WRSET, g_ftl_write_buf_id);	// change bm_write_limit
 		SETREG(BM_STACK_RESET, 0x01);				// change bm_write_limit
 	}
+}
+void ftl_write_page(UINT32 const lba)
+{
+	UINT32 dst, new_bank, new_row;
+	
+	new_bank = g_target_bank;
+	new_row = get_free_page(new_bank);
+	SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
+	SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
+	SETREG(FCP_DMA_ADDR, WR_BUF_PTR(g_ftl_write_buf_id));
+	SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+	SETREG(FCP_COL,0);
+	SETREG(FCP_ROW_L(new_bank),new_row);
+	SETREG(FCP_ROW_H(new_bank),new_row);
+
+	flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
+
+	new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
+	// vsn - > psn mapping  
+	for(i = 0 ;i < SECTORS_PER_PAGE; i++ )
+	{
+		set_psn( lba + i, new_psn + i );
+	}
+	g_target_bank++;
 }
 void ftl_write_sector(UINT32 const lba)
 {
