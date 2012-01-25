@@ -544,10 +544,15 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 		{
 			num_sectors_to_write = remain_sectors;
 		}
-		for(i = 0 ;i < num_sectors_to_write;i++)
-		{
-			/* call sector level write function */
-			ftl_write_sector( next_lba + i);
+		if( num_sectors_to_write == SECTORS_PER_PAGE ){
+			ftl_write_page( next_lba );
+		}
+		else{
+			for(i = 0 ;i < num_sectors_to_write;i++)
+			{
+				/* call sector level write function */
+				ftl_write_sector( next_lba + i);
+			}
 		}
 		sect_offset = 0;
 		remain_sectors -= num_sectors_to_write;
@@ -558,6 +563,30 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 		SETREG(BM_STACK_RESET, 0x01);				// change bm_write_limit
 	}
 }
+void ftl_write_page(UINT32 const lba)
+{
+	UINT32 dst, new_bank, new_row;
+	
+	new_bank = g_target_bank;
+	new_row = get_free_page(new_bank);
+	SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
+	SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
+	SETREG(FCP_DMA_ADDR, WR_BUF_PTR(g_ftl_write_buf_id));
+	SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+	SETREG(FCP_COL,0);
+	SETREG(FCP_ROW_L(new_bank),new_row);
+	SETREG(FCP_ROW_H(new_bank),new_row);
+
+	flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
+
+	new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
+	// vsn - > psn mapping  
+	for(i = 0 ;i < SECTORS_PER_PAGE; i++ )
+	{
+		set_psn( lba + i, new_psn + i );
+	}
+	g_target_bank++;
+}
 void ftl_write_sector(UINT32 const lba)
 {
 	UINT32 new_bank, vsect_num, new_row;
@@ -567,7 +596,7 @@ void ftl_write_sector(UINT32 const lba)
 	UINT32 index = lba % SECTORS_PER_PAGE;
 	int i;
 	//new_bank = lba % NUM_BANKS; // get bank number of sector
-	
+
 	temp = get_psn(lba);
 
 	if( (temp & (UINT32)BIT31) != 0 ){
@@ -622,7 +651,7 @@ void ftl_write_sector(UINT32 const lba)
 			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
 
 			/* initialize merge buffer page's sector point */
-		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
+			//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
 			g_target_sect[new_bank] = 0;
 			// allocate new psn 
 			//new_psn = new_row * SECTORS_PER_PAGE;
@@ -761,7 +790,7 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 {
 	//UINT32 src = (UINT32)g_psn_write + (sizeof(UINT32) * g_psn_write_temp);
 	//UINT32 dst = SMT_ADDR + (lba * sizeof(UINT32));
-	
+
 	//UINT32 size = sizeof(UINT32) * totals;
 	//int i;
 	//mem_copy(dst,src,size);
@@ -959,7 +988,7 @@ static void format(void)
 	// format() from being called again.
 	// However, since the tutorial FTL does not support power off recovery,
 	// format() should be called every time.
-	
+
 	init_meta_data();
 	ftl_flush();
 	write_format_mark();
