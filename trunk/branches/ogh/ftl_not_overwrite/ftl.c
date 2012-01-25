@@ -572,8 +572,8 @@ void ftl_write_sector(UINT32 const lba)
 	//new_bank = lba % NUM_BANKS; // get bank number of sector
 	new_bank = g_target_bank;
 	
-	temp = get_psn(lba);
-
+	//temp = get_psn(lba);
+/*
 	if( (temp & (UINT32)BIT31) != 0 ){
 		// If data, which located in same lba, is already in dram
 		// copy sata host data to same merge buffer sector
@@ -584,6 +584,7 @@ void ftl_write_sector(UINT32 const lba)
 		mem_copy(dst,src, BYTES_PER_SECTOR);
 	}
 	else{
+	*/
 		// copy sata host data to dram memory merge buffer page 
 		//vsect_num = g_misc_meta[new_bank].g_merge_buff_sect;
 		vsect_num = g_target_sect;
@@ -642,7 +643,7 @@ void ftl_write_sector(UINT32 const lba)
 			//g_misc_meta[new_bank].g_merge_buff_sect++;
 			g_target_sect++;
 		}
-	}
+	//}
 }
 
 void flush_merge_buffer()
