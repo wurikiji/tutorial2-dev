@@ -748,6 +748,7 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	if( dst == (UINT32)-1 )
 	{
 		load_smt_piece( bank * NUM_BANKS_MAX + block);
+		dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 	return read_dram_32((UINT32*)dst);
@@ -773,6 +774,7 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 	if(dst == (UINT32)-1)
 	{
 		load_smt_piece( bank * NUM_BANKS_MAX + block);
+		dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 	smt_bit_map[bank] |= ( 1 <<block );
