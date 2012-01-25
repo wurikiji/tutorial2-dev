@@ -495,8 +495,9 @@ void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added b
 	if((psn & (UINT32)BIT31) != 0 )					//data is in merge buffer
 	{
 		buf_offset = (psn ^ (UINT32)BIT31);
+		bank = g_target_bank;
 		dst = RD_BUF_PTR(g_ftl_read_buf_id) + sect_offset * BYTES_PER_SECTOR;
-		src = MERGE_BUFFER_ADDR + BYTES_PER_SECTOR * buf_offset;
+		src = MERGE_BUFFER_ADDR + bank * BYTES_PER_PAGE + BYTES_PER_SECTOR * buf_offset;
 
 		mem_copy(dst, src, BYTES_PER_SECTOR);					
 		//find collect data -> mem_copy to RD_BUFFER
@@ -569,6 +570,7 @@ void ftl_write_sector(UINT32 const lba)
 	UINT32 index = lba % SECTORS_PER_PAGE;
 	int i;
 	//new_bank = lba % NUM_BANKS; // get bank number of sector
+	new_bank = g_target_bank;
 	
 	temp = get_psn(lba);
 
@@ -577,7 +579,7 @@ void ftl_write_sector(UINT32 const lba)
 		// copy sata host data to same merge buffer sector
 		vsect_num = (temp ^ (UINT32)BIT31); 
 
-		dst = MERGE_BUFFER_ADDR + vsect_num * BYTES_PER_SECTOR;
+		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
 		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
 		mem_copy(dst,src, BYTES_PER_SECTOR);
 	}
@@ -586,9 +588,14 @@ void ftl_write_sector(UINT32 const lba)
 		//vsect_num = g_misc_meta[new_bank].g_merge_buff_sect;
 		vsect_num = g_target_sect;
 
-		dst = MERGE_BUFFER_ADDR + vsect_num * BYTES_PER_SECTOR;
+		dst = MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE + vsect_num * BYTES_PER_SECTOR;
 		src = WR_BUF_PTR(g_ftl_write_buf_id) + index * BYTES_PER_SECTOR;
 
+		// Because Firmware does not know 
+		// about status of previous nand flash command, 
+		// wait until target bank is IDLE 
+		// ( target DRAM space is fully flashed ) 
+		while(_BSP_FSM(new_bank) != BANK_IDLE);
 		mem_copy(dst, src, BYTES_PER_SECTOR);
 
 		// set psn to -1 , it means that data is in dram 
@@ -618,6 +625,7 @@ void ftl_write_sector(UINT32 const lba)
 			/* initialize merge buffer page's sector point */
 		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
 			g_target_sect = 0;
+			g_target_bank = (g_target_bank + 1 ) % NUM_BANKS;
 			// allocate new psn 
 			//new_psn = new_row * SECTORS_PER_PAGE;
 
