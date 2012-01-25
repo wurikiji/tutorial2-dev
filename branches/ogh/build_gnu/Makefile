@@ -1,4 +1,4 @@
-FTL	= tutorial
+FTL	= not_overwrite
 PREFIX 	= arm-none-eabi-
 CC 	= $(PREFIX)gcc
 AS 	= $(PREFIX)as
