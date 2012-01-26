@@ -180,7 +180,7 @@ void load_smt_piece(UINT32 idx){
 	bank = idx / NUM_BANKS_MAX;
 	block = idx % NUM_BANKS_MAX;
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][block]);
-	if( g_smt_full == 1){
+	if(g_smt_target == NUM_BANKS_MAX ||  g_smt_full == 1){
 		g_smt_full = 1;
 		g_smt_victim = (g_smt_victim +1 ) %NUM_BANKS_MAX;
 		flush_smt_piece(g_smt_target);
