@@ -197,8 +197,8 @@ void load_smt_piece(UINT32 idx){
 	if( g_smt_target == NUM_BANKS_MAX || g_smt_full == 1){
 		g_smt_full = 1;
 		flush_smt_piece(g_smt_victim);
+		g_smt_target = g_smt_victim;
 		g_smt_victim = (g_smt_victim + 1 ) % NUM_BANKS_MAX;
-		g_smt_target = (g_smt_target + 1 ) % NUM_BANKS_MAX;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
 	SETREG(FCP_DMA_CNT,SMT_PIECE_BYTES);
