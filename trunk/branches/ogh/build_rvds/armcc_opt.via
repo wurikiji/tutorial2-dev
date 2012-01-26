@@ -8,7 +8,6 @@
 --cpu=ARM7TDMI-S
 --fpu=None
 -O3
--Otime
 --forceinline
 --split_ldm
 --apcs=interwork
