@@ -84,18 +84,6 @@ UINT32 g_target_bank;
 UINT32 g_target_sect;
 UINT32 g_merge_buffer_lsn[SECTORS_PER_PAGE];
 
-//debug
-static volatile UINT32 g_debug_pages = PAGES_PER_VBLK;
-static volatile UINT32 g_debug_smt_limit = SMT_LIMIT;
-static volatile UINT32 g_debug_smt_inc_size = SMT_INC_SIZE;
-static volatile UINT32 g_smt_size = SMT_BYTES;
-static volatile UINT32 g_smt_piece_size = SMT_PIECE_BYTES;
-static volatile UINT32 g_bytes_per_phyp = BYTES_PER_PHYPAGE;
-static volatile UINT32 g_bytes_per_vp = BYTES_PER_PAGE;
-static volatile UINT32 g_sectors_per_bank = SECTORS_PER_BANK;
-static volatile UINT32 g_pages_per_blk = PAGES_PER_BLK;
-static volatile UINT32 g_pages_per_vblk = PAGES_PER_VBLK;
-
 void logging_misc_meta()
 {
 	UINT32 bank;
