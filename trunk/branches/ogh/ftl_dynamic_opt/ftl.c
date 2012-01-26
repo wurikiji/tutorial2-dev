@@ -622,9 +622,8 @@ void ftl_write_sector(UINT32 const lba)
 			SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
 			SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
 			SETREG(FCP_COL,0);
-			SETREG(FCP_BANK,AUTO_SEL);
 
-			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
+			flash_issue_cmd(AUTO_SEL,RETURN_ON_ISSUE);
 
 			g_prev_bank[new_bank] = GETREG(WR_BANK);
 
