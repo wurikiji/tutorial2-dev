@@ -118,8 +118,9 @@ void ftl_test(void)
 {
     uart_print("start ftl test...");
 /*     fillup_dataspace(); */
-     tc_write_seq(0, 50000, NUM_PSECTORS_64KB); 
-//    tc_write_rand(0, 200000, NUM_PSECTORS_4KB);
+     //tc_write_seq(0, 500000, NUM_PSECTORS_64KB); 
+    tc_write_rand(0, 200000, NUM_PSECTORS_16KB);
+    //tc_write_rand(0, 200000, NUM_PSECTORS_4KB);
 /*     tc_write_rand(0, 2000000, NUM_PSECTORS_4KB); */
     uart_print("ftl test passed!");
 }

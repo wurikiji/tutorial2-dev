@@ -208,9 +208,6 @@ void load_smt_piece(UINT32 idx){
 	SETREG(FCP_ROW_H(bank), row);
 	
 	// fully guarantee 
-	while(_BSP_FSM(bank) != BANK_IDLE){
-		bank = bank;
-	}
 	flash_issue_cmd(bank, RETURN_WHEN_DONE);
 
 	smt_dram_map[g_smt_target] = idx;
@@ -246,10 +243,6 @@ void flush_smt_piece(UINT32 idx)
 		dest = SMT_ADDR + (idx * SMT_PIECE_BYTES);
 		SETREG(FCP_DMA_ADDR,dest);
 		SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
-		while(_BSP_FSM(bank) != BANK_IDLE)
-		{
-			bank = bank;
-		}
 		flash_issue_cmd(bank,RETURN_WHEN_DONE);
 	}
 	smt_piece_map[smt_dram_map[idx]] = (UINT32)-1;

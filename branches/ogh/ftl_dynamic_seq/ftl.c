@@ -83,7 +83,7 @@ static void set_psn(UINT32 const lba, UINT32 const psn);
 UINT32 g_target_bank;
 UINT32 g_target_sect[NUM_BANKS];
 UINT32 g_merge_buffer_lsn[NUM_BANKS][SECTORS_PER_PAGE];
-
+void ftl_write_page(UINT32 const lba);
 //debug
 static volatile UINT32 g_debug_pages = PAGES_PER_VBLK;
 static volatile UINT32 g_debug_smt_limit = SMT_LIMIT;
@@ -565,7 +565,7 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 }
 void ftl_write_page(UINT32 const lba)
 {
-	UINT32 dst, new_bank, new_row;
+	UINT32 dst, new_bank, new_row, i, new_psn;
 	
 	new_bank = g_target_bank;
 	new_row = get_free_page(new_bank);
