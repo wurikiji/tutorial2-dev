@@ -273,7 +273,7 @@ void init_meta_data()
 		g_misc_meta[i].smt_init = 0;
 		g_misc_meta[i].cur_miscblk_vpn = 0;
 		g_target_sect[i] = 0;
-		g_prev_bank[i] = 0;
+		g_prev_bank[i] = (UINT32) -1;
 	}
 	for(i = 0 ;i < NUM_BANKS_MAX;i++){
 		for(j = 0 ;j < NUM_BANKS_MAX;j++){
@@ -601,7 +601,7 @@ void ftl_write_sector(UINT32 const lba)
 		// about status of previous nand flash command, 
 		// wait until target bank is IDLE 
 		// ( target DRAM space is fully flashed ) 
-		while(_BSP_FSM(g_prev_bank[new_bank]) != BANK_IDLE);
+		while(g_prev_bank[new_bank] != (UINT32)-1 && _BSP_FSM(g_prev_bank[new_bank]) != BANK_IDLE);
 		mem_copy(dst, src, BYTES_PER_SECTOR);
 
 		// set psn to -1 , it means that data is in dram 
