@@ -609,12 +609,11 @@ void ftl_write_sector(UINT32 const lba)
 		SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR * BYTES_PER_PAGE);
 		SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
 		SETREG(FCP_COL,0);
-		SETREG(FCP_BANK,AUTO_SEL);
 
 		//SETREG(FCP_ROW_L(new_bank),new_row);
 		//SETREG(FCP_ROW_H(new_bank),new_row);
 
-		flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
+		flash_issue_cmd(AUTO_SEL,RETURN_ON_ISSUE);
 		g_target_bank = GETREG(WR_BANK);
 
 		new_row = get_free_page(g_target_bank);
