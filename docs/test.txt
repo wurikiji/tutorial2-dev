@@ -25,7 +25,7 @@ static
 
 128		33	6.87
 
-new_mapping
+Dynamic - opt
 512		
 1		
 2		
