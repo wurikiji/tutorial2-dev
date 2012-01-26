@@ -628,8 +628,8 @@ void ftl_write_sector(UINT32 const lba)
 			g_prev_bank[new_bank] = GETREG(WR_BANK);
 
 			new_row = get_free_page(g_prev_bank[new_bank]);
-			SETREG(FCP_ROW_L(new_bank),new_row);
-			SETREG(FCP_ROW_H(new_bank),new_row);
+			SETREG(FCP_ROW_L(g_prev_bank[new_bank]),new_row);
+			SETREG(FCP_ROW_H(g_prev_bank[new_bank]),new_row);
 
 			/* initialize merge buffer page's sector point */
 		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
