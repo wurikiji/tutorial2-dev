@@ -294,7 +294,7 @@ void ftl_open(void)
 	// STEP 1 - read scan lists from NAND flash
 
 	scan_list_t* scan_list = (scan_list_t*) SCAN_LIST_ADDR;
-	UINT32 bank;
+	UINT32 bank,row;
 	UINT32 bad_block, i , j ;
 	// Since we are going to check the flash interrupt flags within this function, ftl_isr() should not be called.
 	disable_irq();

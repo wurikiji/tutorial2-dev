@@ -1,4 +1,4 @@
-FTL	= tutorial_opt
+FTL	= dynamic_opt
 PREFIX 	= arm-none-eabi-
 CC 	= $(PREFIX)gcc
 AS 	= $(PREFIX)as
