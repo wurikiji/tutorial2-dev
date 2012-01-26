@@ -585,7 +585,7 @@ void ftl_write_page(UINT32 const lba)
 	{
 		set_psn( lba + i, new_psn + i );
 	}
-	g_target_bank++;
+	g_target_bank = (g_tager_bank + 1) % NUM_BANKS;
 }
 void ftl_write_sector(UINT32 const lba)
 {
