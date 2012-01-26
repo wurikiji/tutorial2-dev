@@ -587,7 +587,7 @@ void ftl_write_sector(UINT32 const lba)
 	// about status of previous nand flash command, 
 	// wait until target bank is IDLE 
 	// ( target DRAM space is fully flashed ) 
-	while(_BSP_FSM(g_target_bank) != BANK_IDLE);
+	while(g_target_bank != (UINT32)-1 && _BSP_FSM(g_target_bank) != BANK_IDLE);
 	mem_copy(dst, src, BYTES_PER_SECTOR);
 
 	// set psn to -1 , it means that data is in dram 
@@ -646,12 +646,10 @@ void ftl_write_sector(UINT32 const lba)
 void flush_merge_buffer()
 {
 	UINT32 new_row, new_psn;
-	UINT32 new_bank = g_target_bank;
 
 	int i;
 	if( g_target_sect != 0 ){
 		// get free page from target bank
-		new_row = get_free_page(new_bank);
 
 		// set registers to write a data to nand flash memory
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
@@ -660,19 +658,23 @@ void flush_merge_buffer()
 		SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
 		SETREG(FCP_DMA_CNT, BYTES_PER_SECTOR * g_target_sect);
 		SETREG(FCP_COL,0);
-		SETREG(FCP_ROW_L(new_bank),new_row);
-		SETREG(FCP_ROW_H(new_bank),new_row);
+			
+		flash_issue_cmd(AUTO_SEL,RETURN_ON_ISSUE);
+		g_target_bank = GETREG(WR_BANK);	
+		new_row = get_free_page(g_target_bank);
+		SETREG(FCP_ROW_L(g_target_bank),new_row);
+		SETREG(FCP_ROW_H(g_target_bank),new_row);
 
-		flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
 
 		// for lba -> psn mapping information 
-		new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
+		new_psn = g_target_bank * SECTORS_PER_BANK + g_target_row[g_target_bank] * SECTORS_PER_PAGE;
 		// Update mapping information
 		for(i = 0 ;i < g_target_sect; i++ )
 		{
 			set_psn( g_merge_buffer_lsn[i],
 					new_psn + i );
 		}
+		g_target_row[g_target_bank] = new_row;
 	}
 }
 void ftl_flush(void)

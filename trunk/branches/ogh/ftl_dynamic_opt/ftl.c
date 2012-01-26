@@ -666,7 +666,6 @@ void flush_merge_buffer()
 		if( g_target_sect[i] != 0 ){
 			new_bank = i;
 			// get free page from target bank
-			new_row = get_free_page(new_bank);
 
 			// set registers to write a data to nand flash memory
 			SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
@@ -675,19 +674,22 @@ void flush_merge_buffer()
 			SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
 			SETREG(FCP_DMA_CNT, BYTES_PER_SECTOR * g_target_sect[i]);
 			SETREG(FCP_COL,0);
-			SETREG(FCP_ROW_L(new_bank),new_row);
-			SETREG(FCP_ROW_H(new_bank),new_row);
-
-			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
+			flash_issue_cmd(AUTO_SEL,RETURN_ON_ISSUE);
+			
+			g_prev_bank[i] = GETREG(WR_BANK);
+			new_row = get_free_page(g_prev_bank[i]);
+			SETREG(FCP_ROW_L(g_prev_bank[i]),new_row);
+			SETREG(FCP_ROW_H(g_prev_bank[i]),new_row);
 
 			// for lba -> psn mapping information 
-			new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
+			new_psn = g_prev_bank[i] * SECTORS_PER_BANK + g_target_row[g_prev_bank[i]] * SECTORS_PER_PAGE;
 			// Update mapping information
 			for(j = 0 ;j < g_target_sect[i]; i++ )
 			{
 				set_psn( g_merge_buffer_lsn[i][j],
 						new_psn + i );
 			}
+			g_target_row[g_prev_bank[i]] = new_row;
 		}
 	}
 }
