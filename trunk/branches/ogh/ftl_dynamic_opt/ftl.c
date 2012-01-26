@@ -83,6 +83,8 @@ static void set_psn(UINT32 const lba, UINT32 const psn);
 UINT32 g_target_bank;
 UINT32 g_target_sect[NUM_BANKS];
 UINT32 g_merge_buffer_lsn[NUM_BANKS][SECTORS_PER_PAGE];
+UINT32 g_target_row[NUM_BANKS];
+UINT32 g_prev_bank[NUM_BANKS];
 
 //debug
 static volatile UINT32 g_debug_pages = PAGES_PER_VBLK;
@@ -271,6 +273,7 @@ void init_meta_data()
 		g_misc_meta[i].smt_init = 0;
 		g_misc_meta[i].cur_miscblk_vpn = 0;
 		g_target_sect[i] = 0;
+		g_prev_bank[i] = 0;
 	}
 	for(i = 0 ;i < NUM_BANKS_MAX;i++){
 		for(j = 0 ;j < NUM_BANKS_MAX;j++){
@@ -425,6 +428,10 @@ void ftl_open(void)
 	for (bank = 0; bank < NUM_BANKS; bank++)
 	{
 		g_misc_meta[bank].g_target_row = PAGES_PER_VBLK * (g_free_start[bank]);
+		row = get_free_page(bank);
+		SETREG(FCP_ROW_L(bank),row);
+		SETREG(FCP_ROW_H(bank),row);
+		g_target_row[bank] = row;
 	}
 
 	flash_clear_irq();
@@ -594,7 +601,7 @@ void ftl_write_sector(UINT32 const lba)
 		// about status of previous nand flash command, 
 		// wait until target bank is IDLE 
 		// ( target DRAM space is fully flashed ) 
-		while(_BSP_FSM(new_bank) != BANK_IDLE);
+		while(_BSP_FSM(g_prev_bank[new_bank]) != BANK_IDLE);
 		mem_copy(dst, src, BYTES_PER_SECTOR);
 
 		// set psn to -1 , it means that data is in dram 
@@ -610,16 +617,20 @@ void ftl_write_sector(UINT32 const lba)
 		// and set a psn number of all sectors.
 		if( vsect_num >= SECTORS_PER_PAGE ){
 			/* get free page */
-			new_row = get_free_page(new_bank);
 			SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 			SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
 			SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
 			SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
 			SETREG(FCP_COL,0);
-			SETREG(FCP_ROW_L(new_bank),new_row);
-			SETREG(FCP_ROW_H(new_bank),new_row);
+			SETREG(FCP_BANK,AUTO_SEL);
 
 			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
+
+			g_prev_bank[new_bank] = GETREG(WR_BANK);
+
+			new_row = get_free_page(g_prev_bank[new_bank]);
+			SETREG(FCP_ROW_L(new_bank),new_row);
+			SETREG(FCP_ROW_H(new_bank),new_row);
 
 			/* initialize merge buffer page's sector point */
 		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
@@ -627,13 +638,14 @@ void ftl_write_sector(UINT32 const lba)
 			// allocate new psn 
 			//new_psn = new_row * SECTORS_PER_PAGE;
 
-			new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
+			new_psn = g_prev_bank[new_bank] * SECTORS_PER_BANK + g_target_row[g_prev_bank[new_bank]] * SECTORS_PER_PAGE;
 			// vsn - > psn mapping  
 			for(i = 0 ;i < SECTORS_PER_PAGE; i++ )
 			{
 				set_psn( g_merge_buffer_lsn[new_bank][i],
 						new_psn + i );
 			}
+			g_target_row[g_prev_bank[new_bank]] = new_row;
 		}
 		else
 		{
