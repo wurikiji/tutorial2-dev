@@ -455,10 +455,10 @@ void ftl_read(UINT32 const lba, UINT32 const total_sectors)				//modified by GYU
 		while (next_read_buf_id == GETREG(SATA_RBUF_PTR));	// wait if the read buffer is full (slow host)
 		#endif
 		g_ftl_read_buf_id = (g_ftl_read_buf_id + 1) % NUM_RD_BUFFERS;
-			while (GETREG(MON_CHABANKIDLE) != 0);	// This while() loop ensures that Waiting Room is empty and all the banks are idle.
+        while (GETREG(MON_CHABANKIDLE) != 0);	// This while() loop ensures that Waiting Room is empty and all the banks are idle.
 		
-SETREG(BM_STACK_RDSET, next_read_buf_id);	// change bm_read_limit
-			SETREG(BM_STACK_RESET, 0x02);				// change bm_read_limit			// change bm_read_limit
+        SETREG(BM_STACK_RDSET, next_read_buf_id);	// change bm_read_limit
+		SETREG(BM_STACK_RESET, 0x02);				// change bm_read_limit			// change bm_read_limit
 	}
 }
 void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added by GYUHWA
