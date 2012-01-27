@@ -839,7 +839,7 @@ static UINT32 garbage_collection(UINT32 const bank)
 			SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR);
 			SETREG(FCP_OPTION, FO_P | FO_E );		
 			SETREG(FCP_ROW_L(bank), victim_blk * PAGES_PER_VBLK + page);				
-			SETREG(FCP_ROW_H(bank), victim_blk * PAGES_PER_VBLK + page)
+			SETREG(FCP_ROW_H(bank), victim_blk * PAGES_PER_VBLK + page);
 			flash_issue_cmd(bank,RETURN_WHEN_DONE);
 		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + BYTES_PER_SECTOR * (SECTORS_PER_PAGE - 1), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
 		for(sect_offset = 0; sect_offset < SECTORS_PER_PAGE - 1 ; sect_offset ++)
@@ -848,7 +848,7 @@ static UINT32 garbage_collection(UINT32 const bank)
 				continue;
 			dst = FTL_BUF_ADDR + BYTES_PER_PAGE + (gc_sect_offset % SECTORS_PER_PAGE) * BYTES_PER_SECTOR;
 			src = FTL_BUF_ADDR + sect_offset * BYTES_PER_SECTOR;
-			memcopy(dst, src, BYTES_PER_SECTOR);
+			mem_copy(dst, src, BYTES_PER_SECTOR);
 			gc_lba[gc_sect_offset % SECTORS_PER_PAGE] = g_misc_meta[bank].cur_sect_lba[sect_offset];
 			set_psn(g_misc_meta[bank].cur_sect_lba[sect_offset],   SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * g_misc_meta[bank].gc_blk + gc_sect_offset);
 			gc_sect_offset++;
