@@ -412,7 +412,7 @@ void ftl_open(void)
 
 	for (bank = 0; bank < NUM_BANKS; bank++)
 	{
-		g_misc_meta[bank].g_target_row = PAGES_PER_VBLK * (g_free_start[bank]);
+		g_misc_meta[bank].g_target_row = PAGES_PER_VBLK * (g_free_start[bank] + 1);
 	}
 
 	g_target_row = get_free_page(0);
@@ -542,7 +542,6 @@ void ftl_write_sector(UINT32 const lba)
 	UINT32 index = lba % SECTORS_PER_PAGE;
 	//new_bank = lba % NUM_BANKS; // get bank number of sector
 
-	src = WR_BUF_PTR(g_ftl_write_buf_id) + (index - g_target_sect) * BYTES_PER_SECTOR;
 
 
 	// If merge_buffer of bank is full ,
@@ -554,6 +553,7 @@ void ftl_write_sector(UINT32 const lba)
 		g_target_bank = (g_target_bank + 1) % NUM_BANKS;
 		g_target_row = get_free_page(g_target_bank);
 	}
+	src = WR_BUF_PTR(g_ftl_write_buf_id) + ((index - g_target_sect) * BYTES_PER_SECTOR);
 	SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 	SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
 	SETREG(FCP_DMA_ADDR,src);
