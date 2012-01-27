@@ -429,7 +429,7 @@ void ftl_open(void)
 
 	for (bank = 0; bank < NUM_BANKS; bank++)
 	{
-		g_misc_meta[bank].g_target_row = PAGES_PER_VBLK * (g_free_start[bank]);
+		g_misc_meta[bank].g_target_row = PAGES_PER_VBLK * (g_misc_meta[bank].victim);
 	}
 
 	flash_clear_irq();
@@ -784,7 +784,7 @@ static UINT32 get_free_page(UINT32 const bank)
 {
 	// This function returns the row address for write operation.
 
-	UINT32 row;
+	UINT32 row, tmep;
 	UINT32 vblk_offset, page_offset;
 
 	row = g_misc_meta[bank].g_target_row;
@@ -795,9 +795,13 @@ static UINT32 get_free_page(UINT32 const bank)
 	{
 		// Free vblocks are exhausted. Since this example FTL does not do garbage collection,
 		// no more data can be written to this SSD. The SSD stops working now.
-
-		row = garbage_collection(bank);
-		vblk_offset = 0;
+		temp = g_misc_meta[bank].gc_blk;
+		for((row % PAGES_PER_VBLK) == 0 && ((row / PAGES_PER_VBLK) != temp ))
+		{
+			temp = g_misc_meta[bank].gc_blk;
+			row = garbage_collection(bank);
+		}
+		vblk_offset = row / PAGES_PER_VBLK;
 	}
 	else if (page_offset == 0)	// We are going to write to a new vblock.
 	{
@@ -833,14 +837,14 @@ static UINT32 garbage_collection(UINT32 const bank)
 	gc_sect_offset = 0;
 	for(page = 0; page < PAGES_PER_BLK; page++)
 	{
-			SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
-			SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
-			SETREG(FCP_COL, 0);						
-			SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR);
-			SETREG(FCP_OPTION, FO_P | FO_E );		
-			SETREG(FCP_ROW_L(bank), victim_blk * PAGES_PER_VBLK + page);				
-			SETREG(FCP_ROW_H(bank), victim_blk * PAGES_PER_VBLK + page);
-			flash_issue_cmd(bank,RETURN_WHEN_DONE);
+		SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
+		SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+		SETREG(FCP_COL, 0);						
+		SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR);
+		SETREG(FCP_OPTION, FO_P | FO_E );		
+		SETREG(FCP_ROW_L(bank), victim_blk * PAGES_PER_VBLK + page);				
+		SETREG(FCP_ROW_H(bank), victim_blk * PAGES_PER_VBLK + page);
+		flash_issue_cmd(bank,RETURN_WHEN_DONE);
 		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + BYTES_PER_SECTOR * (SECTORS_PER_PAGE - 1), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
 		for(sect_offset = 0; sect_offset < SECTORS_PER_PAGE - 1 ; sect_offset ++)
 		{
@@ -1061,6 +1065,7 @@ static void format(void)
 				g_free_start[bank]++;
 		}
 		g_misc_meta[bank].victim = g_free_start[bank];
+		g_free_start[bank] = g_misc_meta[bank].gc_blk;
 	}
 	// In general, write_format_mark() should be called upon completion of low level format in order to prevent
 	// format() from being called again.
