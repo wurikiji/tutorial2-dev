@@ -1060,6 +1060,7 @@ static void format(void)
 	for(bank = 0; bank < NUM_BANKS; bank++)
 	{
 		g_misc_meta[bank].gc_blk = g_free_start[bank];
+		g_free_start[bank]++;
 		while(is_bad_block(i, bad_block) && j < VBLKS_PER_BANK)
 		{
 				g_free_start[bank]++;
