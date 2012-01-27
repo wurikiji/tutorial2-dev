@@ -466,9 +466,8 @@ void ftl_read(UINT32 const lba, UINT32 const total_sectors)				//modified by GYU
 }
 void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added by GYUHWA
 {
-	UINT32 psn, bank, row, buf_offset, nand_offset;
+	UINT32 psn, bank, row, nand_offset;
 	UINT32 t1;
-	UINT32 src,dst;
 	psn = get_psn(lba);									//physical sector nomber
 	//bank = lba % NUM_BANKS;	
 	bank = psn / SECTORS_PER_BANK;
@@ -530,6 +529,7 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 		remain_sectors -= num_sectors_to_write;
 		next_lba += num_sectors_to_write;
 		/* incread bm_write_limit and g_ftl_write_buf_id for next sata host's data sending */
+		while(_BSP_FSM(g_target_bank) != BANK_IDLE);
 		g_ftl_write_buf_id = (g_ftl_write_buf_id + 1 ) % NUM_WR_BUFFERS;
 		SETREG(BM_STACK_WRSET, g_ftl_write_buf_id);	// change bm_write_limit
 		SETREG(BM_STACK_RESET, 0x01);				// change bm_write_limit
@@ -537,12 +537,9 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 }
 void ftl_write_sector(UINT32 const lba)
 {
-	UINT32 new_bank, vsect_num, new_row;
 	UINT32 new_psn;
-	UINT32 temp;
-	UINT32 dst,src;
+	UINT32 src;
 	UINT32 index = lba % SECTORS_PER_PAGE;
-	int i;
 	//new_bank = lba % NUM_BANKS; // get bank number of sector
 
 	src = WR_BUF_PTR(g_ftl_write_buf_id) + (index - g_target_sect) * BYTES_PER_SECTOR;
