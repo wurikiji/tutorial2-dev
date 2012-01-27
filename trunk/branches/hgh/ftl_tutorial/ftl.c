@@ -833,14 +833,13 @@ static UINT32 garbage_collection(UINT32 const bank)
 	gc_sect_offset = 0;
 	for(page = 0; page < PAGES_PER_BLK; page++)
 	{
-			SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
-			SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
-			SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR);
+			SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
 			SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
-			SETREG(FCP_COL,0);
-			SETREG(FCP_ROW_L(bank),victim_blk * PAGES_PER_VBLK + page);
-			SETREG(FCP_ROW_H(bank),victim_blk * PAGES_PER_VBLK + page);
-
+			SETREG(FCP_COL, 0);						
+			SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR);
+			SETREG(FCP_OPTION, FO_P | FO_E );		
+			SETREG(FCP_ROW_L(bank), victim_blk * PAGES_PER_VBLK + page);				
+			SETREG(FCP_ROW_H(bank), victim_blk * PAGES_PER_VBLK + page)
 			flash_issue_cmd(bank,RETURN_WHEN_DONE);
 		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + BYTES_PER_SECTOR * (SECTORS_PER_PAGE - 1), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
 		for(sect_offset = 0; sect_offset < SECTORS_PER_PAGE - 1 ; sect_offset ++)
