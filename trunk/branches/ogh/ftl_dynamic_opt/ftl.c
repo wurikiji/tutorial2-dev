@@ -623,7 +623,7 @@ void ftl_write_sector(UINT32 const lba)
 			SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
 			SETREG(FCP_COL,0);
 
-			flash_issue_cmd(AUTO_SEL,RETURN_ON_ISSUE);
+			flash_issue_cmd(AUTO_SEL,RETURN_ON_ACCEPT);
 
 			g_prev_bank[new_bank] = GETREG(WR_BANK);
 
@@ -674,7 +674,7 @@ void flush_merge_buffer()
 			SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
 			SETREG(FCP_DMA_CNT, BYTES_PER_SECTOR * g_target_sect[i]);
 			SETREG(FCP_COL,0);
-			flash_issue_cmd(AUTO_SEL,RETURN_ON_ISSUE);
+			flash_issue_cmd(AUTO_SEL,RETURN_ON_ACCEPT);
 			
 			g_prev_bank[i] = GETREG(WR_BANK);
 			new_row = get_free_page(g_prev_bank[i]);
