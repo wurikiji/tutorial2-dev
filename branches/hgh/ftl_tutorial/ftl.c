@@ -650,7 +650,7 @@ void ftl_write_sector(UINT32 const lba)
 
 void flush_merge_buffer()
 {
-	UINT32 new_row, new_psn;
+	/*UINT32 new_row, new_psn;
 	UINT32 new_bank = g_target_bank;
 
 	int i;
@@ -678,13 +678,13 @@ void flush_merge_buffer()
 			set_psn( g_merge_buffer_lsn[i],
 					new_psn + i );
 		}
-	}
+	}*/
 }
 void ftl_flush(void)
 {
-	flush_merge_buffer();
-	logging_map_table();
-	logging_misc_meta();
+	//flush_merge_buffer();
+	//logging_map_table();
+	//logging_misc_meta();
 }
 
 static BOOL32 is_bad_block(UINT32 const bank, UINT32 const vblk_offset)
@@ -828,65 +828,64 @@ static UINT32 get_free_page(UINT32 const bank)
 
 static UINT32 garbage_collection(UINT32 const bank)
 {
-	UINT32  victim_blk, page, sect_offset, gc_sect_offset, gc_lba[SECTORS_PER_PAGE], result;
+	UINT32  victim_blk, page, sect_offset, gc_sect_offset, gc_lba[SECTORS_PER_PAGE], dst, src result;
 	victim_blk = get_victim_blk(bank);
 	gc_sect_offset = 0;
 	for(page = 0; page < PAGES_PER_BLK; page++)
 	{
-		nand_page_ptread(bank,
-			victim_blk,
-                    	page,
-                    	SECTORS_PER_PAGE - 1,
-                	1,
-			FTL_BUF_ADDR + (bank * BYTES_PER_PAGE),
-                    	RETURN_WHEN_DONE);
-		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
+			SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
+			SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
+			SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR);
+			SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+			SETREG(FCP_COL,0);
+			SETREG(FCP_ROW_L(bank),victim_blk * PAGES_PER_VBLK + page);
+			SETREG(FCP_ROW_H(bank),victim_blk * PAGES_PER_VBLK + page);
+
+			flash_issue_cmd(bank,RETURN_WHEN_DONE);
+		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + BYTES_PER_SECTOR * (SECTORS_PER_PAGE - 1), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
 		for(sect_offset = 0; sect_offset < SECTORS_PER_PAGE - 1 ; sect_offset ++)
 		{
 			if(get_psn(g_misc_meta[bank].cur_sect_lba[sect_offset]) !=  SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * victim_blk + SECTORS_PER_PAGE * page + sect_offset)
 				continue;
-			nand_page_ptread(bank,
-				victim_blk,
-				page,
-				sect_offset,
-				1,
-				FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE),
-				RETURN_WHEN_DONE);
-
-			nand_page_ptprogram(bank,
-				g_misc_meta[bank].gc_blk,
-				gc_sect_offset / SECTORS_PER_PAGE,
-				gc_sect_offset % SECTORS_PER_PAGE,
-				1,
-				FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE));
+			dst = FTL_BUF_ADDR + BYTES_PER_PAGE + (gc_sect_offset % SECTORS_PER_PAGE) * BYTES_PER_SECTOR;
+			src = FTL_BUF_ADDR + sect_offset * BYTES_PER_SECTOR;
+			memcopy(dst, src, BYTES_PER_SECTOR);
 			gc_lba[gc_sect_offset % SECTORS_PER_PAGE] = g_misc_meta[bank].cur_sect_lba[sect_offset];
 			set_psn(g_misc_meta[bank].cur_sect_lba[sect_offset],   SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * g_misc_meta[bank].gc_blk + gc_sect_offset);
 			gc_sect_offset++;
 			if(gc_sect_offset % SECTORS_PER_PAGE == SECTORS_PER_PAGE -1)
 			{
-				mem_copy(FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE), gc_lba, (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
-				nand_page_ptprogram(bank,
-				g_misc_meta[bank].gc_blk,
-				gc_sect_offset / SECTORS_PER_PAGE,
-				gc_sect_offset % SECTORS_PER_PAGE,
-				1,
-				FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE));
+				dst = FTL_BUF_ADDR +BYTES_PER_PAGE + ((SECTORS_PER_PAGE - 1) * BYTES_PER_SECTOR);
+				mem_copy(dst, gc_lba, (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
+				SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
+				SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
+				SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR + BYTES_PER_PAGE);
+				SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+				SETREG(FCP_COL,0);
+				SETREG(FCP_ROW_L(bank),victim_blk * gc_sect_offset / SECTORS_PER_PAGE);
+				SETREG(FCP_ROW_H(bank),victim_blk * gc_sect_offset / SECTORS_PER_PAGE);
+
+				flash_issue_cmd(bank,RETURN_ON_ISSUE);
 				gc_sect_offset++;
 			}
 		}	
 	}
 	if(gc_sect_offset % SECTORS_PER_PAGE != 0)
 	{
-		mem_copy(FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE), gc_lba, (gc_sect_offset % SECTORS_PER_PAGE) * sizeof(UINT32));
-		nand_page_ptprogram(bank,
-		g_misc_meta[bank].gc_blk,
-		gc_sect_offset / SECTORS_PER_PAGE,
-		gc_sect_offset % SECTORS_PER_PAGE,
-		1,
-		FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE));
-		gc_sect_offset++;
+		mem_copy(dst, gc_lba, (gc_sect_offset % SECTORS_PER_PAGE) * sizeof(UINT32));
+		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
+		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
+		SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR + BYTES_PER_PAGE);
+		SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+		SETREG(FCP_COL,0);
+		SETREG(FCP_ROW_L(bank),victim_blk * gc_sect_offset / SECTORS_PER_PAGE);
+		SETREG(FCP_ROW_H(bank),victim_blk * gc_sect_offset / SECTORS_PER_PAGE);
+
+		flash_issue_cmd(bank,RETURN_ON_ISSUE);
+		result = g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + (gc_sect_offset / SECTORS_PER_PAGE) + 1;
 	}
-	result = g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + (gc_sect_offset / SECTORS_PER_PAGE) + 1;
+	else
+		result = g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + (gc_sect_offset / SECTORS_PER_PAGE);
 	g_misc_meta[bank].gc_blk = victim_blk;
 	nand_block_erase(bank, g_misc_meta[bank].gc_blk);
 	g_misc_meta[bank].full_blk_count--;
