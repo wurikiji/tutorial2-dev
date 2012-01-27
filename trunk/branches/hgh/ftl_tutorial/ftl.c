@@ -1021,11 +1021,7 @@ static void format(void)
 
 	UINT32 vblk_offset, bank;
 	for(bank = 0; bank < NUM_BANKS; bank++)
-	{
 		g_misc_meta[bank].full_blk_count = 1 + 33;
-		g_misc_meta[bank].gc_blk = 1;
-		write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) , 0xffffffff);
-	}
 	for (vblk_offset = 1; vblk_offset < VBLKS_PER_BANK; vblk_offset++)
 	{
 		for (bank = 0; bank < NUM_BANKS; bank++)
