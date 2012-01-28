@@ -583,7 +583,7 @@ void flush_merge_buffer()
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
 		// Address is merge buffer address which contains actual data
-		SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
+		//SETREG(FCP_DMA_ADDR, MERGE_BUFFER_ADDR + new_bank * BYTES_PER_PAGE);
 		SETREG(FCP_DMA_CNT, BYTES_PER_SECTOR * g_target_sect);
 		SETREG(FCP_COL,0);
 		SETREG(FCP_ROW_L(new_bank),new_row);
