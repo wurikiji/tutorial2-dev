@@ -541,22 +541,20 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 			num_sectors_to_write = remain_sectors;
 		}
 
-		remain_sectors -= num_sectors_to_write;
 
-		while(num_sectors_to_write != 0){
+		remain_sectors -= num_sectors_to_write;
+		while(i != 0){
 			if( g_target_sect + num_sectors_to_write >= SECTORS_PER_PAGE )
 			{
 				i = SECTORS_PER_PAGE - g_target_sect;
-				ftl_write_sector(next_lba, i );
-				num_sectors_to_write -= i;
 			}
 			else
 			{
 				i  = num_sectors_to_write;
-				ftl_write_sector(next_lba,i);
-				num_sectors_to_write = 0;
 			}
+			ftl_write_sector(next_lba,i);
 			next_lba += i;
+			num_sectors_to_write -= i; 
 		}
 		sect_offset = 0;
 		/* incread bm_write_limit and g_ftl_write_buf_id for next sata host's data sending */
@@ -586,8 +584,8 @@ void ftl_write_sector(UINT32 const lba, UINT32 const totals)
 
 	// Because Firmware does not know 
 	// about status of previous nand flash command, 
-	// wait until target bank is IDLE 
-	// ( target DRAM space is fully flashed ) 
+	// must wait until target bank is IDLE 
+	// ( targeted DRAM space is fully flushed ) 
 	while(_BSP_FSM(new_bank) != BANK_IDLE);
 	mem_copy(dst, src, BYTES_PER_SECTOR * totals);
 
@@ -632,9 +630,6 @@ void ftl_write_sector(UINT32 const lba, UINT32 const totals)
 			set_psn(lba+i, ((UINT32)BIT31 | (vsect_num+i) ));
 		g_target_sect+=totals;
 	}
-	// If merge_buffer of bank is full ,
-	// than flush the merge buffer page to nand flash
-	// and set a psn number of all sectors.
 }
 
 void flush_merge_buffer()
