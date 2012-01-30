@@ -325,7 +325,7 @@ void ftl_open(void)
 
 			UINT32 i;
 
-			num_entries = read_dram_16(&(scan_list[bank].num_entries));
+			num_entries = read_dram_16((UINT32)&(scan_list[bank].num_entries));
 
 			if (num_entries > SCAN_LIST_ITEMS)
 			{
@@ -661,9 +661,9 @@ void flush_merge_buffer()
 void ftl_flush(void)
 {
 #if OPTION_FTL_TEST == 0
-	flush_merge_buffer();
-	logging_map_table();
-	logging_misc_meta();
+	//flush_merge_buffer();
+	//logging_map_table();
+	//logging_misc_meta();
 #endif
 }
 
