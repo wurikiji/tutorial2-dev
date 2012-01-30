@@ -21,7 +21,7 @@
 
 #define	FLASH_TYPE		K9LCG08U1M
 #define	DRAM_SIZE		65075200
-#define	BANK_BMP		0x00ff00ff
+#define	BANK_BMP		0x00330033
 #define	CLOCK_SPEED		175000000
 
 #define	OPTION_2_PLANE			1	// 1 = 2-plane mode, 0 = 1-plane mode
