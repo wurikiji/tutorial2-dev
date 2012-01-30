@@ -76,10 +76,10 @@
 //#define SMT_DRAM_BYTES		((((UINT32)NUM_PSECTORS_128GB + NUM_BANKS_MAX -1 ) / NUM_BANKS_MAX ) * sizeof(UINT32) )
 #define SMT_DRAM_BYTES		(SECTORS_PER_BANK * sizeof(UINT32))
 #define SMT_BYTES		(SECTORS_PER_BANK * sizeof(UINT32))
-#define SMT_PIECE_BYTES		((SMT_BYTES + NUM_BANKS_MAX -1 )/ NUM_BANKS_MAX)
+#define SMT_NUM			(NUM_BANKS_MAX * 2)
+#define SMT_PIECE_BYTES		((SMT_BYTES + NUM_BANKS_MAX -1 )/ SMT_NUM)
 #define SMT_INC_SIZE		((SMT_PIECE_BYTES + BYTES_PER_PAGE -1 ) / BYTES_PER_PAGE)
 #define SMT_LIMIT		(PAGES_PER_VBLK / SMT_INC_SIZE)	
-
 // 32 smt pieces per banks, ( 32 * 32 smt pieces )
 
 ///////////////////////////////

@@ -50,8 +50,8 @@ typedef struct _misc_metadata											//modified by GYUHWA
 	UINT32 g_scan_list_entries;
 	UINT32 g_target_row;
 	// smt piece data
-	UINT32 smt_pieces[NUM_BANKS_MAX];
-	UINT32 smt_init;
+	UINT32 smt_pieces[SMT_NUM];
+	UINT32 smt_init[2];
 }misc_metadata; // per bank
 //----------------------------------
 // FTL metadata (maintain in SRAM)
@@ -61,10 +61,10 @@ static misc_metadata  g_misc_meta[NUM_BANKS];
 
 /* smt piece data information */
 /* initialize 0 */
-UINT32 smt_bit_map[ NUM_BANKS_MAX ]; //dirty information
+UINT32 smt_bit_map[ NUM_BANKS_MAX ][2]; //dirty information
 /* initialize -1 */
-UINT32 smt_dram_map[ NUM_BANKS_MAX ]; // smt table index information
-UINT32 smt_piece_map[ NUM_BANKS_MAX * NUM_BANKS_MAX ]; // where a smt is in dram
+UINT32 smt_dram_map[ SMT_NUM ]; // smt table index information
+UINT32 smt_piece_map[ NUM_BANKS_MAX * SMT_NUM ]; // where a smt is in dram
 // initialize 0 
 UINT32 g_smt_target;	// loading place on dram space
 UINT32 g_smt_victim;	// map,flush target
@@ -72,7 +72,7 @@ UINT32 g_smt_full;	// map data area full check
 /* end smt */
 //
 //bad block
-UINT32 g_bad_list[NUM_BANKS][NUM_BANKS_MAX]; // bad block list for metadata
+UINT32 g_bad_list[NUM_BANKS][SMT_NUM]; // bad block list for metadata
 UINT32 g_free_start[NUM_BANKS];
 //*Red//
 static UINT32 get_psn(UINT32 const lba);
@@ -177,14 +177,16 @@ void loading_misc_meta()
 void load_smt_piece(UINT32 idx){
 	UINT32 bank,row,block;
 	UINT32 dest;
-	bank = idx / NUM_BANKS_MAX;
-	block = idx % NUM_BANKS_MAX;
+	UINT32 arr;
+	bank = idx / SMT_NUM;
+	block = idx % SMT_NUM;
+
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][block]);
-	if(g_smt_target == NUM_BANKS_MAX ||  g_smt_full == 1){
+	if(g_smt_target == SMT_NUM ||  g_smt_full == 1){
 		g_smt_full = 1;
-		g_smt_victim = (g_smt_victim +1 ) %NUM_BANKS_MAX;
+		g_smt_victim = (g_smt_victim +1 ) % SMT_NUM;
 		flush_smt_piece(g_smt_target);
-		g_smt_target = (g_smt_target + 1 ) %NUM_BANKS_MAX;
+		g_smt_target = (g_smt_target + 1 ) % SMT_NUM;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
 	SETREG(FCP_DMA_CNT,SMT_PIECE_BYTES);
@@ -200,10 +202,10 @@ void load_smt_piece(UINT32 idx){
 
 	smt_dram_map[g_smt_target] = idx;
 	smt_piece_map[idx] = g_smt_target;
-	smt_bit_map[bank] &= ~( 1 <<block );
-	if(( g_misc_meta[bank].smt_init & ( 1 << block ) ) == 0){
+	smt_bit_map[bank][block/NUM_BANKS_MAX] &= ~( 1 << (block % NUM_BANKS_MAX) );
+	if(( g_misc_meta[bank].smt_init[block / NUM_BANKS_MAX ] & ( 1 << (block   % NUM_BANKS_MAX)) ) == 0){
 		mem_set_dram( dest, 0x00, SMT_PIECE_BYTES);
-		g_misc_meta[bank].smt_init |= (1 <<block);
+		g_misc_meta[bank].smt_init[block / NUM_BANKS_MAX] |= (1 << (block % NUM_BANKS_MAX));
 	}
 	g_smt_target++;
 }
@@ -211,9 +213,9 @@ void flush_smt_piece(UINT32 idx)
 {
 	UINT32 bank,row,block;
 	UINT32 dest;
-	bank = smt_dram_map[idx] / NUM_BANKS_MAX;
-	block = smt_dram_map[idx] % NUM_BANKS_MAX;
-	if((smt_bit_map[bank] & (1<<block)) != 0){
+	bank = smt_dram_map[idx] / SMT_NUM;
+	block = smt_dram_map[idx] % SMT_NUM;
+	if((smt_bit_map[bank][block / NUM_BANKS_MAX] & (1<< (block % NUM_BANKS_MAX))) != 0){
 		//  smt piece data
 		if( g_misc_meta[bank].smt_pieces[block] >= SMT_LIMIT - 1){
 			// erase 
@@ -239,7 +241,7 @@ void flush_smt_piece(UINT32 idx)
 void logging_map_table()
 {
 	int i;
-	for(i = 0 ;i < NUM_BANKS_MAX;i++){
+	for(i = 0 ;i < SMT_NUM ;i++){
 		flash_finish();
 		if( smt_dram_map[i] != (UINT32)-1 ){
 			flush_smt_piece(i);
@@ -254,15 +256,18 @@ void init_meta_data()
 		for(j = 0 ;j < NUM_BANKS_MAX;j++){
 			g_misc_meta[i].smt_pieces[ j ] = 0;
 		}
-		g_misc_meta[i].smt_init = 0;
+		g_misc_meta[i].smt_init[0] = 0;
+		g_misc_meta[i].smt_init[1] = 0;
 		g_misc_meta[i].cur_miscblk_vpn = 0;
 	}
 	for(i = 0 ;i < NUM_BANKS_MAX;i++){
-		for(j = 0 ;j < NUM_BANKS_MAX;j++){
+		for(j = 0 ;j < SMT_NUM;j++){
 			smt_piece_map[i * NUM_BANKS_MAX + j] = (UINT32)-1;
 		}
-		smt_bit_map[i] = 0;
-		smt_dram_map[i] = (UINT32)-1;
+		smt_bit_map[i][0] = 0;
+		smt_bit_map[i][1] = 0;
+		smt_dram_map[i*2] = (UINT32)-1;
+		smt_dram_map[i*2+1] = (UINT32)-1;
 	}
 	g_smt_target = 0;
 	g_smt_victim = 0;
@@ -376,14 +381,14 @@ void ftl_open(void)
 	// block#2 ~ map table meta and data
 	for(i = 0 ;i < NUM_BANKS;i++){
 		bad_block = 2;
-		for(j = 0 ;j < NUM_BANKS_MAX;j++){
+		for(j = 0 ;j < SMT_NUM;j++){
 			while(is_bad_block(i, bad_block) && j < VBLKS_PER_BANK)
 			{
 				bad_block++;
 			}
 			g_bad_list[i][j] = bad_block++;
 		}
-		g_free_start[i] = g_bad_list[i][NUM_BANKS_MAX-1] + 1;
+		g_free_start[i] = g_bad_list[i][SMT_NUM-1] + 1;
 	}
 	//if (check_format_mark() == FALSE)
 	if( TRUE)
@@ -719,17 +724,17 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	//UINT32 size = sizeof(UINT32) * totals;
 	//mem_copy(dst,src,size);
 	UINT32 dst, bank, block, sector;
-	UINT32 sectors_per_mblk = (SECTORS_PER_BANK + NUM_BANKS_MAX - 1) / NUM_BANKS_MAX;
+	UINT32 sectors_per_mblk = (SECTORS_PER_BANK + SMT_NUM - 1) / SMT_NUM;
 
 	bank = lba / SECTORS_PER_BANK;
 	block = (lba % SECTORS_PER_BANK)  / (sectors_per_mblk);
 	sector = (lba % SECTORS_PER_BANK) % (sectors_per_mblk);
 
-	dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
+	dst = smt_piece_map[bank * SMT_NUM + block];
 	if( dst == (UINT32)-1 )
 	{
-		load_smt_piece( bank * NUM_BANKS_MAX + block);
-		dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
+		load_smt_piece( bank * SMT_NUM + block);
+		dst = smt_piece_map[bank * SMT_NUM  + block];
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 	return read_dram_32((UINT32*)dst);
@@ -745,20 +750,20 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 	//mem_copy(dst,src,size);
 	UINT32 dst, bank, block, sector;
 
-	UINT32 sectors_per_mblk = (SECTORS_PER_BANK) / NUM_BANKS_MAX;
+	UINT32 sectors_per_mblk = (SECTORS_PER_BANK + SMT_NUM -1) / SMT_NUM;
 
 	bank = lba / SECTORS_PER_BANK;
 	block = ((lba % SECTORS_PER_BANK)) / (sectors_per_mblk);
 	sector = ((lba % SECTORS_PER_BANK)) % (sectors_per_mblk);
 
-	dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
+	dst = smt_piece_map[bank * SMT_NUM + block];
 	if(dst == (UINT32)-1)
 	{
-		load_smt_piece( bank * NUM_BANKS_MAX + block);
-		dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
+		load_smt_piece( bank * SMT_NUM + block);
+		dst = smt_piece_map[bank * SMT_NUM + block];
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
-	smt_bit_map[bank] |= ( 1 <<block );
+	smt_bit_map[bank][block/NUM_BANKS_MAX] |= ( 1 << (block % NUM_BANKS_MAX) );
 
 	write_dram_32( (UINT32*)dst , psn );
 }
