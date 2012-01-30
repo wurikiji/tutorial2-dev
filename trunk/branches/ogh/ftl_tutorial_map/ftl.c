@@ -84,18 +84,6 @@ UINT32 g_target_bank;
 UINT32 g_target_sect;
 UINT32 g_merge_buffer_lsn[SECTORS_PER_PAGE];
 
-//debug
-static volatile UINT32 g_debug_pages = PAGES_PER_VBLK;
-static volatile UINT32 g_debug_smt_limit = SMT_LIMIT;
-static volatile UINT32 g_debug_smt_inc_size = SMT_INC_SIZE;
-static volatile UINT32 g_smt_size = SMT_BYTES;
-static volatile UINT32 g_smt_piece_size = SMT_PIECE_BYTES;
-static volatile UINT32 g_bytes_per_phyp = BYTES_PER_PHYPAGE;
-static volatile UINT32 g_bytes_per_vp = BYTES_PER_PAGE;
-static volatile UINT32 g_sectors_per_bank = SECTORS_PER_BANK;
-static volatile UINT32 g_pages_per_blk = PAGES_PER_BLK;
-static volatile UINT32 g_pages_per_vblk = PAGES_PER_VBLK;
-
 void logging_misc_meta()
 {
 	UINT32 bank;
@@ -192,11 +180,11 @@ void load_smt_piece(UINT32 idx){
 	bank = idx / NUM_BANKS_MAX;
 	block = idx % NUM_BANKS_MAX;
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][block]);
-	if( g_smt_target == NUM_BANKS_MAX || g_smt_full == 1){
+	if(g_smt_target == NUM_BANKS_MAX ||  g_smt_full == 1){
 		g_smt_full = 1;
-		flush_smt_piece(g_smt_victim);
-		g_smt_target = g_smt_victim;
-		g_smt_victim = (g_smt_victim + 1 ) % NUM_BANKS_MAX;
+		g_smt_victim = (g_smt_victim +1 ) %NUM_BANKS_MAX;
+		flush_smt_piece(g_smt_target);
+		g_smt_target = (g_smt_target + 1 ) %NUM_BANKS_MAX;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
 	SETREG(FCP_DMA_CNT,SMT_PIECE_BYTES);
@@ -208,9 +196,6 @@ void load_smt_piece(UINT32 idx){
 	SETREG(FCP_ROW_H(bank), row);
 	
 	// fully guarantee 
-	while(_BSP_FSM(bank) != BANK_IDLE){
-		bank = bank;
-	}
 	flash_issue_cmd(bank, RETURN_WHEN_DONE);
 
 	smt_dram_map[g_smt_target] = idx;
@@ -246,10 +231,6 @@ void flush_smt_piece(UINT32 idx)
 		dest = SMT_ADDR + (idx * SMT_PIECE_BYTES);
 		SETREG(FCP_DMA_ADDR,dest);
 		SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
-		while(_BSP_FSM(bank) != BANK_IDLE)
-		{
-			bank = bank;
-		}
 		flash_issue_cmd(bank,RETURN_WHEN_DONE);
 	}
 	smt_piece_map[smt_dram_map[idx]] = (UINT32)-1;
@@ -474,10 +455,10 @@ void ftl_read(UINT32 const lba, UINT32 const total_sectors)				//modified by GYU
 		while (next_read_buf_id == GETREG(SATA_RBUF_PTR));	// wait if the read buffer is full (slow host)
 		#endif
 		g_ftl_read_buf_id = (g_ftl_read_buf_id + 1) % NUM_RD_BUFFERS;
-			while (GETREG(MON_CHABANKIDLE) != 0);	// This while() loop ensures that Waiting Room is empty and all the banks are idle.
+        while (GETREG(MON_CHABANKIDLE) != 0);	// This while() loop ensures that Waiting Room is empty and all the banks are idle.
 		
-SETREG(BM_STACK_RDSET, next_read_buf_id);	// change bm_read_limit
-			SETREG(BM_STACK_RESET, 0x02);				// change bm_read_limit			// change bm_read_limit
+        SETREG(BM_STACK_RDSET, next_read_buf_id);	// change bm_read_limit
+		SETREG(BM_STACK_RESET, 0x02);				// change bm_read_limit			// change bm_read_limit
 	}
 }
 void ftl_read_sector(UINT32 const lba, UINT32 const sect_offset)							//added by GYUHWA
@@ -547,16 +528,10 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 		{
 			num_sectors_to_write = remain_sectors;
 		}
-		if( num_sectors_to_write == SECTORS_PER_PAGE ){
-			ftl_write_page(next_lba);
-		}
-		else
+		for(i = 0 ;i < num_sectors_to_write;i++)
 		{
-			for(i = 0 ;i < num_sectors_to_write;i++)
-			{
-				/* call sector level write function */
-				ftl_write_sector( next_lba + i);
-			}
+			/* call sector level write function */
+			ftl_write_sector( next_lba + i);
 		}
 		sect_offset = 0;
 		remain_sectors -= num_sectors_to_write;
@@ -566,30 +541,6 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 		SETREG(BM_STACK_WRSET, g_ftl_write_buf_id);	// change bm_write_limit
 		SETREG(BM_STACK_RESET, 0x01);				// change bm_write_limit
 	}
-}
-void ftl_write_page(UINT32 const lba)
-{
-	UINT32 dst, new_bank, new_row;
-	
-	new_bank = g_target_bank;
-	new_row = get_free_page(new_bank);
-	SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
-	SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
-	SETREG(FCP_DMA_ADDR, WR_BUF_PTR(g_ftl_write_buf_id));
-	SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
-	SETREG(FCP_COL,0);
-	SETREG(FCP_ROW_L(new_bank),new_row);
-	SETREG(FCP_ROW_H(new_bank),new_row);
-
-	flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
-
-	new_psn = new_bank * SECTORS_PER_BANK + new_row * SECTORS_PER_PAGE;
-	// vsn - > psn mapping  
-	for(i = 0 ;i < SECTORS_PER_PAGE; i++ )
-	{
-		set_psn( lba + i, new_psn + i );
-	}
-	g_target_bank++;
 }
 void ftl_write_sector(UINT32 const lba)
 {
