@@ -564,7 +564,7 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 void ftl_write_sector(UINT32 const lba)
 {
 	UINT32 new_bank, vsect_num, new_row;
-	UINT32 new_psn, old_bank, old_blk;
+	UINT32 new_psn;
 	UINT32 temp;
 	UINT32 dst,src;
 	UINT32 index = lba % SECTORS_PER_PAGE;
@@ -781,7 +781,7 @@ static UINT32 get_free_page(UINT32 const bank)
 {
 	// This function returns the row address for write operation.
 
-	UINT32 row, tmep;
+	UINT32 row, temp;
 	UINT32 vblk_offset, page_offset;
 
 	row = g_misc_meta[bank].g_target_row;
@@ -793,7 +793,7 @@ static UINT32 get_free_page(UINT32 const bank)
 		// Free vblocks are exhausted. Since this example FTL does not do garbage collection,
 		// no more data can be written to this SSD. The SSD stops working now.
 		temp = g_misc_meta[bank].gc_blk;
-		for((row % PAGES_PER_VBLK) == 0 && ((row / PAGES_PER_VBLK) != temp ))
+		for(;(row % PAGES_PER_VBLK) == 0 && ((row / PAGES_PER_VBLK) != temp );)
 		{
 			temp = g_misc_meta[bank].gc_blk;
 			row = garbage_collection(bank);
@@ -829,7 +829,7 @@ static UINT32 get_free_page(UINT32 const bank)
 
 static UINT32 garbage_collection(UINT32 const bank)
 {
-	UINT32  victim_blk, page, sect_offset, gc_sect_offset, gc_lba[SECTORS_PER_PAGE], dst, src result;
+	UINT32  victim_blk, page, sect_offset, gc_sect_offset, gc_lba[SECTORS_PER_PAGE], dst, src, result;
 	victim_blk = get_victim_blk(bank);
 	gc_sect_offset = 0;
 	for(page = 0; page < PAGES_PER_BLK; page++)
@@ -1032,7 +1032,6 @@ static void format(void)
 		{
 			if (is_bad_block(bank, vblk_offset))
 			{
-				write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) + vblk_offset * sizeof(UINT32), 0xffffffff);
 				g_misc_meta[bank].full_blk_count++;
 				continue;
 			}
@@ -1060,7 +1059,7 @@ static void format(void)
 	{
 		g_misc_meta[bank].gc_blk = g_free_start[bank];
 		g_free_start[bank]++;
-		while(is_bad_block(i, bad_block) && j < VBLKS_PER_BANK)
+		while(is_bad_block(bank,g_free_start[bank]) && g_free_start[bank] < VBLKS_PER_BANK)
 		{
 				g_free_start[bank]++;
 		}
