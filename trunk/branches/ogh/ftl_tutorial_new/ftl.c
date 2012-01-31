@@ -84,6 +84,7 @@ UINT32 g_target_bank;
 UINT32 g_target_sect;
 UINT32 g_merge_buffer_lsn[SECTORS_PER_PAGE];
 
+UINT32 num_miss;
 //debug
 static volatile UINT32 g_debug_pages = PAGES_PER_VBLK;
 static volatile UINT32 g_debug_smt_limit = SMT_LIMIT;
@@ -276,6 +277,7 @@ void init_meta_data()
 		smt_bit_map[i] = 0;
 		smt_dram_map[i] = (UINT32)-1;
 	}
+	num_miss = 0;
 	g_smt_target = 0;
 	g_smt_victim = 0;
 	g_smt_full   = 0 ;
@@ -735,6 +737,9 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
 	if( dst == (UINT32)-1 )
 	{
+#if OPTION_FTL_TEST == 1
+		num_miss++;
+#endif
 		load_smt_piece( bank * NUM_BANKS_MAX + block);
 		dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
 	}
@@ -761,6 +766,9 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 	dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
 	if(dst == (UINT32)-1)
 	{
+#if OPTION_FTL_TEST == 1
+		num_miss++;
+#endif
 		load_smt_piece( bank * NUM_BANKS_MAX + block);
 		dst = smt_piece_map[bank * NUM_BANKS_MAX + block];
 	}
