@@ -629,7 +629,7 @@ void ftl_write_sector(UINT32 const lba, UINT32 const totals)
 	{
 		//g_misc_meta[new_bank].g_merge_buff_sect++;
 		for(i = 0 ;i < totals;i++)
-			set_psn(lba+i, ((UINT32)BIT31 | (vsect_num+i) ));
+			set_psn(lba+i, ((UINT32)BIT31 | (g_target_sect+i) ));
 		g_target_sect+=totals;
 	}
 }
