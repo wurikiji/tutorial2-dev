@@ -573,9 +573,6 @@ void ftl_write_sector(UINT32 const lba)
 	new_bank = g_target_bank;
 	
 	temp = get_psn(lba);
-	old_bank = temp / SECTORS_PER_BANK;
-	old_blk = (temp % SECTORS_PER_BANK) / (SECTORS_PER_PAGE * PAGES_PER_BLK);
-
 	if( (temp & (UINT32)BIT31) != 0 ){
 		// If data, which located in same lba, is already in dram
 		// copy sata host data to same merge buffer sector
@@ -848,17 +845,19 @@ static UINT32 garbage_collection(UINT32 const bank)
 		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + BYTES_PER_SECTOR * (SECTORS_PER_PAGE - 1), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
 		for(sect_offset = 0; sect_offset < SECTORS_PER_PAGE - 1 ; sect_offset ++)
 		{
+			dst = get_psn(g_misc_meta[bank].cur_sect_lba[sect_offset]);
+			src = SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * victim_blk + SECTORS_PER_PAGE * page + sect_offset;
 			if(get_psn(g_misc_meta[bank].cur_sect_lba[sect_offset]) !=  SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * victim_blk + SECTORS_PER_PAGE * page + sect_offset)
 				continue;
 			dst = FTL_BUF_ADDR + BYTES_PER_PAGE + (gc_sect_offset % SECTORS_PER_PAGE) * BYTES_PER_SECTOR;
 			src = FTL_BUF_ADDR + sect_offset * BYTES_PER_SECTOR;
 			mem_copy(dst, src, BYTES_PER_SECTOR);
 			gc_lba[gc_sect_offset % SECTORS_PER_PAGE] = g_misc_meta[bank].cur_sect_lba[sect_offset];
-			set_psn(g_misc_meta[bank].cur_sect_lba[sect_offset],   SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * g_misc_meta[bank].gc_blk + gc_sect_offset);
+			set_psn(g_misc_meta[bank].cur_sect_lba[sect_offset], SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * g_misc_meta[bank].gc_blk + gc_sect_offset);
 			gc_sect_offset++;
 			if(gc_sect_offset % SECTORS_PER_PAGE == SECTORS_PER_PAGE -1)
 			{
-				dst = FTL_BUF_ADDR +BYTES_PER_PAGE + ((SECTORS_PER_PAGE - 1) * BYTES_PER_SECTOR);
+				dst = FTL_BUF_ADDR + BYTES_PER_PAGE + ((SECTORS_PER_PAGE - 1) * BYTES_PER_SECTOR);
 				mem_copy(dst, gc_lba, (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
 				SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 				SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
@@ -875,6 +874,7 @@ static UINT32 garbage_collection(UINT32 const bank)
 	}
 	if(gc_sect_offset % SECTORS_PER_PAGE != 0)
 	{
+		dst = FTL_BUF_ADDR + BYTES_PER_PAGE + ((SECTORS_PER_PAGE - 1) * BYTES_PER_SECTOR);
 		mem_copy(dst, gc_lba, (gc_sect_offset % SECTORS_PER_PAGE) * sizeof(UINT32));
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
@@ -898,7 +898,7 @@ static UINT32 get_victim_blk(UINT32 const bank)
 {
 	UINT32 victim;
 	victim = g_misc_meta[bank].victim;
-	if(g_misc_meta[bank].victim == VBLKS_PER_BANK)
+	if(g_misc_meta[bank].victim >= VBLKS_PER_BANK)
 	{
 		g_misc_meta[bank].victim = g_free_start[bank];
 	}
