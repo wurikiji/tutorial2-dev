@@ -545,8 +545,7 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 
 
 		remain_sectors -= num_sectors_to_write;
-		i = num_sectors_to_write;
-		while(i != 0){
+		while(num_sectors_to_write != 0){
 			if( g_target_sect + num_sectors_to_write >= SECTORS_PER_PAGE )
 			{
 				i = SECTORS_PER_PAGE - g_target_sect;
