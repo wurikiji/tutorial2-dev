@@ -845,8 +845,6 @@ static UINT32 garbage_collection(UINT32 const bank)
 		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + BYTES_PER_SECTOR * (SECTORS_PER_PAGE - 1), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
 		for(sect_offset = 0; sect_offset < SECTORS_PER_PAGE - 1 ; sect_offset ++)
 		{
-			dst = get_psn(g_misc_meta[bank].cur_sect_lba[sect_offset]);
-			src = SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * victim_blk + SECTORS_PER_PAGE * page + sect_offset;
 			if(get_psn(g_misc_meta[bank].cur_sect_lba[sect_offset]) !=  SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * victim_blk + SECTORS_PER_PAGE * page + sect_offset)
 				continue;
 			dst = FTL_BUF_ADDR + BYTES_PER_PAGE + (gc_sect_offset % SECTORS_PER_PAGE) * BYTES_PER_SECTOR;
@@ -891,7 +889,6 @@ static UINT32 garbage_collection(UINT32 const bank)
 		result = g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + (gc_sect_offset / SECTORS_PER_PAGE);
 	g_misc_meta[bank].gc_blk = victim_blk;
 	nand_block_erase(bank, g_misc_meta[bank].gc_blk);
-	g_misc_meta[bank].full_blk_count--;
 	return result;
 }
 static UINT32 get_victim_blk(UINT32 const bank)
@@ -903,11 +900,12 @@ static UINT32 get_victim_blk(UINT32 const bank)
 		g_misc_meta[bank].victim = g_free_start[bank];
 	}
 	else{
+		g_misc_meta[bank].victim++;
 		while (is_bad_block(bank, g_misc_meta[bank].victim) && g_misc_meta[bank].victim < VBLKS_PER_BANK)
 		{
 			g_misc_meta[bank].victim++;	// We have to skip bad vblocks.
 		}
-		if(g_misc_meta[bank].victim == VBLKS_PER_BANK)
+		if(g_misc_meta[bank].victim >= VBLKS_PER_BANK)
 		{
 			g_misc_meta[bank].victim = g_free_start[bank];
 		}
@@ -1059,6 +1057,7 @@ static void format(void)
 	{
 		g_misc_meta[bank].gc_blk = g_free_start[bank];
 		g_free_start[bank]++;
+		g_misc_meta[bank].full_blk_count++;
 		while(is_bad_block(bank,g_free_start[bank]) && g_free_start[bank] < VBLKS_PER_BANK)
 		{
 				g_free_start[bank]++;

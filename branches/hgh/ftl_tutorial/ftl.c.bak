@@ -57,6 +57,7 @@ typedef struct _misc_metadata											//modified by GYUHWA
 	UINT32 full_blk_count;
 	UINT32 gc_blk;
 	UINT32 cur_sect_lba[SECTORS_PER_PAGE];
+	UINT32 victim;
 }misc_metadata; // per bank
 //----------------------------------
 // FTL metadata (maintain in SRAM)
@@ -199,7 +200,7 @@ void load_smt_piece(UINT32 idx){
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_BLK * g_bad_list[bank][block]);
 	if( g_smt_target == NUM_BANKS_MAX){
 		g_smt_target = 0;
-		flush_smt_piece(smt_dram_map[g_smt_victim]);
+		flush_smt_piece(g_smt_victim);
 		g_smt_victim = (g_smt_victim +1 ) % NUM_BANKS_MAX;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
@@ -397,7 +398,11 @@ void ftl_open(void)
 			}
 			g_bad_list[i][j] = bad_block++;
 		}
-		g_free_start[i] = g_bad_list[i][NUM_BANKS_MAX-1] + 1;
+		while(is_bad_block(i, bad_block) && j < VBLKS_PER_BANK)
+		{
+				bad_block++;
+		}
+		g_free_start[i] = bad_block;
 	}
 	//if (check_format_mark() == FALSE)
 	if( TRUE)
@@ -424,7 +429,7 @@ void ftl_open(void)
 
 	for (bank = 0; bank < NUM_BANKS; bank++)
 	{
-		g_misc_meta[bank].g_target_row = PAGES_PER_VBLK * (g_free_start[bank]);
+		g_misc_meta[bank].g_target_row = PAGES_PER_VBLK * (g_misc_meta[bank].victim);
 	}
 
 	flash_clear_irq();
@@ -559,7 +564,7 @@ void ftl_write(UINT32 const lba, UINT32 const total_sectors)
 void ftl_write_sector(UINT32 const lba)
 {
 	UINT32 new_bank, vsect_num, new_row;
-	UINT32 new_psn, old_bank, old_blk, vsect_count;
+	UINT32 new_psn;
 	UINT32 temp;
 	UINT32 dst,src;
 	UINT32 index = lba % SECTORS_PER_PAGE;
@@ -568,9 +573,6 @@ void ftl_write_sector(UINT32 const lba)
 	new_bank = g_target_bank;
 	
 	temp = get_psn(lba);
-	old_bank = temp / SECTORS_PER_BANK;
-	old_blk = (temp % SECTORS_PER_BANK) / (SECTORS_PER_PAGE * PAGES_PER_BLK);
-
 	if( (temp & (UINT32)BIT31) != 0 ){
 		// If data, which located in same lba, is already in dram
 		// copy sata host data to same merge buffer sector
@@ -619,8 +621,6 @@ void ftl_write_sector(UINT32 const lba)
 			SETREG(FCP_ROW_H(new_bank),new_row);
 
 			flash_issue_cmd(new_bank,RETURN_ON_ISSUE);
-			vsect_count = read_dram_32(VSECT_COUNT_ADDR + new_bank * VBLKS_PER_BANK * sizeof(UINT32) + (new_row / PAGES_PER_BLK) * sizeof(UINT32));
-			write_dram_32(VSECT_COUNT_ADDR + new_bank * VBLKS_PER_BANK * sizeof(UINT32) + (new_row / PAGES_PER_BLK) * sizeof(UINT32), vsect_count + SECTORS_PER_PAGE - 1);
 
 			/* initialize merge buffer page's sector point */
 		//	g_misc_meta[new_bank].g_merge_buff_sect = 0;
@@ -641,18 +641,13 @@ void ftl_write_sector(UINT32 const lba)
 		{
 			//g_misc_meta[new_bank].g_merge_buff_sect++;
 			g_target_sect++;
-			if(temp !=0)
-			{
-				vsect_count = read_dram_32(VSECT_COUNT_ADDR + old_bank * VBLKS_PER_BANK * sizeof(UINT32) + old_blk * sizeof(UINT32));
-				write_dram_32(VSECT_COUNT_ADDR + old_bank * VBLKS_PER_BANK * sizeof(UINT32) + old_blk * sizeof(UINT32), vsect_count - 1);
-			}
 		}
 	}
 }
 
 void flush_merge_buffer()
 {
-	UINT32 new_row, new_psn;
+	/*UINT32 new_row, new_psn;
 	UINT32 new_bank = g_target_bank;
 
 	int i;
@@ -680,13 +675,13 @@ void flush_merge_buffer()
 			set_psn( g_merge_buffer_lsn[i],
 					new_psn + i );
 		}
-	}
+	}*/
 }
 void ftl_flush(void)
 {
-	flush_merge_buffer();
-	logging_map_table();
-	logging_misc_meta();
+	//flush_merge_buffer();
+	//logging_map_table();
+	//logging_misc_meta();
 }
 
 static BOOL32 is_bad_block(UINT32 const bank, UINT32 const vblk_offset)
@@ -786,7 +781,7 @@ static UINT32 get_free_page(UINT32 const bank)
 {
 	// This function returns the row address for write operation.
 
-	UINT32 row;
+	UINT32 row, temp;
 	UINT32 vblk_offset, page_offset;
 
 	row = g_misc_meta[bank].g_target_row;
@@ -797,9 +792,13 @@ static UINT32 get_free_page(UINT32 const bank)
 	{
 		// Free vblocks are exhausted. Since this example FTL does not do garbage collection,
 		// no more data can be written to this SSD. The SSD stops working now.
-
-		row = garbage_collection(bank);
-		vblk_offset = 0;
+		temp = g_misc_meta[bank].gc_blk;
+		for(;(row % PAGES_PER_VBLK) == 0 && ((row / PAGES_PER_VBLK) != temp );)
+		{
+			temp = g_misc_meta[bank].gc_blk;
+			row = garbage_collection(bank);
+		}
+		vblk_offset = row / PAGES_PER_VBLK;
 	}
 	else if (page_offset == 0)	// We are going to write to a new vblock.
 	{
@@ -830,80 +829,91 @@ static UINT32 get_free_page(UINT32 const bank)
 
 static UINT32 garbage_collection(UINT32 const bank)
 {
-	UINT32  victim_blk, page, sect_offset, gc_sect_offset, gc_lba[SECTORS_PER_PAGE], vsect, result;
+	UINT32  victim_blk, page, sect_offset, gc_sect_offset, gc_lba[SECTORS_PER_PAGE], dst, src, result, debug[SECTORS_PER_PAGE];
 	victim_blk = get_victim_blk(bank);
 	gc_sect_offset = 0;
-	vsect = read_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) + victim_blk * sizeof(UINT32));
 	for(page = 0; page < PAGES_PER_BLK; page++)
 	{
-		nand_page_ptread(bank,
-			victim_blk,
-                    	page,
-                    	SECTORS_PER_PAGE - 1,
-                	1,
-			FTL_BUF_ADDR + (bank * BYTES_PER_PAGE),
-                    	RETURN_WHEN_DONE);
-		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
+		SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
+		SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+		SETREG(FCP_COL, 0);						
+		SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR);
+		SETREG(FCP_OPTION, FO_P | FO_E );		
+		SETREG(FCP_ROW_L(bank), victim_blk * PAGES_PER_VBLK + page);				
+		SETREG(FCP_ROW_H(bank), victim_blk * PAGES_PER_VBLK + page);
+		flash_issue_cmd(bank,RETURN_WHEN_DONE);
+		mem_copy(g_misc_meta[bank].cur_sect_lba, FTL_BUF_ADDR + BYTES_PER_SECTOR * (SECTORS_PER_PAGE - 1), (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
 		for(sect_offset = 0; sect_offset < SECTORS_PER_PAGE - 1 ; sect_offset ++)
 		{
+			dst = get_psn(g_misc_meta[bank].cur_sect_lba[sect_offset]);
+			src = SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * victim_blk + SECTORS_PER_PAGE * page + sect_offset;
 			if(get_psn(g_misc_meta[bank].cur_sect_lba[sect_offset]) !=  SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * victim_blk + SECTORS_PER_PAGE * page + sect_offset)
 				continue;
-			nand_page_ptread(bank,
-				victim_blk,
-				page,
-				sect_offset,
-				1,
-				FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE),
-				RETURN_WHEN_DONE);
-
-			nand_page_ptprogram(bank,
-				g_misc_meta[bank].gc_blk,
-				gc_sect_offset / SECTORS_PER_PAGE,
-				gc_sect_offset % SECTORS_PER_PAGE,
-				1,
-				FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE));
+			dst = FTL_BUF_ADDR + BYTES_PER_PAGE + (gc_sect_offset % SECTORS_PER_PAGE) * BYTES_PER_SECTOR;
+			src = FTL_BUF_ADDR + sect_offset * BYTES_PER_SECTOR;
+			mem_copy(dst, src, BYTES_PER_SECTOR);
 			gc_lba[gc_sect_offset % SECTORS_PER_PAGE] = g_misc_meta[bank].cur_sect_lba[sect_offset];
-			set_psn(g_misc_meta[bank].cur_sect_lba[sect_offset],   SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * g_misc_meta[bank].gc_blk + gc_sect_offset);
+			set_psn(g_misc_meta[bank].cur_sect_lba[sect_offset], SECTORS_PER_BANK * bank + SECTORS_PER_PAGE * PAGES_PER_BLK * g_misc_meta[bank].gc_blk + gc_sect_offset);
 			gc_sect_offset++;
 			if(gc_sect_offset % SECTORS_PER_PAGE == SECTORS_PER_PAGE -1)
 			{
-				mem_copy(FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE), gc_lba, (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
-				nand_page_ptprogram(bank,
-				g_misc_meta[bank].gc_blk,
-				gc_sect_offset / SECTORS_PER_PAGE,
-				gc_sect_offset % SECTORS_PER_PAGE,
-				1,
-				FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE));
+				dst = FTL_BUF_ADDR + BYTES_PER_PAGE + ((SECTORS_PER_PAGE - 1) * BYTES_PER_SECTOR);
+				mem_copy(dst, gc_lba, (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
+				mem_copy(debug, dst, (SECTORS_PER_PAGE - 1) * sizeof(UINT32));
+				SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
+				SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
+				SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR + BYTES_PER_PAGE);
+				SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+				SETREG(FCP_COL,0);
+				SETREG(FCP_ROW_L(bank),g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + gc_sect_offset / SECTORS_PER_PAGE);
+				SETREG(FCP_ROW_H(bank),g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + gc_sect_offset / SECTORS_PER_PAGE);
+
+				flash_issue_cmd(bank,RETURN_ON_ISSUE);
 				gc_sect_offset++;
 			}
 		}	
 	}
-	while(vsect != gc_sect_offset);
 	if(gc_sect_offset % SECTORS_PER_PAGE != 0)
 	{
-		mem_copy(FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE), gc_lba, (gc_sect_offset % SECTORS_PER_PAGE) * sizeof(UINT32));
-		nand_page_ptprogram(bank,
-		g_misc_meta[bank].gc_blk,
-		gc_sect_offset / SECTORS_PER_PAGE,
-		gc_sect_offset % SECTORS_PER_PAGE,
-		1,
-		FTL_BUF_ADDR + ((bank) * BYTES_PER_PAGE));
-		gc_sect_offset++;
+		dst = FTL_BUF_ADDR + BYTES_PER_PAGE + ((SECTORS_PER_PAGE - 1) * BYTES_PER_SECTOR);
+		mem_copy(dst, gc_lba, (gc_sect_offset % SECTORS_PER_PAGE) * sizeof(UINT32));
+		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
+		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
+		SETREG(FCP_DMA_ADDR, FTL_BUF_ADDR + BYTES_PER_PAGE);
+		SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
+		SETREG(FCP_COL,0);
+		SETREG(FCP_ROW_L(bank),g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + gc_sect_offset / SECTORS_PER_PAGE);
+		SETREG(FCP_ROW_H(bank),g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + gc_sect_offset / SECTORS_PER_PAGE);
+
+		flash_issue_cmd(bank,RETURN_ON_ISSUE);
+		result = g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + (gc_sect_offset / SECTORS_PER_PAGE) + 1;
 	}
-	result = g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + (gc_sect_offset / SECTORS_PER_PAGE) + 1;
+	else
+		result = g_misc_meta[bank].gc_blk * PAGES_PER_VBLK + (gc_sect_offset / SECTORS_PER_PAGE);
 	g_misc_meta[bank].gc_blk = victim_blk;
 	nand_block_erase(bank, g_misc_meta[bank].gc_blk);
-	g_misc_meta[bank].full_blk_count--;
 	return result;
 }
 static UINT32 get_victim_blk(UINT32 const bank)
 {
-	UINT32 victim_blk;
-	victim_blk = mem_search_min_max(VSECT_COUNT_ADDR + (bank * VBLKS_PER_BANK * sizeof(UINT32) + g_free_start[bank] * sizeof(UINT32)),
-                                sizeof(UINT32),
-                                VBLKS_PER_BANK - g_free_start[bank],
-                                MU_CMD_SEARCH_MIN_DRAM);
-	return victim_blk + g_free_start[bank];
+	UINT32 victim;
+	victim = g_misc_meta[bank].victim;
+	if(g_misc_meta[bank].victim >= VBLKS_PER_BANK)
+	{
+		g_misc_meta[bank].victim = g_free_start[bank];
+	}
+	else{
+		g_misc_meta[bank].victim++;
+		while (is_bad_block(bank, g_misc_meta[bank].victim) && g_misc_meta[bank].victim < VBLKS_PER_BANK)
+		{
+			g_misc_meta[bank].victim++;	// We have to skip bad vblocks.
+		}
+		if(g_misc_meta[bank].victim >= VBLKS_PER_BANK)
+		{
+			g_misc_meta[bank].victim = g_free_start[bank];
+		}
+	}
+	return victim;
 }
 
 static BOOL32 check_format_mark(void)
@@ -1016,18 +1026,13 @@ static void format(void)
 
 	UINT32 vblk_offset, bank;
 	for(bank = 0; bank < NUM_BANKS; bank++)
-	{
 		g_misc_meta[bank].full_blk_count = 1 + 33;
-		g_misc_meta[bank].gc_blk = 1;
-		write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) , 0xffffffff);
-	}
 	for (vblk_offset = 1; vblk_offset < VBLKS_PER_BANK; vblk_offset++)
 	{
 		for (bank = 0; bank < NUM_BANKS; bank++)
 		{
 			if (is_bad_block(bank, vblk_offset))
 			{
-				write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) + vblk_offset * sizeof(UINT32), 0xffffffff);
 				g_misc_meta[bank].full_blk_count++;
 				continue;
 			}
@@ -1055,7 +1060,13 @@ static void format(void)
 	{
 		g_misc_meta[bank].gc_blk = g_free_start[bank];
 		g_free_start[bank]++;
-		write_dram_32(VSECT_COUNT_ADDR + bank * VBLKS_PER_BANK * sizeof(UINT32) + g_misc_meta[bank].gc_blk * sizeof(UINT32), 0xffffffff);
+		g_misc_meta[bank].full_blk_count++;
+		while(is_bad_block(bank,g_free_start[bank]) && g_free_start[bank] < VBLKS_PER_BANK)
+		{
+				g_free_start[bank]++;
+		}
+		g_misc_meta[bank].victim = g_free_start[bank];
+		g_free_start[bank] = g_misc_meta[bank].gc_blk;
 	}
 	// In general, write_format_mark() should be called upon completion of low level format in order to prevent
 	// format() from being called again.
@@ -1115,7 +1126,7 @@ void ftl_isr(void)
 static void sanity_check(void)
 {
 	UINT32 dram_requirement = RD_BUF_BYTES + WR_BUF_BYTES + COPY_BUF_BYTES + FTL_BUF_BYTES
-		+ HIL_BUF_BYTES + TEMP_BUF_BYTES + SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + SMT_DRAM_BYTES + VSECT_COUNT_BYTES;
+		+ HIL_BUF_BYTES + TEMP_BUF_BYTES + SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + SMT_DRAM_BYTES;
 
 	if (dram_requirement > DRAM_SIZE)
 	{
