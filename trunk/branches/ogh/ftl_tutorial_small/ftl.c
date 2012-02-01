@@ -182,11 +182,9 @@ void load_smt_piece(UINT32 idx){
 	block = idx % SMT_NUM;
 
 	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][block]);
-	if(g_smt_target == SMT_NUM ||  g_smt_full == 1){
-		g_smt_full = 1;
-		g_smt_victim = (g_smt_victim +1 ) % SMT_NUM;
+	if(g_smt_full == 1){
 		flush_smt_piece(g_smt_target);
-		g_smt_target = (g_smt_target + 1 ) % SMT_NUM;
+		g_smt_victim = (g_smt_victim +1 ) % SMT_NUM;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
 	SETREG(FCP_DMA_CNT,SMT_PIECE_BYTES);
@@ -208,6 +206,10 @@ void load_smt_piece(UINT32 idx){
 		g_misc_meta[bank].smt_init[block / NUM_BANKS_MAX] |= (1 << (block % NUM_BANKS_MAX));
 	}
 	g_smt_target++;
+	if( g_smt_target == SMT_NUM ){
+		g_smt_target = 0;
+		g_smt_full = 1;
+	}
 }
 void flush_smt_piece(UINT32 idx)
 {
