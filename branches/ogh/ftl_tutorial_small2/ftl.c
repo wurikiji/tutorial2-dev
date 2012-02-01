@@ -51,7 +51,7 @@ typedef struct _misc_metadata											//modified by GYUHWA
 	UINT32 g_target_row;
 	// smt piece data
 	UINT32 smt_pieces[SMT_NUM];
-	UINT32 smt_init[2];
+	UINT32 smt_init[4];
 }misc_metadata; // per bank
 //----------------------------------
 // FTL metadata (maintain in SRAM)
@@ -61,7 +61,7 @@ static misc_metadata  g_misc_meta[NUM_BANKS];
 
 /* smt piece data information */
 /* initialize 0 */
-UINT32 smt_bit_map[ NUM_BANKS_MAX ][2]; //dirty information
+UINT32 smt_bit_map[ NUM_BANKS_MAX ][4]; //dirty information
 /* initialize -1 */
 UINT32 smt_dram_map[ SMT_NUM ]; // smt table index information
 UINT32 smt_piece_map[ NUM_BANKS_MAX * SMT_NUM ]; // where a smt is in dram
@@ -258,18 +258,19 @@ void init_meta_data()
 		for(j = 0 ;j < NUM_BANKS_MAX;j++){
 			g_misc_meta[i].smt_pieces[ j ] = 0;
 		}
-		g_misc_meta[i].smt_init[0] = 0;
-		g_misc_meta[i].smt_init[1] = 0;
+		for(j = 0 ;j < 4;j++){
+			g_misc_meta[i].smt_init[j] = 0;
+		}
 		g_misc_meta[i].cur_miscblk_vpn = 0;
 	}
 	for(i = 0 ;i < NUM_BANKS_MAX;i++){
 		for(j = 0 ;j < SMT_NUM;j++){
-			smt_piece_map[i * NUM_BANKS_MAX + j] = (UINT32)-1;
+			smt_piece_map[i * SMT_NUM + j] = (UINT32)-1;
 		}
-		smt_bit_map[i][0] = 0;
-		smt_bit_map[i][1] = 0;
-		smt_dram_map[i*2] = (UINT32)-1;
-		smt_dram_map[i*2+1] = (UINT32)-1;
+		for(j = 0 ;j < 4;j++){
+			smt_bit_map[i][j] = 0;
+			smt_dram_map[i*4 + j] = (UINT32)-1;
+		}
 	}
 	g_smt_target = 0;
 	g_smt_victim = 0;
@@ -384,13 +385,13 @@ void ftl_open(void)
 	for(i = 0 ;i < NUM_BANKS;i++){
 		bad_block = 2;
 		for(j = 0 ;j < SMT_NUM;j++){
-			while(is_bad_block(i, bad_block) && j < VBLKS_PER_BANK)
+			while(is_bad_block(i, bad_block) && bad_block < VBLKS_PER_BANK)
 			{
 				bad_block++;
 			}
 			g_bad_list[i][j] = bad_block++;
 		}
-		g_free_start[i] = g_bad_list[i][SMT_NUM-1] + 1;
+		g_free_start[i] = bad_block;
 	}
 	//if (check_format_mark() == FALSE)
 	if( TRUE)
