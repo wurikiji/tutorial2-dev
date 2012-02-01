@@ -42,6 +42,12 @@ static volatile UINT32 g_read_fail_count;
 static volatile UINT32 g_program_fail_count;
 static volatile UINT32 g_erase_fail_count;
 
+
+//debug
+//
+static volatile UINT32 g_smt_size = SMT_PIECE_BYTES;
+static volatile UINT32 g_smt_inc = SMT_INC_SIZE;
+static volatile UINT32 g_smt_bytes = SMT_BYTES;
 //by ogh
 
 typedef struct _misc_metadata											//modified by GYUHWA
@@ -51,7 +57,8 @@ typedef struct _misc_metadata											//modified by GYUHWA
 	UINT32 g_target_row;
 	// smt piece data
 	UINT32 smt_pieces[SMT_NUM];
-	UINT32 smt_init[2];
+	UINT32 smt_next_page[NUM_BANKS_MAX * 2];
+	UINT32 smt_init[32];
 }misc_metadata; // per bank
 //----------------------------------
 // FTL metadata (maintain in SRAM)
@@ -61,7 +68,7 @@ static misc_metadata  g_misc_meta[NUM_BANKS];
 
 /* smt piece data information */
 /* initialize 0 */
-UINT32 smt_bit_map[ NUM_BANKS_MAX ][2]; //dirty information
+UINT32 smt_bit_map[ NUM_BANKS_MAX ][32]; //dirty information
 /* initialize -1 */
 UINT32 smt_dram_map[ SMT_NUM ]; // smt table index information
 UINT32 smt_piece_map[ NUM_BANKS_MAX * SMT_NUM ]; // where a smt is in dram
@@ -72,8 +79,9 @@ UINT32 g_smt_full;	// map data area full check
 /* end smt */
 //
 //bad block
-UINT32 g_bad_list[NUM_BANKS][SMT_NUM]; // bad block list for metadata
+UINT32 g_bad_list[NUM_BANKS][NUM_BANKS_MAX*2]; // bad block list for metadata
 UINT32 g_free_start[NUM_BANKS];
+UINT32 g_smt_free[NUM_BANKS];
 //*Red//
 static UINT32 get_psn(UINT32 const lba);
 static void set_psn(UINT32 const lba, UINT32 const psn);
@@ -177,11 +185,12 @@ void loading_misc_meta()
 void load_smt_piece(UINT32 idx){
 	UINT32 bank,row,block;
 	UINT32 dest;
-	UINT32 arr;
+	UINT32 pblock;
 	bank = idx / SMT_NUM;
 	block = idx % SMT_NUM;
 
-	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][block]);
+	pblock = block / (NUM_BANKS_MAX *2);
+	row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][pblock]);
 	if(g_smt_full == 1){
 		flush_smt_piece(g_smt_target);
 		g_smt_victim = (g_smt_victim +1 ) % SMT_NUM;
@@ -201,7 +210,7 @@ void load_smt_piece(UINT32 idx){
 	smt_dram_map[g_smt_target] = idx;
 	smt_piece_map[idx] = g_smt_target;
 	smt_bit_map[bank][block/NUM_BANKS_MAX] &= ~( 1 << (block % NUM_BANKS_MAX) );
-	if(( g_misc_meta[bank].smt_init[block / NUM_BANKS_MAX ] & ( 1 << (block   % NUM_BANKS_MAX)) ) == 0){
+	if(( g_misc_meta[bank].smt_init[block / NUM_BANKS_MAX ] & ( 1 << (block % NUM_BANKS_MAX)) ) == 0){
 		mem_set_dram( dest, 0x00, SMT_PIECE_BYTES);
 		g_misc_meta[bank].smt_init[block / NUM_BANKS_MAX] |= (1 << (block % NUM_BANKS_MAX));
 	}
@@ -215,17 +224,35 @@ void flush_smt_piece(UINT32 idx)
 {
 	UINT32 bank,row,block;
 	UINT32 dest;
+	UINT32 pblock;
+	UINT32 i, old_block;
 	bank = smt_dram_map[idx] / SMT_NUM;
 	block = smt_dram_map[idx] % SMT_NUM;
+
+	pblock = block / ( NUM_BANKS_MAX *2 );
+
 	if((smt_bit_map[bank][block / NUM_BANKS_MAX] & (1<< (block % NUM_BANKS_MAX))) != 0){
 		//  smt piece data
-		if( g_misc_meta[bank].smt_pieces[block] >= SMT_LIMIT - 1){
+		if( g_misc_meta[bank].smt_next_page[pblock] >= SMT_LIMIT - 1){
 			// erase 
-			nand_block_erase(bank,g_bad_list[bank][block]);
+			for(i = 0 ;i < 16 ;i++){
+				nand_page_copyback(bank,
+					g_bad_list[bank][pblock],
+	g_misc_meta[bank].smt_pieces[i * NUM_BANKS_MAX * 2 + pblock],
+					g_smt_free[bank],
+					i );
+				g_misc_meta[bank].smt_pieces[i * NUM_BANKS_MAX * 2 + pblock] = i;
+			}
+			nand_block_erase(bank,g_bad_list[bank][pblock]);
+
+			g_misc_meta[bank].smt_next_page[pblock] = 16;
+			old_block = g_bad_list[bank][pblock];
+			g_bad_list[bank][pblock] = g_smt_free[bank];
+			g_smt_free[bank] = old_block;
 		}
 		//update and flash 
-		g_misc_meta[bank].smt_pieces[block] = (g_misc_meta[bank].smt_pieces[block] + 1) % SMT_LIMIT;
-		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + ( PAGES_PER_VBLK * g_bad_list[bank][block]);
+		g_misc_meta[bank].smt_pieces[block] = g_misc_meta[bank].smt_next_page[pblock];
+		row = g_misc_meta[bank].smt_pieces[block] * SMT_INC_SIZE + ( PAGES_PER_VBLK * g_bad_list[bank][pblock]);
 		// flash map data to nand
 		SETREG(FCP_CMD, FC_COL_ROW_IN_PROG);
 		SETREG(FCP_OPTION, FO_P | FO_E | FO_B_W_DRDY);
@@ -234,8 +261,10 @@ void flush_smt_piece(UINT32 idx)
 		SETREG(FCP_ROW_H(bank),row);
 		dest = SMT_ADDR + (idx * SMT_PIECE_BYTES);
 		SETREG(FCP_DMA_ADDR,dest);
-		SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
+		//SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
+		SETREG(FCP_DMA_CNT, BYTES_PER_PAGE);
 		flash_issue_cmd(bank,RETURN_WHEN_DONE);
+		g_misc_meta[bank].smt_next_page[pblock]++;
 	}
 	smt_piece_map[smt_dram_map[idx]] = (UINT32)-1;
 }
@@ -258,18 +287,19 @@ void init_meta_data()
 		for(j = 0 ;j < NUM_BANKS_MAX;j++){
 			g_misc_meta[i].smt_pieces[ j ] = 0;
 		}
-		g_misc_meta[i].smt_init[0] = 0;
-		g_misc_meta[i].smt_init[1] = 0;
+		for(j = 0 ;j < 32;j++){
+			g_misc_meta[i].smt_init[j] = 0;
+		}
 		g_misc_meta[i].cur_miscblk_vpn = 0;
 	}
 	for(i = 0 ;i < NUM_BANKS_MAX;i++){
 		for(j = 0 ;j < SMT_NUM;j++){
-			smt_piece_map[i * NUM_BANKS_MAX + j] = (UINT32)-1;
+			smt_piece_map[i * SMT_NUM + j] = (UINT32)-1;
 		}
-		smt_bit_map[i][0] = 0;
-		smt_bit_map[i][1] = 0;
-		smt_dram_map[i*2] = (UINT32)-1;
-		smt_dram_map[i*2+1] = (UINT32)-1;
+		for(j = 0 ;j < 32;j++){
+			smt_bit_map[i][j] = 0;
+			smt_dram_map[i*32 + j] = (UINT32)-1;
+		}
 	}
 	g_smt_target = 0;
 	g_smt_victim = 0;
@@ -383,7 +413,7 @@ void ftl_open(void)
 	// block#2 ~ map table meta and data
 	for(i = 0 ;i < NUM_BANKS;i++){
 		bad_block = 2;
-		for(j = 0 ;j < SMT_NUM;j++){
+		for(j = 0 ;j < NUM_BANKS_MAX * 2;j++){
 			while(is_bad_block(i, bad_block) && j < VBLKS_PER_BANK)
 			{
 				bad_block++;
@@ -391,6 +421,22 @@ void ftl_open(void)
 			g_bad_list[i][j] = bad_block++;
 		}
 		g_free_start[i] = g_bad_list[i][SMT_NUM-1] + 1;
+	}
+	for(i = 0 ;i < NUM_BANKS;i++){
+		bad_block = 2;
+		for(j = 0 ;j < NUM_BANKS_MAX * 2;j++){
+			while(is_bad_block(i, bad_block) && bad_block < VBLKS_PER_BANK)
+			{
+				bad_block++;
+			}
+			g_bad_list[i][j] = bad_block++;
+		}
+		while(is_bad_block(i, bad_block) && bad_block < VBLKS_PER_BANK)
+		{
+			bad_block++;
+		}
+		g_smt_free[i] = bad_block++;
+		g_free_start[i] = bad_block;
 	}
 	//if (check_format_mark() == FALSE)
 	if( TRUE)

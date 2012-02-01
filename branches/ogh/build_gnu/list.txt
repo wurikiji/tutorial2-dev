@@ -12,15 +12,16 @@ c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../
 Allocating common symbols
 Common symbol       size              file
 
+g_smt_free          0x20              ftl.o
 g_merge_buffer_lsn  0x100             ftl.o
 g_sata_context      0x1c              sata_main.o
 g_sdram_ecc_fail_count
                     0x4               misc.o
 g_target_sect       0x4               ftl.o
-smt_dram_map        0x100             ftl.o
+smt_dram_map        0x1000            ftl.o
 g_smt_target        0x4               ftl.o
 g_ftl_read_buf_id   0x4               ftl.o
-smt_bit_map         0x100             ftl.o
+smt_bit_map         0x1000            ftl.o
 g_free_start        0x20              ftl.o
 g_sata_action_flags
                     0x4               sata_main.o
@@ -31,7 +32,7 @@ g_timer_interrupt_count
                     0x4               misc.o
 g_sdram_ecc_count   0x4               misc.o
 g_smt_victim        0x4               ftl.o
-smt_piece_map       0x2000            ftl.o
+smt_piece_map       0x20000           ftl.o
 g_target_bank       0x4               ftl.o
 g_sata_ncq          0x404             sata_main.o
 g_smt_full          0x4               ftl.o
@@ -63,7 +64,7 @@ LOAD c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bi
 END GROUP
                 0x00000000                . = 0x0
 
-.text           0x00000000     0x488c
+.text           0x00000000     0x4e70
                 0x00000000                entry_point = .
  init.o(INIT)
  INIT           0x00000000       0xc8 init.o
@@ -74,262 +75,263 @@ END GROUP
                 0x0000009c                disable_interrupt
                 0x000000ac                enable_interrupt
  *(.text)
- .text          0x000000c8     0x155c ftl.o
-                0x000008a8                ftl_open
-                0x00000f28                ftl_read_sector
-                0x0000104c                ftl_read
-                0x00001158                ftl_write_sector
-                0x00001314                ftl_write
-                0x0000145c                flush_merge_buffer
-                0x00001558                ftl_flush
-                0x0000155c                ftl_isr
- .text          0x00001624      0x2d0 sata_identify.o
-                0x000017a8                ata_identify_device
- .text          0x000018f4      0x544 sata_cmd.o
-                0x000018f4                ata_check_power_mode
-                0x00001958                ata_read_native_max_address
-                0x00001a1c                send_status_to_host
-                0x00001a9c                ata_not_supported
-                0x00001aa4                ata_recalibrate
-                0x00001aac                ata_initialize_device_parameters
-                0x00001b1c                ata_nop
-                0x00001b24                ata_sleep
-                0x00001b2c                ata_idle_immediate
-                0x00001b40                ata_idle
-                0x00001b54                ata_standby_immediate
-                0x00001b68                ata_standby
-                0x00001b7c                ata_set_multiple_mode
-                0x00001b84                ata_seek
-                0x00001ba4                ata_set_features
-                0x00001c6c                ata_read_verify_sectors
-                0x00001c74                ata_flush_cache
-                0x00001c88                ata_srst
-                0x00001cfc                ata_execute_drive_diagnostics
-                0x00001d08                pio_sector_transfer
-                0x00001e18                ata_write_buffer
-                0x00001e28                ata_read_buffer
- .text          0x00001e38      0x560 sata_isr.o
-                0x00001e38                fiq_handler
- .text          0x00002398      0x300 sata_main.o
-                0x00002398                Main
-                0x000024d8                sata_reset
-                0x00002638                delay
- .text          0x00002698        0x0 sata_table.o
- .text          0x00002698      0x480 initialize.o
-                0x00002698                init_jasmine
- .text          0x00002b18      0x780 mem_util.o
-                0x00002b18                _mem_copy
-                0x00002b60                _mem_bmp_find_sram
-                0x00002bac                _mem_bmp_find_dram
-                0x00002bf8                _mem_set_sram
-                0x00002c3c                _mem_set_dram
-                0x00002c80                _mem_search_min_max
-                0x00002ccc                _mem_search_equ
-                0x00002d30                _write_dram_32
-                0x00002d60                _write_dram_16
-                0x00002dc4                _write_dram_8
-                0x00002e24                _set_bit_dram
-                0x00002e84                _clr_bit_dram
-                0x00002ee4                _tst_bit_dram
-                0x00002f20                _read_dram_8
-                0x00002f58                _read_dram_16
-                0x00002f94                _read_dram_32
-                0x00002fb8                _mem_cmp_sram
-                0x00003034                _mem_cmp_dram
- .text          0x00003298      0x45c flash.o
-                0x00003298                flash_issue_cmd
-                0x000032f4                flash_copy
-                0x00003368                flash_modify_copy
-                0x000033f4                flash_erase
-                0x00003458                flash_finish
-                0x0000346c                flash_clear_irq
-                0x000034a4                flash_reset
- .text          0x000036f4      0x6ec flash_wrapper.o
-                0x000036f4                nand_page_read
-                0x00003760                nand_page_ptread
-                0x000037d0                nand_page_read_to_host
-                0x00003888                nand_page_ptread_to_host
-                0x00003940                nand_page_program
-                0x000039ac                nand_page_ptprogram
-                0x00003a1c                nand_page_program_from_host
-                0x00003ad4                nand_page_ptprogram_from_host
-                0x00003b8c                nand_page_copyback
-                0x00003c04                nand_page_modified_copyback
-                0x00003d30                nand_block_erase
-                0x00003d88                nand_block_erase_sync
- .text          0x00003de0      0x8e8 misc.o
-                0x00003de0                led
-                0x00003e00                led_blink
-                0x00003e38                swi_handler
-                0x00003e3c                irq_handler
-                0x00003ef4                test_nand_blocks
-                0x0000465c                start_interval_measurement
-                0x00004694                start_timer
- .text          0x000046c8        0x0 uart.o
- .text          0x000046c8        0x0 init.o
- .text          0x000046c8      0x148 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_divsi3.o)
-                0x000046c8                __divsi3
-                0x000046c8                __aeabi_idiv
-                0x000047f0                __aeabi_idivmod
- .text          0x00004810        0x4 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_dvmd_tls.o)
-                0x00004810                __aeabi_idiv0
-                0x00004810                __aeabi_ldiv0
- .text          0x00004814       0x78 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-rand.o)
-                0x00004814                srand
-                0x00004830                rand
- .text          0x0000488c        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+ .text          0x000000c8     0x1b40 ftl.o
+                0x00000d60                ftl_open
+                0x0000150c                ftl_read_sector
+                0x00001630                ftl_read
+                0x0000173c                ftl_write_sector
+                0x000018f8                ftl_write
+                0x00001a40                flush_merge_buffer
+                0x00001b3c                ftl_flush
+                0x00001b40                ftl_isr
+ .text          0x00001c08      0x2d0 sata_identify.o
+                0x00001d8c                ata_identify_device
+ .text          0x00001ed8      0x544 sata_cmd.o
+                0x00001ed8                ata_check_power_mode
+                0x00001f3c                ata_read_native_max_address
+                0x00002000                send_status_to_host
+                0x00002080                ata_not_supported
+                0x00002088                ata_recalibrate
+                0x00002090                ata_initialize_device_parameters
+                0x00002100                ata_nop
+                0x00002108                ata_sleep
+                0x00002110                ata_idle_immediate
+                0x00002124                ata_idle
+                0x00002138                ata_standby_immediate
+                0x0000214c                ata_standby
+                0x00002160                ata_set_multiple_mode
+                0x00002168                ata_seek
+                0x00002188                ata_set_features
+                0x00002250                ata_read_verify_sectors
+                0x00002258                ata_flush_cache
+                0x0000226c                ata_srst
+                0x000022e0                ata_execute_drive_diagnostics
+                0x000022ec                pio_sector_transfer
+                0x000023fc                ata_write_buffer
+                0x0000240c                ata_read_buffer
+ .text          0x0000241c      0x560 sata_isr.o
+                0x0000241c                fiq_handler
+ .text          0x0000297c      0x300 sata_main.o
+                0x0000297c                Main
+                0x00002abc                sata_reset
+                0x00002c1c                delay
+ .text          0x00002c7c        0x0 sata_table.o
+ .text          0x00002c7c      0x480 initialize.o
+                0x00002c7c                init_jasmine
+ .text          0x000030fc      0x780 mem_util.o
+                0x000030fc                _mem_copy
+                0x00003144                _mem_bmp_find_sram
+                0x00003190                _mem_bmp_find_dram
+                0x000031dc                _mem_set_sram
+                0x00003220                _mem_set_dram
+                0x00003264                _mem_search_min_max
+                0x000032b0                _mem_search_equ
+                0x00003314                _write_dram_32
+                0x00003344                _write_dram_16
+                0x000033a8                _write_dram_8
+                0x00003408                _set_bit_dram
+                0x00003468                _clr_bit_dram
+                0x000034c8                _tst_bit_dram
+                0x00003504                _read_dram_8
+                0x0000353c                _read_dram_16
+                0x00003578                _read_dram_32
+                0x0000359c                _mem_cmp_sram
+                0x00003618                _mem_cmp_dram
+ .text          0x0000387c      0x45c flash.o
+                0x0000387c                flash_issue_cmd
+                0x000038d8                flash_copy
+                0x0000394c                flash_modify_copy
+                0x000039d8                flash_erase
+                0x00003a3c                flash_finish
+                0x00003a50                flash_clear_irq
+                0x00003a88                flash_reset
+ .text          0x00003cd8      0x6ec flash_wrapper.o
+                0x00003cd8                nand_page_read
+                0x00003d44                nand_page_ptread
+                0x00003db4                nand_page_read_to_host
+                0x00003e6c                nand_page_ptread_to_host
+                0x00003f24                nand_page_program
+                0x00003f90                nand_page_ptprogram
+                0x00004000                nand_page_program_from_host
+                0x000040b8                nand_page_ptprogram_from_host
+                0x00004170                nand_page_copyback
+                0x000041e8                nand_page_modified_copyback
+                0x00004314                nand_block_erase
+                0x0000436c                nand_block_erase_sync
+ .text          0x000043c4      0x8e8 misc.o
+                0x000043c4                led
+                0x000043e4                led_blink
+                0x0000441c                swi_handler
+                0x00004420                irq_handler
+                0x000044d8                test_nand_blocks
+                0x00004c40                start_interval_measurement
+                0x00004c78                start_timer
+ .text          0x00004cac        0x0 uart.o
+ .text          0x00004cac        0x0 init.o
+ .text          0x00004cac      0x148 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_divsi3.o)
+                0x00004cac                __divsi3
+                0x00004cac                __aeabi_idiv
+                0x00004dd4                __aeabi_idivmod
+ .text          0x00004df4        0x4 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_dvmd_tls.o)
+                0x00004df4                __aeabi_idiv0
+                0x00004df4                __aeabi_ldiv0
+ .text          0x00004df8       0x78 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-rand.o)
+                0x00004df8                srand
+                0x00004e14                rand
+ .text          0x00004e70        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
 
-.glue_7         0x0000488c        0x0
+.glue_7         0x00004e70        0x0
  .glue_7        0x00000000        0x0 linker stubs
 
-.glue_7t        0x0000488c        0x0
+.glue_7t        0x00004e70        0x0
  .glue_7t       0x00000000        0x0 linker stubs
 
-.vfp11_veneer   0x0000488c        0x0
+.vfp11_veneer   0x00004e70        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0000488c        0x0
+.v4_bx          0x00004e70        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x0000488c        0x0
+.iplt           0x00004e70        0x0
  .iplt          0x00000000        0x0 ftl.o
 
-.rodata         0x0000488c      0x234
+.rodata         0x00004e70      0x234
  *(.rodata)
- .rodata        0x0000488c      0x228 sata_table.o
-                0x0000488c                ata_function_table
-                0x00004978                ata_command_code_table
-                0x000049b4                ata_cmd_class_table
- .rodata        0x00004ab4        0x8 flash.o
-                0x00004ab4                c_bank_map
- .rodata        0x00004abc        0x4 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
-                0x00004abc                _global_impure_ptr
+ .rodata        0x00004e70      0x228 sata_table.o
+                0x00004e70                ata_function_table
+                0x00004f5c                ata_command_code_table
+                0x00004f98                ata_cmd_class_table
+ .rodata        0x00005098        0x8 flash.o
+                0x00005098                c_bank_map
+ .rodata        0x000050a0        0x4 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+                0x000050a0                _global_impure_ptr
 
-.rodata.str1.4  0x00004ac0       0x30
+.rodata.str1.4  0x000050a4       0x30
  .rodata.str1.4
-                0x00004ac0       0x29 sata_identify.o
+                0x000050a4       0x29 sata_identify.o
                                  0x2c (size before relaxing)
- *fill*         0x00004ae9        0x3 00
+ *fill*         0x000050cd        0x3 00
  .rodata.str1.4
-                0x00004aec        0x4 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+                0x000050d0        0x4 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
 
-.rel.dyn        0x00004af0        0x0
+.rel.dyn        0x000050d4        0x0
  .rel.iplt      0x00000000        0x0 ftl.o
 
-.data           0x00004af0      0x650
+.data           0x000050d8      0x650
  *(.data)
- .data          0x00004af0        0x0 ftl.o
- .data          0x00004af0      0x200 sata_identify.o
-                0x00004af0                ht_identify_data
- .data          0x00004cf0        0x0 sata_cmd.o
- .data          0x00004cf0        0x0 sata_isr.o
- .data          0x00004cf0        0x0 sata_main.o
- .data          0x00004cf0        0x0 sata_table.o
- .data          0x00004cf0        0x0 initialize.o
- .data          0x00004cf0        0x0 mem_util.o
- .data          0x00004cf0       0x20 flash.o
-                0x00004cf0                c_bank_rmap
- .data          0x00004d10        0x0 flash_wrapper.o
- .data          0x00004d10        0x0 misc.o
- .data          0x00004d10        0x0 uart.o
- .data          0x00004d10        0x0 init.o
- .data          0x00004d10        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_divsi3.o)
- .data          0x00004d10        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_dvmd_tls.o)
- .data          0x00004d10        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-rand.o)
- .data          0x00004d10      0x430 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
-                0x00004d10                _impure_ptr
+ .data          0x000050d8        0x0 ftl.o
+ .data          0x000050d8      0x200 sata_identify.o
+                0x000050d8                ht_identify_data
+ .data          0x000052d8        0x0 sata_cmd.o
+ .data          0x000052d8        0x0 sata_isr.o
+ .data          0x000052d8        0x0 sata_main.o
+ .data          0x000052d8        0x0 sata_table.o
+ .data          0x000052d8        0x0 initialize.o
+ .data          0x000052d8        0x0 mem_util.o
+ .data          0x000052d8       0x20 flash.o
+                0x000052d8                c_bank_rmap
+ .data          0x000052f8        0x0 flash_wrapper.o
+ .data          0x000052f8        0x0 misc.o
+ .data          0x000052f8        0x0 uart.o
+ .data          0x000052f8        0x0 init.o
+ .data          0x000052f8        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_divsi3.o)
+ .data          0x000052f8        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_dvmd_tls.o)
+ .data          0x000052f8        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-rand.o)
+ .data          0x000052f8      0x430 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+                0x000052f8                _impure_ptr
 
-.igot.plt       0x00005140        0x0
+.igot.plt       0x00005728        0x0
  .igot.plt      0x00000000        0x0 ftl.o
 
-.bss            0x00005140     0x3a5c
+.bss            0x00005728    0x2bc3c
  *(.bss)
- .bss           0x00005140      0x8ac ftl.o
- .bss           0x000059ec        0x0 sata_identify.o
- .bss           0x000059ec        0x0 sata_cmd.o
- .bss           0x000059ec        0x0 sata_isr.o
- .bss           0x000059ec        0x4 sata_main.o
- .bss           0x000059f0        0x0 sata_table.o
- .bss           0x000059f0        0x0 initialize.o
- .bss           0x000059f0        0x0 mem_util.o
- .bss           0x000059f0        0x0 flash.o
- .bss           0x000059f0        0x0 flash_wrapper.o
- .bss           0x000059f0       0x40 misc.o
- .bss           0x00005a30        0x0 uart.o
- .bss           0x00005a30        0x0 init.o
- .bss           0x00005a30        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_divsi3.o)
- .bss           0x00005a30        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_dvmd_tls.o)
- .bss           0x00005a30        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-rand.o)
- .bss           0x00005a30        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
- COMMON         0x00005a30     0x2b3c ftl.o
-                0x00005a30                g_merge_buffer_lsn
-                0x00005b30                g_target_sect
-                0x00005b34                smt_dram_map
-                0x00005c34                g_smt_target
-                0x00005c38                g_ftl_read_buf_id
-                0x00005c3c                smt_bit_map
-                0x00005d3c                g_free_start
-                0x00005d5c                g_ftl_write_buf_id
-                0x00005d60                g_bad_list
-                0x00006560                g_smt_victim
-                0x00006564                smt_piece_map
-                0x00008564                g_target_bank
-                0x00008568                g_smt_full
- COMMON         0x0000856c      0x424 sata_main.o
-                0x0000856c                g_sata_context
-                0x00008588                g_sata_action_flags
-                0x0000858c                g_sata_ncq
- COMMON         0x00008990      0x200 mem_util.o
-                0x00008990                g_temp_mem
- COMMON         0x00008b90        0xc misc.o
-                0x00008b90                g_sdram_ecc_fail_count
-                0x00008b94                g_timer_interrupt_count
-                0x00008b98                g_sdram_ecc_count
-                0x00005140                Image$$ER_ZI$$ZI$$Base = LOADADDR (.bss)
-                0x00003a5c                Image$$ER_ZI$$ZI$$Length = SIZEOF (.bss)
-                0x00005140                size_of_firmware_image = LOADADDR (.bss)
+ .bss           0x00005728     0x8c6c ftl.o
+ .bss           0x0000e394        0x0 sata_identify.o
+ .bss           0x0000e394        0x0 sata_cmd.o
+ .bss           0x0000e394        0x0 sata_isr.o
+ .bss           0x0000e394        0x4 sata_main.o
+ .bss           0x0000e398        0x0 sata_table.o
+ .bss           0x0000e398        0x0 initialize.o
+ .bss           0x0000e398        0x0 mem_util.o
+ .bss           0x0000e398        0x0 flash.o
+ .bss           0x0000e398        0x0 flash_wrapper.o
+ .bss           0x0000e398       0x40 misc.o
+ .bss           0x0000e3d8        0x0 uart.o
+ .bss           0x0000e3d8        0x0 init.o
+ .bss           0x0000e3d8        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_divsi3.o)
+ .bss           0x0000e3d8        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_dvmd_tls.o)
+ .bss           0x0000e3d8        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-rand.o)
+ .bss           0x0000e3d8        0x0 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
+ COMMON         0x0000e3d8    0x2295c ftl.o
+                0x0000e3d8                g_smt_free
+                0x0000e3f8                g_merge_buffer_lsn
+                0x0000e4f8                g_target_sect
+                0x0000e4fc                smt_dram_map
+                0x0000f4fc                g_smt_target
+                0x0000f500                g_ftl_read_buf_id
+                0x0000f504                smt_bit_map
+                0x00010504                g_free_start
+                0x00010524                g_ftl_write_buf_id
+                0x00010528                g_bad_list
+                0x00010d28                g_smt_victim
+                0x00010d2c                smt_piece_map
+                0x00030d2c                g_target_bank
+                0x00030d30                g_smt_full
+ COMMON         0x00030d34      0x424 sata_main.o
+                0x00030d34                g_sata_context
+                0x00030d50                g_sata_action_flags
+                0x00030d54                g_sata_ncq
+ COMMON         0x00031158      0x200 mem_util.o
+                0x00031158                g_temp_mem
+ COMMON         0x00031358        0xc misc.o
+                0x00031358                g_sdram_ecc_fail_count
+                0x0003135c                g_timer_interrupt_count
+                0x00031360                g_sdram_ecc_count
+                0x00005728                Image$$ER_ZI$$ZI$$Base = LOADADDR (.bss)
+                0x0002bc3c                Image$$ER_ZI$$ZI$$Length = SIZEOF (.bss)
+                0x00005728                size_of_firmware_image = LOADADDR (.bss)
                 0x00000000                _start = entry_point
 OUTPUT(firmware.elf elf32-littlearm)
 
-.debug_info     0x00000000     0x3cfb
- .debug_info    0x00000000      0xbb3 ftl.o
- .debug_info    0x00000bb3      0x363 sata_identify.o
- .debug_info    0x00000f16      0x95d sata_cmd.o
- .debug_info    0x00001873      0x6b7 sata_isr.o
- .debug_info    0x00001f2a      0x4f9 sata_main.o
- .debug_info    0x00002423       0xf8 sata_table.o
- .debug_info    0x0000251b      0x126 initialize.o
- .debug_info    0x00002641      0x95d mem_util.o
- .debug_info    0x00002f9e      0x2f6 flash.o
- .debug_info    0x00003294      0x656 flash_wrapper.o
- .debug_info    0x000038ea      0x3c8 misc.o
- .debug_info    0x00003cb2       0x49 uart.o
+.debug_info     0x00000000     0x3d79
+ .debug_info    0x00000000      0xc31 ftl.o
+ .debug_info    0x00000c31      0x363 sata_identify.o
+ .debug_info    0x00000f94      0x95d sata_cmd.o
+ .debug_info    0x000018f1      0x6b7 sata_isr.o
+ .debug_info    0x00001fa8      0x4f9 sata_main.o
+ .debug_info    0x000024a1       0xf8 sata_table.o
+ .debug_info    0x00002599      0x126 initialize.o
+ .debug_info    0x000026bf      0x95d mem_util.o
+ .debug_info    0x0000301c      0x2f6 flash.o
+ .debug_info    0x00003312      0x656 flash_wrapper.o
+ .debug_info    0x00003968      0x3c8 misc.o
+ .debug_info    0x00003d30       0x49 uart.o
 
-.debug_abbrev   0x00000000     0x125e
- .debug_abbrev  0x00000000      0x2ee ftl.o
- .debug_abbrev  0x000002ee      0x19e sata_identify.o
- .debug_abbrev  0x0000048c      0x187 sata_cmd.o
- .debug_abbrev  0x00000613      0x1b1 sata_isr.o
- .debug_abbrev  0x000007c4      0x213 sata_main.o
- .debug_abbrev  0x000009d7       0x8b sata_table.o
- .debug_abbrev  0x00000a62       0xae initialize.o
- .debug_abbrev  0x00000b10      0x285 mem_util.o
- .debug_abbrev  0x00000d95      0x193 flash.o
- .debug_abbrev  0x00000f28      0x137 flash_wrapper.o
- .debug_abbrev  0x0000105f      0x1d5 misc.o
- .debug_abbrev  0x00001234       0x2a uart.o
+.debug_abbrev   0x00000000     0x1264
+ .debug_abbrev  0x00000000      0x2f4 ftl.o
+ .debug_abbrev  0x000002f4      0x19e sata_identify.o
+ .debug_abbrev  0x00000492      0x187 sata_cmd.o
+ .debug_abbrev  0x00000619      0x1b1 sata_isr.o
+ .debug_abbrev  0x000007ca      0x213 sata_main.o
+ .debug_abbrev  0x000009dd       0x8b sata_table.o
+ .debug_abbrev  0x00000a68       0xae initialize.o
+ .debug_abbrev  0x00000b16      0x285 mem_util.o
+ .debug_abbrev  0x00000d9b      0x193 flash.o
+ .debug_abbrev  0x00000f2e      0x137 flash_wrapper.o
+ .debug_abbrev  0x00001065      0x1d5 misc.o
+ .debug_abbrev  0x0000123a       0x2a uart.o
 
-.debug_loc      0x00000000     0x3326
- .debug_loc     0x00000000      0xdc8 ftl.o
- .debug_loc     0x00000dc8      0x1a3 sata_identify.o
- .debug_loc     0x00000f6b      0x55b sata_cmd.o
- .debug_loc     0x000014c6      0x43a sata_isr.o
- .debug_loc     0x00001900      0x11f sata_main.o
- .debug_loc     0x00001a1f       0x94 initialize.o
- .debug_loc     0x00001ab3      0xb97 mem_util.o
- .debug_loc     0x0000264a      0x360 flash.o
- .debug_loc     0x000029aa      0x5ff flash_wrapper.o
- .debug_loc     0x00002fa9      0x37d misc.o
+.debug_loc      0x00000000     0x34d7
+ .debug_loc     0x00000000      0xf79 ftl.o
+ .debug_loc     0x00000f79      0x1a3 sata_identify.o
+ .debug_loc     0x0000111c      0x55b sata_cmd.o
+ .debug_loc     0x00001677      0x43a sata_isr.o
+ .debug_loc     0x00001ab1      0x11f sata_main.o
+ .debug_loc     0x00001bd0       0x94 initialize.o
+ .debug_loc     0x00001c64      0xb97 mem_util.o
+ .debug_loc     0x000027fb      0x360 flash.o
+ .debug_loc     0x00002b5b      0x5ff flash_wrapper.o
+ .debug_loc     0x0000315a      0x37d misc.o
 
 .debug_aranges  0x00000000      0x140
  .debug_aranges
@@ -353,53 +355,53 @@ OUTPUT(firmware.elf elf32-littlearm)
  .debug_aranges
                 0x00000120       0x20 misc.o
 
-.debug_ranges   0x00000000      0xa10
- .debug_ranges  0x00000000      0x188 ftl.o
- .debug_ranges  0x00000188       0x40 sata_identify.o
- .debug_ranges  0x000001c8      0x118 sata_isr.o
- .debug_ranges  0x000002e0       0xd8 sata_main.o
- .debug_ranges  0x000003b8      0x530 mem_util.o
- .debug_ranges  0x000008e8       0x40 flash_wrapper.o
- .debug_ranges  0x00000928       0xe8 misc.o
+.debug_ranges   0x00000000      0xa30
+ .debug_ranges  0x00000000      0x1a8 ftl.o
+ .debug_ranges  0x000001a8       0x40 sata_identify.o
+ .debug_ranges  0x000001e8      0x118 sata_isr.o
+ .debug_ranges  0x00000300       0xd8 sata_main.o
+ .debug_ranges  0x000003d8      0x530 mem_util.o
+ .debug_ranges  0x00000908       0x40 flash_wrapper.o
+ .debug_ranges  0x00000948       0xe8 misc.o
 
-.debug_line     0x00000000     0x164f
- .debug_line    0x00000000      0x61b ftl.o
- .debug_line    0x0000061b      0x136 sata_identify.o
- .debug_line    0x00000751      0x1b6 sata_cmd.o
- .debug_line    0x00000907      0x1c2 sata_isr.o
- .debug_line    0x00000ac9      0x146 sata_main.o
- .debug_line    0x00000c0f       0x5b sata_table.o
- .debug_line    0x00000c6a      0x1c3 initialize.o
- .debug_line    0x00000e2d      0x1df mem_util.o
- .debug_line    0x0000100c      0x17d flash.o
- .debug_line    0x00001189      0x252 flash_wrapper.o
- .debug_line    0x000013db      0x257 misc.o
- .debug_line    0x00001632       0x1d uart.o
+.debug_line     0x00000000     0x174f
+ .debug_line    0x00000000      0x71b ftl.o
+ .debug_line    0x0000071b      0x136 sata_identify.o
+ .debug_line    0x00000851      0x1b6 sata_cmd.o
+ .debug_line    0x00000a07      0x1c2 sata_isr.o
+ .debug_line    0x00000bc9      0x146 sata_main.o
+ .debug_line    0x00000d0f       0x5b sata_table.o
+ .debug_line    0x00000d6a      0x1c3 initialize.o
+ .debug_line    0x00000f2d      0x1df mem_util.o
+ .debug_line    0x0000110c      0x17d flash.o
+ .debug_line    0x00001289      0x252 flash_wrapper.o
+ .debug_line    0x000014db      0x257 misc.o
+ .debug_line    0x00001732       0x1d uart.o
 
-.debug_str      0x00000000     0x1608
- .debug_str     0x00000000      0x44d ftl.o
-                                0x4a2 (size before relaxing)
- .debug_str     0x0000044d      0x1a7 sata_identify.o
+.debug_str      0x00000000     0x1632
+ .debug_str     0x00000000      0x477 ftl.o
+                                0x4cc (size before relaxing)
+ .debug_str     0x00000477      0x1a7 sata_identify.o
                                 0x26c (size before relaxing)
- .debug_str     0x000005f4      0x85f sata_cmd.o
+ .debug_str     0x0000061e      0x85f sata_cmd.o
                                 0xa1f (size before relaxing)
- .debug_str     0x00000e53       0xf4 sata_isr.o
+ .debug_str     0x00000e7d       0xf4 sata_isr.o
                                 0x751 (size before relaxing)
- .debug_str     0x00000f47       0xdf sata_main.o
+ .debug_str     0x00000f71       0xdf sata_main.o
                                 0x2ba (size before relaxing)
- .debug_str     0x00001026       0x15 sata_table.o
+ .debug_str     0x00001050       0x15 sata_table.o
                                  0xfe (size before relaxing)
- .debug_str     0x0000103b       0x58 initialize.o
+ .debug_str     0x00001065       0x58 initialize.o
                                 0x10f (size before relaxing)
- .debug_str     0x00001093      0x1cb mem_util.o
+ .debug_str     0x000010bd      0x1cb mem_util.o
                                 0x2a3 (size before relaxing)
- .debug_str     0x0000125e       0xe2 flash.o
+ .debug_str     0x00001288       0xe2 flash.o
                                 0x1a6 (size before relaxing)
- .debug_str     0x00001340      0x189 flash_wrapper.o
+ .debug_str     0x0000136a      0x189 flash_wrapper.o
                                 0x297 (size before relaxing)
- .debug_str     0x000014c9      0x12a misc.o
+ .debug_str     0x000014f3      0x12a misc.o
                                 0x237 (size before relaxing)
- .debug_str     0x000015f3       0x15 uart.o
+ .debug_str     0x0000161d       0x15 uart.o
                                  0xa4 (size before relaxing)
 
 .comment        0x00000000       0x30
@@ -454,16 +456,16 @@ OUTPUT(firmware.elf elf32-littlearm)
  .ARM.attributes
                 0x000002f8       0x32 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-impure.o)
 
-.debug_frame    0x00000000      0x968
- .debug_frame   0x00000000      0x1dc ftl.o
- .debug_frame   0x000001dc       0x48 sata_identify.o
- .debug_frame   0x00000224      0x1b8 sata_cmd.o
- .debug_frame   0x000003dc       0x38 sata_isr.o
- .debug_frame   0x00000414       0x60 sata_main.o
- .debug_frame   0x00000474       0x38 initialize.o
- .debug_frame   0x000004ac      0x194 mem_util.o
- .debug_frame   0x00000640       0xb0 flash.o
- .debug_frame   0x000006f0      0x170 flash_wrapper.o
- .debug_frame   0x00000860       0xb0 misc.o
- .debug_frame   0x00000910       0x20 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_divsi3.o)
- .debug_frame   0x00000930       0x38 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-rand.o)
+.debug_frame    0x00000000      0x96c
+ .debug_frame   0x00000000      0x1e0 ftl.o
+ .debug_frame   0x000001e0       0x48 sata_identify.o
+ .debug_frame   0x00000228      0x1b8 sata_cmd.o
+ .debug_frame   0x000003e0       0x38 sata_isr.o
+ .debug_frame   0x00000418       0x60 sata_main.o
+ .debug_frame   0x00000478       0x38 initialize.o
+ .debug_frame   0x000004b0      0x194 mem_util.o
+ .debug_frame   0x00000644       0xb0 flash.o
+ .debug_frame   0x000006f4      0x170 flash_wrapper.o
+ .debug_frame   0x00000864       0xb0 misc.o
+ .debug_frame   0x00000914       0x20 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1\libgcc.a(_divsi3.o)
+ .debug_frame   0x00000934       0x38 c:/program files (x86)/codesourcery/sourcery_codebench_lite_for_arm_eabi/bin/../lib/gcc/arm-none-eabi/4.6.1/../../../../arm-none-eabi/lib\libc.a(lib_a-rand.o)
