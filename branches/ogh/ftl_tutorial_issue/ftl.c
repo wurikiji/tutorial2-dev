@@ -199,7 +199,7 @@ void load_smt_piece(UINT32 idx){
 	SETREG(FCP_ROW_L(bank), row);
 	SETREG(FCP_ROW_H(bank), row);
 	
-	while(_BSP_FSM(smt_dram_map[idx] / NUM_BANKS_MAX) != BANK_IDLE);
+	//while(_BSP_FSM(smt_dram_map[idx] / NUM_BANKS_MAX) != BANK_IDLE);
 	// fully guarantee 
 	//flash_issue_cmd(bank, RETURN_WHEN_DONE);
 	flash_issue_cmd(bank, RETURN_ON_ISSUE);
@@ -749,7 +749,7 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 
-	while(_BSP_FSM(bank) != BANK_IDLE);
+	//while(_BSP_FSM(bank) != BANK_IDLE);
 
 	return read_dram_32((UINT32*)dst);
 
@@ -782,7 +782,7 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 	smt_bit_map[bank] |= ( 1 <<block );
 
-	while(_BSP_FSM(bank) != BANK_IDLE);
+	//while(_BSP_FSM(bank) != BANK_IDLE);
 
 	write_dram_32( (UINT32*)dst , psn );
 }
