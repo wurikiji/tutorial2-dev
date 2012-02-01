@@ -90,6 +90,9 @@ UINT32 g_merge_buffer_lsn[SECTORS_PER_PAGE];
 UINT32 num_miss;
 #endif
 
+//debug
+static volatile UINT32 g_smt_bytes = SMT_PIECE_BYTES;
+
 void logging_misc_meta()
 {
 	UINT32 bank;
