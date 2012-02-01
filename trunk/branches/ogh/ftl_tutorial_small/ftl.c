@@ -414,17 +414,6 @@ void ftl_open(void)
 	for(i = 0 ;i < NUM_BANKS;i++){
 		bad_block = 2;
 		for(j = 0 ;j < NUM_BANKS_MAX * 2;j++){
-			while(is_bad_block(i, bad_block) && j < VBLKS_PER_BANK)
-			{
-				bad_block++;
-			}
-			g_bad_list[i][j] = bad_block++;
-		}
-		g_free_start[i] = g_bad_list[i][SMT_NUM-1] + 1;
-	}
-	for(i = 0 ;i < NUM_BANKS;i++){
-		bad_block = 2;
-		for(j = 0 ;j < NUM_BANKS_MAX * 2;j++){
 			while(is_bad_block(i, bad_block) && bad_block < VBLKS_PER_BANK)
 			{
 				bad_block++;
