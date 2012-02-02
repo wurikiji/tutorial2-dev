@@ -63,6 +63,7 @@ static misc_metadata  g_misc_meta[NUM_BANKS];
 /* initialize 0 */
 UINT32 smt_bit_map[NUM_BANKS][(SMT_BANK_NUM + NUM_BANKS_MAX -1 )/NUM_BANKS_MAX]; //dirty information
 /* initialize -1 */
+UINT8  smt_pos[ SMT_PIECE_NUM ];
 UINT32 smt_dram_map[ SMT_BLOCK ]; // smt table index information
 UINT32 smt_piece_map[ SMT_PIECE_NUM ]; // where a smt is in dram
 // initialize 0 
@@ -191,8 +192,7 @@ void load_smt_piece(UINT32 idx){
 	block = idx % SMT_BANK_NUM;
 
 	pblock = block / SMT_BLOCK;
-	row = read_dram_32( SMT_INDEX_ADDR + idx * sizeof(UINT32) );
-	row = row * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][pblock]);
+	row = smt_pos[idx] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][pblock]);
 	if( g_smt_full == 1){
 		flush_smt_piece(g_smt_victim);
 		g_smt_victim = (g_smt_victim +1 ) % SMT_BLOCK;
@@ -239,10 +239,10 @@ void flush_smt_piece(UINT32 idx)
 			// erase 
 			for(i = 0; i <  (SMT_BANK_NUM + SMT_BLOCK -1) / SMT_BLOCK; i++)
 			{
-				dest = SMT_INDEX_ADDR + sizeof(UINT32) * (bank * SMT_BANK_NUM + SMT_BLOCK * pblock + i);
-				new_row = read_dram_32(dest);
+				dest = bank * SMT_BANK_NUM + SMT_BLOCK * pblock +i;
+				new_row = smt_pos[dest];
 				nand_page_copyback(bank,g_bad_list[bank][pblock], new_row * SMT_INC_SIZE , g_bad_list[bank][SMT_BLOCK], i * SMT_INC_SIZE);
-				write_dram_32(dest,i);
+				smt_pos[dest] = i;
 			}
 			g_misc_meta[bank].smt_row[pblock] = i;
 			row = i;
@@ -254,7 +254,7 @@ void flush_smt_piece(UINT32 idx)
 		else{
 			row = g_misc_meta[bank].smt_row[pblock]++;
 		}
-		write_dram_32(SMT_INDEX_ADDR + sizeof(UINT32) * smt_dram_map[idx] , row);
+		smt_pos[smt_dram_map[idx]] = row;
 		row = row * SMT_INC_SIZE + ( PAGES_PER_VBLK * g_bad_list[bank][pblock]);
 
 		// flash map data to nand
