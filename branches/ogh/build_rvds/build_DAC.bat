@@ -1,1 +1,1 @@
-build.bat dac
+build.bat tutorial2_dynamic

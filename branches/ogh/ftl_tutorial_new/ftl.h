@@ -101,7 +101,7 @@ void ftl_read(UINT32 const lsn, UINT32 const num_sectors);
 void ftl_write(UINT32 const lsn, UINT32 const num_sectors);
 void ftl_flush(void);
 void ftl_isr(void);
-void ftl_write_sector(UINT32 const lsn);
+void ftl_write_sector(UINT32 const lsn,UINT32 const totals);
 void ftl_read_sector(UINT32 const lsn,UINT32 const);
 
 #endif //FTL_H
