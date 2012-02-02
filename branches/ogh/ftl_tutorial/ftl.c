@@ -239,7 +239,7 @@ void flush_smt_piece(UINT32 idx)
 			// erase 
 			for(i = 0; i <  (SMT_BANK_NUM + SMT_BLOCK -1) / SMT_BLOCK; i++)
 			{
-				dest = bank * SMT_BANK_NUM + SMT_BLOCK * pblock +i;
+				dest = bank * SMT_BANK_NUM + SMT_BLOCK * pblock + i;
 				new_row = smt_pos[dest];
 				nand_page_copyback(bank,g_bad_list[bank][pblock], new_row * SMT_INC_SIZE , g_bad_list[bank][SMT_BLOCK], i * SMT_INC_SIZE);
 				smt_pos[dest] = i;
