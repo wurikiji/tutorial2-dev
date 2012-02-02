@@ -33,7 +33,7 @@
 #define NUM_HIL_BUFFERS		1
 #define NUM_TEMP_BUFFERS	1
 
-#define DRAM_BYTES_OTHER	((NUM_COPY_BUFFERS + NUM_FTL_BUFFERS + NUM_HIL_BUFFERS + NUM_TEMP_BUFFERS) * BYTES_PER_PAGE + SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + SMT_DRAM_BYTES)
+#define DRAM_BYTES_OTHER	((NUM_COPY_BUFFERS + NUM_FTL_BUFFERS + NUM_HIL_BUFFERS + NUM_TEMP_BUFFERS) * BYTES_PER_PAGE + SCAN_LIST_BYTES + MERGE_BUFFER_BYTES + SMT_DRAM_BYTES )
 // modified by GYUHWA, RED
 
 #define WR_BUF_PTR(BUF_ID)	(WR_BUF_ADDR + ((UINT32)(BUF_ID)) * BYTES_PER_PAGE)
@@ -68,18 +68,28 @@
 
 #define SCAN_LIST_ADDR		(TEMP_BUF_ADDR + TEMP_BUF_BYTES)				// list of initial bad blocks
 #define SCAN_LIST_BYTES		(SCAN_LIST_SIZE * NUM_BANKS)
-#define MERGE_BUFFER_ADDR	(SCAN_LIST_ADDR + SCAN_LIST_BYTES)				// merge buffer (added by GYUHWA, modified by RED)
+#define MERGE_BUFFER_ADDR	(SCAN_LIST_ADDR + SCAN_LIST_BYTES)
 #define MERGE_BUFFER_BYTES	(((NUM_BANKS * BYTES_PER_PAGE + BYTES_PER_SECTOR - 1) / BYTES_PER_SECTOR )* BYTES_PER_SECTOR)
 
 
 #define SMT_ADDR		(MERGE_BUFFER_ADDR + MERGE_BUFFER_BYTES)
 //#define SMT_DRAM_BYTES		((((UINT32)NUM_PSECTORS_128GB + NUM_BANKS_MAX -1 ) / NUM_BANKS_MAX ) * sizeof(UINT32) )
-#define SMT_DRAM_BYTES		(SECTORS_PER_BANK * sizeof(UINT32))
-#define SMT_BYTES		(SECTORS_PER_BANK * sizeof(UINT32))
-#define SMT_PIECE_BYTES		((SMT_BYTES + NUM_BANKS_MAX -1 )/ NUM_BANKS_MAX)
+//Dram size 
+#define SMT_DRAM_BYTES		(16*1024*1024)
+#define SMT_DRAM		((SMT_DRAM_BYTES + SMT_PIECE_BYTES -1) / SMT_PIECE_BYTES )
+//number of banks for SMT
+#define SMT_BLOCK		(NUM_BANKS_MAX * 3)
+// size of piece of SMT
+#define SMT_PIECE_BYTES		(BYTES_PER_PAGE)	
 #define SMT_INC_SIZE		((SMT_PIECE_BYTES + BYTES_PER_PAGE -1 ) / BYTES_PER_PAGE)
 #define SMT_LIMIT		(PAGES_PER_VBLK / SMT_INC_SIZE)	
+// total SMT pieces number
+#define SMT_PIECE_NUM		(((SECTORS_PER_BANK * sizeof(UINT32) + SMT_PIECE_BYTES - 1) / SMT_PIECE_BYTES) *  NUM_BANKS)
+// SMT pieces per bank
+#define SMT_BANK_NUM		((SMT_PIECE_NUM + NUM_BANKS-1) / NUM_BANKS)
 
+#define SMT_INDEX_ADDR		(SMT_ADDR + SMT_DRAM_BYTES)
+#define	SMT_INDEX_BYTES		((( sizeof(UINT32) * SMT_PIECE_NUM + BYTES_PER_SECTOR -1 ) / BYTES_PER_SECTOR ) * BYTES_PER_SECTOR ) 
 // 32 smt pieces per banks, ( 32 * 32 smt pieces )
 
 ///////////////////////////////
@@ -91,7 +101,7 @@ void ftl_read(UINT32 const lsn, UINT32 const num_sectors);
 void ftl_write(UINT32 const lsn, UINT32 const num_sectors);
 void ftl_flush(void);
 void ftl_isr(void);
-void ftl_write_sector(UINT32 const lsn,UINT32 const total);
+void ftl_write_sector(UINT32 const lsn);
 void ftl_read_sector(UINT32 const lsn,UINT32 const);
 
 #endif //FTL_H
