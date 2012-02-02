@@ -83,7 +83,7 @@ static void set_psn(UINT32 const lba, UINT32 const psn);
 UINT32 g_target_bank;
 UINT32 g_target_sect;
 UINT32 g_merge_buffer_lsn[SECTORS_PER_PAGE];
-
+UINT32 g_bank_to_wait;
 
 //for testing
 #if OPTION_FTL_TEST == 1
@@ -208,7 +208,9 @@ void load_smt_piece(UINT32 idx){
 	
 	// fully guarantee 
 	//flash_issue_cmd(bank, RETURN_WHEN_DONE);
+	while(_BSP_FSM(g_bank_to_wait) != BANK_IDLE);
 	flash_issue_cmd(bank, RETURN_ON_ISSUE);
+	g_bank_to_wait = bank;
 
 	smt_dram_map[g_smt_target] = idx;
 	smt_piece_map[idx] = g_smt_target;
@@ -269,6 +271,7 @@ void flush_smt_piece(UINT32 idx)
 		SETREG(FCP_DMA_CNT, SMT_PIECE_BYTES);
 		//flash_issue_cmd(bank,RETURN_WHEN_DONE);
 		flash_issue_cmd(bank,RETURN_ON_ISSUE);
+		g_bank_to_wait = bank;
 	}
 	smt_piece_map[smt_dram_map[idx]] = (UINT32)-1;
 }
@@ -792,6 +795,7 @@ static UINT32 get_psn(UINT32 const lba)		//added by RED
 #endif
 		load_smt_piece( bank * SMT_BANK_NUM + block);
 		dst = smt_piece_map[bank * SMT_BANK_NUM + block];
+		while(_BSP_FSM(g_bank_to_wait) != BANK_IDLE);
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 	return read_dram_32((UINT32*)dst);
@@ -820,6 +824,7 @@ static void set_psn(UINT32 const lba, UINT32 const psn)			//added by RED
 #endif
 		load_smt_piece( bank * SMT_BANK_NUM + block);
 		dst = smt_piece_map[bank * SMT_BANK_NUM + block];
+		while(_BSP_FSM(g_bank_to_wait) != BANK_IDLE);
 	}
 	dst = SMT_ADDR + (SMT_PIECE_BYTES * dst) + (sector * sizeof(UINT32));
 	smt_bit_map[bank][block / NUM_BANKS_MAX] |= ( 1 <<( block% NUM_BANKS_MAX) );
