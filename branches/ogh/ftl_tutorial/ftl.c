@@ -237,7 +237,7 @@ void flush_smt_piece(UINT32 idx)
 		//update and flash 
 		if( g_misc_meta[bank].smt_row[pblock] >= SMT_LIMIT ){
 			// erase 
-			for(i = 0; (SMT_BANK_NUM + SMT_BLOCK -1) / SMT_BLOCK; i++)
+			for(i = 0; i <  (SMT_BANK_NUM + SMT_BLOCK -1) / SMT_BLOCK; i++)
 			{
 				dest = SMT_INDEX_ADDR + sizeof(UINT32) * (bank * SMT_BANK_NUM + SMT_BLOCK * pblock + i);
 				new_row = read_dram_32(dest);
@@ -245,9 +245,7 @@ void flush_smt_piece(UINT32 idx)
 				write_dram_32(dest,i);
 			}
 			g_misc_meta[bank].smt_row[pblock] = i;
-
 			row = i;
-
 			nand_block_erase(bank,g_bad_list[bank][pblock]);
 			new_block = g_bad_list[bank][pblock];
 			g_bad_list[bank][pblock] = g_bad_list[bank][SMT_BLOCK];
@@ -303,12 +301,12 @@ void init_meta_data()
 	for(j = 0; j < NUM_BANKS ;j++){
 		for(k = 0 ; k < SMT_BLOCK ;k++)
 		{
-			for(i = 0; (SMT_BANK_NUM + SMT_BLOCK -1) / SMT_BLOCK; i++)
+			for(i = 0; i < (SMT_BANK_NUM + SMT_BLOCK -1) / SMT_BLOCK; i++)
 			{
 				dest = SMT_INDEX_ADDR + sizeof(UINT32) * (j * SMT_BANK_NUM + SMT_BLOCK * k + i);
 				write_dram_32(dest,i);
 			}
-			g_misc_meta[bank].smt_row[k] = i;
+			g_misc_meta[j].smt_row[k] = i;
 		}
 	}
 
