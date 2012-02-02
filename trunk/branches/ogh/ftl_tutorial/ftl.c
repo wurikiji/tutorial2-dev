@@ -195,7 +195,7 @@ void load_smt_piece(UINT32 idx){
 	row = row * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][pblock]);
 	if( g_smt_full == 1){
 		flush_smt_piece(g_smt_victim);
-		g_smt_victim = (g_smt_victim +1 ) %NUM_BANKS_MAX;
+		g_smt_victim = (g_smt_victim +1 ) % SMT_BLOCK;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
 	SETREG(FCP_DMA_CNT,SMT_PIECE_BYTES);
