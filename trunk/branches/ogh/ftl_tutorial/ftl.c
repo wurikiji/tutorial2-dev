@@ -296,10 +296,6 @@ void init_meta_data()
 			g_misc_meta[i].smt_init[j] = 0;
 		}
 
-		for(j = 0 ;j < SMT_BLOCK;j++)
-		{
-		// init smt index meta in dram	
-		}
 		g_misc_meta[i].cur_miscblk_vpn = 0;
 	}
 	for(j = 0; j < NUM_BANKS ;j++){
