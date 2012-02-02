@@ -64,7 +64,7 @@ static misc_metadata  g_misc_meta[NUM_BANKS];
 UINT32 smt_bit_map[NUM_BANKS][(SMT_BANK_NUM + NUM_BANKS_MAX -1 )/NUM_BANKS_MAX]; //dirty information
 /* initialize -1 */
 UINT8  smt_pos[ SMT_PIECE_NUM ];
-UINT32 smt_dram_map[ SMT_BLOCK ]; // smt table index information
+UINT32 smt_dram_map[ SMT_DRAM ]; // smt table index information
 UINT32 smt_piece_map[ SMT_PIECE_NUM ]; // where a smt is in dram
 // initialize 0 
 UINT32 g_smt_target;	// loading place on dram space
@@ -195,7 +195,7 @@ void load_smt_piece(UINT32 idx){
 	row = smt_pos[idx] * SMT_INC_SIZE + (PAGES_PER_VBLK * g_bad_list[bank][pblock]);
 	if( g_smt_full == 1){
 		flush_smt_piece(g_smt_victim);
-		g_smt_victim = (g_smt_victim +1 ) % SMT_BLOCK;
+		g_smt_victim = (g_smt_victim +1 ) % SMT_DRAM;
 	}
 	SETREG(FCP_CMD, FC_COL_ROW_READ_OUT);	
 	SETREG(FCP_DMA_CNT,SMT_PIECE_BYTES);
@@ -218,7 +218,7 @@ void load_smt_piece(UINT32 idx){
 		mem_set_dram( dest, 0x00, SMT_PIECE_BYTES);
 		g_misc_meta[bank].smt_init[block/NUM_BANKS_MAX] |= (1 <<(block % NUM_BANKS_MAX));
 	}
-	g_smt_target = (g_smt_target + 1) % SMT_BLOCK;
+	g_smt_target = (g_smt_target + 1) % SMT_DRAM;
 	if( g_smt_target == 0 ){
 		g_smt_full = 1;
 	}
@@ -274,7 +274,7 @@ void flush_smt_piece(UINT32 idx)
 void logging_map_table()
 {
 	int i;
-	for(i = 0 ;i < NUM_BANKS_MAX;i++){
+	for(i = 0 ;i < SMT_DRAM;i++){
 		flash_finish();
 		if( smt_dram_map[i] != (UINT32)-1 ){
 			flush_smt_piece(i);
