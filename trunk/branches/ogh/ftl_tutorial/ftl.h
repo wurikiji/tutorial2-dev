@@ -77,7 +77,7 @@
 //Dram size 
 #define SMT_DRAM_BYTES		(((SMT_PIECE_BYTES * SMT_BLOCK + BYTES_PER_SECTOR -1 )/BYTES_PER_SECTOR) * BYTES_PER_SECTOR)
 //number of banks for SMT
-#define SMT_BLOCK		(NUM_BANKS_MAX * 2)
+#define SMT_BLOCK		(NUM_BANKS_MAX * 3)
 // size of piece of SMT
 #define SMT_PIECE_BYTES		(BYTES_PER_PAGE)	
 #define SMT_INC_SIZE		((SMT_PIECE_BYTES + BYTES_PER_PAGE -1 ) / BYTES_PER_PAGE)
