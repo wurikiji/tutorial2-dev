@@ -283,7 +283,7 @@ void logging_map_table()
 }
 void init_meta_data()
 {
-	int i,j;
+	int i,j, dest;
 	for(i = 0 ;i < NUM_BANKS;i++){
 		for(j = 0 ;j < (SMT_BANK_NUM+ NUM_BANKS_MAX -1)/NUM_BANKS_MAX;j++)
 		{
@@ -424,14 +424,14 @@ void ftl_open(void)
 	// block#2 ~ map table meta and data
 	for(i = 0 ;i < NUM_BANKS;i++){
 		bad_block = 2;
-		for(j = 0 ;j < NUM_BANKS_MAX;j++){
+		for(j = 0 ;j < SMT_BLOCK + 1;j++){
 			while(is_bad_block(i, bad_block) && j < VBLKS_PER_BANK)
 			{
 				bad_block++;
 			}
 			g_bad_list[i][j] = bad_block++;
 		}
-		g_free_start[i] = g_bad_list[i][NUM_BANKS_MAX-1] + 1;
+		g_free_start[i] = bad_block;
 	}
 	//if (check_format_mark() == FALSE)
 	if( TRUE)
