@@ -286,7 +286,7 @@ void logging_map_table()
 }
 void init_meta_data()
 {
-	int i,j;
+	int i,j,k, dest;
 	for(i = 0 ;i < NUM_BANKS;i++){
 		for(j = 0 ;j < (SMT_BANK_NUM+ NUM_BANKS_MAX -1)/NUM_BANKS_MAX;j++)
 		{
@@ -299,6 +299,19 @@ void init_meta_data()
 		}
 		g_misc_meta[i].cur_miscblk_vpn = 0;
 	}
+
+	for(j = 0; j < NUM_BANKS ;j++){
+		for(k = 0 ; k < SMT_BLOCK ;k++)
+		{
+			for(i = 0; (SMT_BANK_NUM + SMT_BLOCK -1) / SMT_BLOCK; i++)
+			{
+				dest = SMT_INDEX_ADDR + sizeof(UINT32) * (j * SMT_BANK_NUM + SMT_BLOCK * k + i);
+				write_dram_32(dest,i);
+			}
+			g_misc_meta[bank].smt_row[k] = i;
+		}
+	}
+
 	for(i = 0 ;i < NUM_BANKS;i++){
 		for(j = 0 ;j < (SMT_BANK_NUM + NUM_BANKS_MAX -1 )/NUM_BANKS_MAX;j++)
 			smt_bit_map[i][j] = 0;
