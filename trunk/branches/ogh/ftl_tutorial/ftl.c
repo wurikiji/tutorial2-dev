@@ -244,6 +244,10 @@ void flush_smt_piece(UINT32 idx)
 				nand_page_copyback(bank,g_bad_list[bank][pblock], new_row * SMT_INC_SIZE , g_bad_list[bank][SMT_BLOCK], i * SMT_INC_SIZE);
 				write_dram_32(dest,i);
 			}
+			g_misc_meta[bank].smt_row[pblock] = i;
+
+			row = i;
+
 			nand_block_erase(bank,g_bad_list[bank][pblock]);
 			new_block = g_bad_list[bank][pblock];
 			g_bad_list[bank][pblock] = g_bad_list[bank][SMT_BLOCK];

@@ -51,7 +51,7 @@ typedef struct _misc_metadata											//modified by GYUHWA
 	UINT32 g_target_row;
 	// smt piece data
 	UINT32 smt_pieces[SMT_NUM];
-	UINT32 smt_init[8];
+	UINT32 smt_init[16];
 }misc_metadata; // per bank
 //----------------------------------
 // FTL metadata (maintain in SRAM)
@@ -61,7 +61,7 @@ static misc_metadata  g_misc_meta[NUM_BANKS];
 
 /* smt piece data information */
 /* initialize 0 */
-UINT32 smt_bit_map[ NUM_BANKS_MAX ][8]; //dirty information
+UINT32 smt_bit_map[ NUM_BANKS_MAX ][16]; //dirty information
 /* initialize -1 */
 UINT32 smt_dram_map[ SMT_NUM ]; // smt table index information
 UINT32 smt_piece_map[ NUM_BANKS_MAX * SMT_NUM ]; // where a smt is in dram
@@ -258,7 +258,7 @@ void init_meta_data()
 		for(j = 0 ;j < NUM_BANKS_MAX;j++){
 			g_misc_meta[i].smt_pieces[ j ] = 0;
 		}
-		for(j = 0 ;j < 8;j++){
+		for(j = 0 ;j < 16;j++){
 			g_misc_meta[i].smt_init[j] = 0;
 		}
 		g_misc_meta[i].cur_miscblk_vpn = 0;
@@ -267,9 +267,9 @@ void init_meta_data()
 		for(j = 0 ;j < SMT_NUM;j++){
 			smt_piece_map[i * SMT_NUM + j] = (UINT32)-1;
 		}
-		for(j = 0 ;j < 8;j++){
+		for(j = 0 ;j < 16;j++){
 			smt_bit_map[i][j] = 0;
-			smt_dram_map[i*8 + j] = (UINT32)-1;
+			smt_dram_map[i*16 + j] = (UINT32)-1;
 		}
 	}
 	g_smt_target = 0;

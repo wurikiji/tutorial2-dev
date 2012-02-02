@@ -1,4 +1,4 @@
-FTL	= tutorial_small2
+FTL	= tutorial
 PREFIX 	= arm-none-eabi-
 CC 	= $(PREFIX)gcc
 AS 	= $(PREFIX)as
